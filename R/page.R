@@ -3,7 +3,7 @@
 #' @import shiny
 bigPage <- function(
   ...,
-  menu = list(),
+  sidebar = list(),
   title = "BigOmics",
   lang = NULL
 ) {
@@ -11,12 +11,14 @@ bigPage <- function(
     title = title,
     lang = lang,
     theme = bslib::bs_theme(version = 5L),
+    dependencies(),
     div(
       class = "row",
       id = "app",
       div(
+        id = "sidebar-container",
         class = "sidebar-expanded d-none d-md-block",
-        menu
+        sidebar
       ),
       div(
         class = "col p-4",
@@ -25,4 +27,3 @@ bigPage <- function(
     )
   )
 }
-
