@@ -4,7 +4,7 @@
 \alias{bigPage}
 \title{Page}
 \usage{
-bigPage(..., menu = list(), title = "BigOmics", lang = NULL)
+bigPage(..., sidebar = list(), title = "BigOmics", lang = NULL)
 }
 \description{
 Page
