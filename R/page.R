@@ -104,7 +104,7 @@ sidebarMenu <- function(
         span(
           icon(
             "chevron-down",
-            class = "float-right pt-1"
+            class = "toggler float-right pt-1"
           )
         )
       )

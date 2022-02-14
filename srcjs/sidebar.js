@@ -30,3 +30,13 @@ const toggleCollapse = () => {
 const isExpanded = () => {
   return $('#sidebar-container').hasClass('sidebar-expanded');
 }
+
+$(function() {
+  $('[data-bs-toggle]').on('click', (e) => {
+    console.log(e.currentTarget);
+    $(e.currentTarget)
+      .find('.toggler')
+      .toggleClass('fa-chevron-down')
+      .toggleClass('fa-chevron-up')
+  });
+});
