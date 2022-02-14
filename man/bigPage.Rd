@@ -4,8 +4,17 @@
 \alias{bigPage}
 \title{Page}
 \usage{
-bigPage(..., sidebar = list(), title = "BigOmics", lang = NULL)
+bigPage(..., sidebar = htmltools::tagList(), title = "BigOmics", lang = NULL)
+}
+\arguments{
+\item{...}{Content of the application.}
+
+\item{sidebar}{Sidebar content as returned by \code{sidebar}.}
+
+\item{title}{Title of the application.}
+
+\item{lang}{Language for meta tag.}
 }
 \description{
-Page
+Main application page.
 }

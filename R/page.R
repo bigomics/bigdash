@@ -1,24 +1,34 @@
 #' Page
 #' 
+#' Main application page.
+#' 
+#' @param ... Content of the application.
+#' @param sidebar Sidebar content as returned by `sidebar`.
+#' @param title Title of the application.
+#' @param lang Language for meta tag.
+#' 
 #' @import shiny
+#' @importFrom bslib bs_theme
+#' 
+#' @export 
 bigPage <- function(
   ...,
-  sidebar = list(),
+  sidebar = htmltools::tagList(),
   title = "BigOmics",
   lang = NULL
 ) {
-  sidebar <- htmltools::tagAppendChild(
+  sidebar <- tagAppendChild(
     sidebar,
     tags$a(
-      `data-toggle` = "sidebar-colapse",
-      "Collapse",
-      class = "btn btn-default"
+      `data-toggle` = "sidebar-collapse",
+      class = "btn btn-sm btn-default",
+      span("Collapse")
     )
   )
   bootstrapPage(
     title = title,
     lang = lang,
-    theme = bslib::bs_theme(version = 5L),
+    theme = bs_theme(version = 5L),
     dependencies(),
     div(
       class = "row",
@@ -36,74 +46,116 @@ bigPage <- function(
   )
 }
 
+#' Sidebar
+#' 
+#' Sidebar content to pass to [bigPage()].
+#' 
+#' @param ... Contnent of the sidebar.
+#' 
+#' @export 
 sidebar <- function(
   ...
 ) {
-  tags$ul(
-    class = "list-group",
+  div(
+    class = "sidebar m-4",
     ...
   )
 }
 
-sidebarBlock <- function(
-  text
-) {
-  tags$li(
-    class = "list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed",
-    tags$small(
-      text
-    )
-  )
-}
-
-sidebarSubMenu <- function(
+#' Sidebar Menu
+#' 
+#' Menu for the side bar to pass to [sidebar()].
+#' 
+#' @param text Text to display when the sidebar is expanded.
+#' @param icon Icon to display when the sidebar is collapsed.
+#' @param ... Children, [sidebarMenuElement()].
+#' 
+#' @export 
+sidebarMenu <- function(
   text,
-  ...,
-  .icon = "fa fa-gauge fa-fw"
+  icon,
+  ...
 ) {
   if(missing(text))
     stop("Missing `text`")
 
+  if(missing(icon))
+    stop("Missing `icon`")
+
   id <- make_id()
 
   tagList(
-    tags$a(
-      href = sprintf("#%s", id),
-      `data-toggle` = "collapse",
-      `aria-expanded` = "false",
-      class = "bg-dark list-group-item list-group-item-action flex-column align-items-start",
-      tags$div(
-        class = "d-flex w-100 justify-content-start align-items-center",
+    p(
+      class = "w-100 mb-2",
+      a(
+        class = "hide-expanded text-dark d-none",
+        `data-bs-toggle` = "collapse",
+        href = sprintf("#%s", id),
+        icon
+      ),
+      tags$a(
+        class = "show-expanded text-decoration-none text-dark",
+        `data-bs-toggle` = "collapse",
+        href = sprintf("#%s", id),
         span(
-          class = sprintf("%s mr-3", .icon)
-        ),
-        span(
-          class = "menu-collapsed",
+          class = "fw-bold",
           text
         ),
         span(
-          class = "submenu-icon ml-auto"
+          icon(
+            "chevron-down",
+            class = "float-right pt-1"
+          )
         )
       )
     ),
+    hr_(),
     div(
+      class = "collapse",
       id = id,
-      class = "collapse sidebar-submenu",
       ...
     )
   )
 }
 
-sidebarSubMenuItem <- function(
+#' Element for the Sidebar menu
+#' 
+#' Element in the collapsible [sidebarMenu()].
+#' 
+#' @inheritParams sidebarMenu
+#' 
+#' @export 
+sidebarMenuElement <- function(
   text,
-  target = text
+  icon
 ) {
-  tags$a(
-    `data-target` = target,
-    class = "list-group-item list-group-item-action bg-dark text-white",
-    span(
-      class = "menu-collapsed",
-      text
-    )
+  if(missing(text))
+    stop("Missing `text`")
+
+  if(missing(icon))
+    stop("Missing `icon`")
+
+  tagList(
+    p(
+      class = "w-100 mb-2",
+      a(
+        class = "hide-expanded text-dark d-none",
+        icon
+      ),
+      a(
+        class = "show-expanded text-decoration-none text-dark",
+        text
+      ),
+    ),
+    hr_()
   )
+}
+
+#' Horizontal Rule
+#' 
+#' Horizontal rule with little margin.
+#' 
+#' @keywords internal
+hr_ <- function() {
+  htmltools::tags$hr(class = "mt-1 mp-1")
 }

@@ -1,33 +1,32 @@
 import 'jquery';
 
 export const handleSidebar = () => {
-  // Hide submenus
-  $('#body-row .collapse').collapse('hide'); 
-
-  // Collapse/Expand icon
-  $('#collapse-icon').addClass('fa-angle-double-left'); 
-
   // Collapse click
-  $('[data-toggle=sidebar-colapse]').on('click', () => {
-    SidebarCollapse();
+  $('[data-toggle=sidebar-collapse]').on('click', (e) => {
+    sidebarCollapse(e.currentTarget);
   });
 }
 
-const SidebarCollapse = () => {
-  $('.menu-collapsed').toggleClass('d-none');
-  $('.sidebar-submenu').toggleClass('d-none');
-  $('.submenu-icon').toggleClass('d-none');
+const sidebarCollapse = (el) => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-  
-  // Treating d-flex/d-none on separators with title
-  var SeparatorTitle = $('.sidebar-separator-title');
-  if ( SeparatorTitle.hasClass('d-flex') ) {
-    SeparatorTitle.removeClass('d-flex');
-  } else {
-    SeparatorTitle.addClass('d-flex');
-  }
-  
-  // Collapse/Expand icon
-  $('#collapse-icon').toggleClass('fa-angle-double-left fa-angle-double-right');
+  toggleCollapseButton(el);
+  toggleCollapse();
+}
 
+const toggleCollapseButton = (el) => {
+  if(isExpanded()) {
+    $(el).html('<span>Collapse</span>');
+    return;
+  }
+
+  $(el).html('<i class="fa fa-expand"></i>');
+}
+
+const toggleCollapse = () => {
+  $('.show-expanded').toggleClass('d-none');
+  $('.hide-expanded').toggleClass('d-none');
+}
+
+const isExpanded = () => {
+  return $('#sidebar-container').hasClass('sidebar-expanded');
 }
