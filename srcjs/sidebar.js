@@ -33,7 +33,6 @@ const isExpanded = () => {
 
 $(function() {
   $('[data-bs-toggle]').on('click', (e) => {
-    console.log(e.currentTarget);
     $(e.currentTarget)
       .find('.toggler')
       .toggleClass('fa-chevron-down')
