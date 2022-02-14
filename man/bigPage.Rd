@@ -4,7 +4,13 @@
 \alias{bigPage}
 \title{Page}
 \usage{
-bigPage(..., sidebar = htmltools::tagList(), title = "BigOmics", lang = NULL)
+bigPage(
+  ...,
+  sidebar = htmltools::tagList(),
+  title = "BigOmics",
+  navbar = htmltools::tagList(),
+  lang = NULL
+)
 }
 \arguments{
 \item{...}{Content of the application.}
@@ -12,6 +18,8 @@ bigPage(..., sidebar = htmltools::tagList(), title = "BigOmics", lang = NULL)
 \item{sidebar}{Sidebar content as returned by \code{sidebar}.}
 
 \item{title}{Title of the application.}
+
+\item{navbar}{Navbar.}
 
 \item{lang}{Language for meta tag.}
 }
