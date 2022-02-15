@@ -2,8 +2,10 @@ Package: bigui
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(
+        person("John", "Coene", , "john@opifex.org", role = c("aut", "cre")),
+        person("Carson", "Sievert", role = "ctb", email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844"))
+    )
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8

@@ -75,11 +75,14 @@ sidebarMenu <- function(
 #' Element in the collapsible [sidebarMenu()].
 #' 
 #' @inheritParams sidebarMenu
+#' @param target `name` of the target [bigTabItem()] that this should
+#' make visible.
 #' 
 #' @export 
 sidebarMenuElement <- function(
   text,
-  icon
+  icon,
+  target
 ) {
   if(missing(text))
     stop("Missing `text`")
@@ -87,15 +90,20 @@ sidebarMenuElement <- function(
   if(missing(icon))
     stop("Missing `icon`")
 
+  if(missing(target))
+    stop("Missing `target`")
+
   tagList(
     p(
       class = "w-100 mb-2",
       a(
-        class = "hide-expanded text-dark d-none",
+        class = "hide-expanded text-dark d-none tag-trigger",
+        `data-target` = target,
         icon
       ),
       a(
-        class = "show-expanded text-decoration-none text-dark",
+        class = "show-expanded text-decoration-none text-dark tab-trigger",
+        `data-target` = target,
         text
       ),
     ),

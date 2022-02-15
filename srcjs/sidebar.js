@@ -38,4 +38,44 @@ $(function() {
       .toggleClass('fa-chevron-down')
       .toggleClass('fa-chevron-up')
   });
+  
+  // on load toggle first tab
+  toggleFirstTab();
+
+  $('.tab-trigger').on('click', (e) => {
+    let target = $(e.currentTarget).data('target');
+    toggleTabs(target)
+  })
 });
+
+
+const toggleFirstTab = () => {
+  let target = $('.tab-trigger')
+    .first()
+    .data('target');
+
+  toggleTabs(target);
+}
+
+const toggleTabs = (target) => {
+  $('#big-tabs')
+    .find('.big-tab')
+    .each((index, tab) => {
+      toggleTab(tab, target);
+    })
+}
+
+const toggleTab = (tab, target) => {
+  let name = $(tab).data('name');
+
+  if(name == target) {
+    $(tab).removeClass('d-none');
+    $(tab).show();
+    $(tab).trigger('shown');
+    return;
+  }
+
+  $(tab).addClass('d-none');
+  $(tab).hide();
+  $(tab).trigger('hidden');
+}
