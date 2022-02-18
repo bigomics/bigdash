@@ -4,9 +4,11 @@
 \alias{settings}
 \title{Settings}
 \usage{
-settings(...)
+settings(title = "Settings", ...)
 }
 \arguments{
+\item{title}{Title of the sidebar.}
+
 \item{...}{Content of the sidebar.}
 }
 \description{

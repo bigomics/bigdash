@@ -37,7 +37,7 @@ bigPage <- function(
       ),
       div(
         id = "settings-container",
-        class = "sidebar-expanded d-none d-md-block",
+        class = "settings-expanded d-none d-md-block",
         settings
       ),
       div(

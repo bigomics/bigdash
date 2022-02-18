@@ -2,18 +2,19 @@
 #' 
 #' Settings content to pass to [bigPage()].
 #' 
-#' @param ... Content of the sidebar.
+#' @inheritParams sidebar
 #' 
 #' @importFrom htmltools div h4 div
 #' 
 #' @export 
 settings <- function(
+  title = "Settings",
   ...
 ) {
   div(
     class = "settings m-4",
     h4(
-      "Settings",
+      title,
       icon("chevron-down", class = "settings-icon"),
       class = "settings-label"
     ),

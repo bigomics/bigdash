@@ -4,9 +4,11 @@
 \alias{sidebar}
 \title{Sidebar}
 \usage{
-sidebar(...)
+sidebar(title = "Menu", ...)
 }
 \arguments{
+\item{title}{Title of the sidebar.}
+
 \item{...}{Content of the sidebar.}
 }
 \description{

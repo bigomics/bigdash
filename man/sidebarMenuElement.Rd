@@ -4,12 +4,10 @@
 \alias{sidebarMenuElement}
 \title{Element for the Sidebar menu}
 \usage{
-sidebarMenuElement(text, icon, target)
+sidebarMenuElement(text, target)
 }
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
-
-\item{icon}{Icon to display when the sidebar is collapsed.}
 
 \item{target}{\code{name} of the target \code{\link[=bigTabItem]{bigTabItem()}} that this should
 make visible.}

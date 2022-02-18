@@ -2,11 +2,11 @@ import 'shiny';
 
 export const handleSettings = () => {
   $('.settings-label').on('click', (e) => {
-    settingsCollapse(e.currentTarget);
+    settingsCollapse();
   });
 }
 
-const settingsCollapse = (el) => {
+const settingsCollapse = () => {
   $('#settings-container').toggleClass('settings-expanded settings-collapsed');
   toggleCollapseLabel();
   toggleCollapseContent();
@@ -16,7 +16,7 @@ const toggleCollapseContent = () => {
   let $container = $('#settings-container')
     .find('.settings-content');
 
-  if(!isExpanded()) {
+  if(isExpanded()) {
     $container.show();
     return
   }
@@ -35,7 +35,7 @@ const toggleCollapseLabel = () => {
     'right': 0,
   }
 
-  if(isExpanded()) {
+  if(!isExpanded()) {
     css = {
       'transform': 'rotate(-90deg)',
       'margin-top': '5rem',
@@ -59,3 +59,9 @@ const toggleCollapseLabel = () => {
 const isExpanded = () => {
   return $('#settings-container').hasClass('settings-expanded');
 }
+
+$(function(){
+  setTimeout(() => {
+    $('.settings-label').trigger('click');
+  }, 50);
+});

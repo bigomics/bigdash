@@ -2,52 +2,10 @@ import 'jquery';
 
 export const handleSidebar = () => {
   // Collapse click
-  $('[data-toggle=sidebar-collapse]').on('click', (e) => {
-    sidebarCollapse(e.currentTarget);
+  $('.sidebar-label').on('click', (e) => {
+    sidebarCollapse();
   });
 }
-
-const sidebarCollapse = (el) => {
-  $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-  toggleCollapseButton(el);
-  toggleCollapse();
-}
-
-const toggleCollapseButton = (el) => {
-  if(isExpanded()) {
-    $(el).html('<span>Collapse</span>');
-    return;
-  }
-
-  $(el).html('<i class="fa fa-expand"></i>');
-}
-
-const toggleCollapse = () => {
-  $('.show-expanded').toggleClass('d-none');
-  $('.hide-expanded').toggleClass('d-none');
-}
-
-const isExpanded = () => {
-  return $('#sidebar-container').hasClass('sidebar-expanded');
-}
-
-$(function() {
-  $('[data-bs-toggle]').on('click', (e) => {
-    $(e.currentTarget)
-      .find('.toggler')
-      .toggleClass('fa-chevron-down')
-      .toggleClass('fa-chevron-up')
-  });
-  
-  // on load toggle first tab
-  toggleFirstTab();
-
-  $('.tab-trigger').on('click', (e) => {
-    let target = $(e.currentTarget).data('target');
-    toggleTabs(target)
-  })
-});
-
 
 const toggleFirstTab = () => {
   let target = $('.tab-trigger.tab-sidebar')
@@ -79,3 +37,67 @@ const toggleTab = (tab, target) => {
   $(tab).hide();
   $(tab).trigger('hidden');
 }
+
+const sidebarCollapse = () => {
+  $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+  toggleCollapseLabel();
+  toggleCollapseContent();
+}
+
+const toggleCollapseContent = () => {
+  let $container = $('#sidebar-container')
+    .find('.sidebar-content');
+
+  if(isExpanded()) {
+    $container.show();
+    return
+  }
+
+  $container.hide();
+}
+
+const toggleCollapseLabel = () => {
+  let css = {
+    'transform': 'none',
+    'margin-top': 0,
+  };
+  let cssIcon = {
+    'position': 'relative',
+    'top': 0,
+    'right': 0,
+  }
+
+  if(!isExpanded()) {
+    css = {
+      'transform': 'rotate(-90deg)',
+      'margin-top': '3rem',
+    };
+    cssIcon = {
+      'position': 'absolute',
+      'top': 0,
+      'right': '1rem',
+    }
+  }
+
+  $('#sidebar-container')
+    .find('.sidebar-label')
+    .css(css);
+
+  $('#sidebar-container')
+    .find('.sidebar-icon')
+    .css(cssIcon);
+}
+
+const isExpanded = () => {
+  return $('#sidebar-container').hasClass('sidebar-expanded');
+}
+
+$(function() {
+  // on load toggle first tab
+  toggleFirstTab();
+
+  $('.tab-trigger').on('click', (e) => {
+    let target = $(e.currentTarget).data('target');
+    toggleTabs(target)
+  });
+});

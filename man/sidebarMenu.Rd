@@ -4,12 +4,10 @@
 \alias{sidebarMenu}
 \title{Sidebar Menu}
 \usage{
-sidebarMenu(text, icon, ...)
+sidebarMenu(text, ...)
 }
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
-
-\item{icon}{Icon to display when the sidebar is collapsed.}
 
 \item{...}{Children, \code{\link[=sidebarMenuElement]{sidebarMenuElement()}}.}
 }
