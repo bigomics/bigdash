@@ -6,7 +6,7 @@ navbar <- function(
     stop("Missing `title`")
 
   tags$nav(
-    class = "navbar navbar-light bg-light",
+    class = "navbar navbar-light bg-white",
     div(
       class = "container-fluid",
       tags$span(

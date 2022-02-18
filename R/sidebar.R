@@ -2,7 +2,7 @@
 #' 
 #' Sidebar content to pass to [bigPage()].
 #' 
-#' @param ... Contnent of the sidebar.
+#' @param ... Content of the sidebar.
 #' 
 #' @export 
 sidebar <- function(
@@ -10,7 +10,12 @@ sidebar <- function(
 ) {
   div(
     class = "sidebar m-4",
-    ...
+    ...,
+    tags$a(
+      `data-toggle` = "sidebar-collapse",
+      class = "btn btn-sm btn-default",
+      span("Collapse")
+    )
   )
 }
 

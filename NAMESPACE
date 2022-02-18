@@ -3,6 +3,7 @@
 export(bigPage)
 export(bigTabItem)
 export(bigTabs)
+export(settings)
 export(sidebar)
 export(sidebarMenu)
 export(sidebarMenuElement)

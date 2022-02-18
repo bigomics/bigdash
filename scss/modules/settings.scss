@@ -1,0 +1,13 @@
+#settings-container {
+  min-height: 100vh;   
+  padding: 0;
+  border-right: 1px solid grey;
+}
+
+.settings-expanded {
+  width: 230px;
+}
+
+.settings-collapsed {
+  width: 60px;
+}

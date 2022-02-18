@@ -11,7 +11,7 @@ bigTabItem(name, ...)
 This is to be reference in the \code{target} argument
 of the \code{\link[=sidebarMenuElement]{sidebarMenuElement()}}.}
 
-\item{...}{Content of the tab}
+\item{...}{Content of the tab.}
 }
 \description{
 Create a tab.

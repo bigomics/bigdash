@@ -7,6 +7,7 @@
 bigPage(
   ...,
   sidebar = htmltools::tagList(),
+  settings = htmltools::tagList(),
   title = "BigOmics",
   navbar = htmltools::tagList(),
   lang = NULL
@@ -16,6 +17,8 @@ bigPage(
 \item{...}{Content of the application.}
 
 \item{sidebar}{Sidebar content as returned by \code{sidebar}.}
+
+\item{settings}{Settings drawer.}
 
 \item{title}{Title of the application.}
 

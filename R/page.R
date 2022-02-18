@@ -5,6 +5,7 @@
 #' @param ... Content of the application.
 #' @param sidebar Sidebar content as returned by `sidebar`.
 #' @param navbar Navbar.
+#' @param settings Settings drawer.
 #' @param title Title of the application.
 #' @param lang Language for meta tag.
 #' 
@@ -15,18 +16,11 @@
 bigPage <- function(
   ...,
   sidebar = htmltools::tagList(),
+  settings = htmltools::tagList(),
   title = "BigOmics",
   navbar = htmltools::tagList(),
   lang = NULL
 ) {
-  sidebar <- tagAppendChild(
-    sidebar,
-    tags$a(
-      `data-toggle` = "sidebar-collapse",
-      class = "btn btn-sm btn-default",
-      span("Collapse")
-    )
-  )
   bootstrapPage(
     title = title,
     lang = lang,
@@ -40,6 +34,11 @@ bigPage <- function(
         id = "sidebar-container",
         class = "sidebar-expanded d-none d-md-block",
         sidebar
+      ),
+      div(
+        id = "settings-container",
+        class = "sidebar-expanded d-none d-md-block",
+        settings
       ),
       div(
         class = "col p-4",

@@ -7,7 +7,7 @@
 sidebar(...)
 }
 \arguments{
-\item{...}{Contnent of the sidebar.}
+\item{...}{Content of the sidebar.}
 }
 \description{
 Sidebar content to pass to \code{\link[=bigPage]{bigPage()}}.
