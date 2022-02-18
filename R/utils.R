@@ -15,3 +15,10 @@ make_id <- function(){
 hr_ <- function() {
   htmltools::tags$hr(class = "mt-1 mp-1")
 }
+
+#' @keywords internal
+pkg_file <- function(
+  path
+) {
+  system.file(path,  package = "bigui")
+}

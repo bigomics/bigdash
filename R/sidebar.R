@@ -75,7 +75,7 @@ sidebarMenu <- function(
         ),
         icon(
           "chevron-down",
-          class = "sidebar-menu-icon float-right mt-1"
+          class = "sidebar-menu-icon float-right mt-1 text-mid-grey"
         )
       )
     ),

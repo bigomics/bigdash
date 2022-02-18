@@ -8,9 +8,13 @@
 #' @param settings Settings drawer.
 #' @param title Title of the application.
 #' @param lang Language for meta tag.
+#' @param theme Theme, passed to `theme`, defaults to
+#' [big_theme()] which returns an object of class
+#' `bs_theme`. Can be changed but must be a n object
+#' of the same class as returned by [bslib::bs_theme()]
+#' for __Bootstrap 5.__
 #' 
 #' @import shiny
-#' @importFrom bslib bs_theme
 #' 
 #' @export 
 bigPage <- function(
@@ -19,12 +23,13 @@ bigPage <- function(
   settings = htmltools::tagList(),
   title = "BigOmics",
   navbar = htmltools::tagList(),
-  lang = NULL
+  lang = NULL,
+  theme = big_theme()
 ) {
   bootstrapPage(
     title = title,
     lang = lang,
-    theme = bs_theme(version = 5L),
+    theme = theme,
     dependencies(),
     navbar,
     div(
@@ -41,7 +46,7 @@ bigPage <- function(
         settings
       ),
       div(
-        class = "col p-4",
+        class = "col p-0",
         ...
       )
     )

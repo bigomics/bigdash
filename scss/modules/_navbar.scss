@@ -1,0 +1,19 @@
+.navbar {
+  border-bottom: 1px solid $mid-grey;
+}
+
+[data-toggle="dropdown"]:after {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f067";
+}
+
+.show [data-toggle="dropdown"]:after {
+  content: "\f068";
+}
+.dropdown-toggle {
+  display: flex;
+}
+.dropdown-toggle:after {
+  border: none;
+}

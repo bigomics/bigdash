@@ -17,11 +17,11 @@ navbar <- function(
     stop("Missing `title`")
 
   tags$nav(
-    class = "navbar navbar-light bg-white mb-0",
+    class = "navbar navbar-light bg-white mb-0 pb-0",
     div(
       class = "container-fluid",
       tags$span(
-        class = "navbar-brand",
+        class = "navbar-brand mt-0 pt-0",
         title
       ),
       tags$button(
@@ -98,7 +98,7 @@ navbarDropdown <- function(
   tags$li(
     class = "nav-item dropdown",
     tags$a(
-      class = "nav-link dropdown-toggle",
+      class = "nav-link dropdown-toggle text-mid-blue fw-bold",
       id = id, 
       role = "button",
       `data-bs-toggle` = "dropdown",

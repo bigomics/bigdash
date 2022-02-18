@@ -10,7 +10,8 @@ bigPage(
   settings = htmltools::tagList(),
   title = "BigOmics",
   navbar = htmltools::tagList(),
-  lang = NULL
+  lang = NULL,
+  theme = big_theme()
 )
 }
 \arguments{
@@ -25,6 +26,12 @@ bigPage(
 \item{navbar}{Navbar.}
 
 \item{lang}{Language for meta tag.}
+
+\item{theme}{Theme, passed to \code{theme}, defaults to
+\code{\link[=big_theme]{big_theme()}} which returns an object of class
+\code{bs_theme}. Can be changed but must be a n object
+of the same class as returned by \code{\link[bslib:bs_theme]{bslib::bs_theme()}}
+for \strong{Bootstrap 5.}}
 }
 \description{
 Main application page.
