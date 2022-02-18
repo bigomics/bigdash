@@ -50,7 +50,7 @@ $(function() {
 
 
 const toggleFirstTab = () => {
-  let target = $('.tab-trigger')
+  let target = $('.tab-trigger.tab-sidebar')
     .first()
     .data('target');
 

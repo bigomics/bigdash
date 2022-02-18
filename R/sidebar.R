@@ -102,12 +102,12 @@ sidebarMenuElement <- function(
     p(
       class = "w-100 mb-2",
       a(
-        class = "hide-expanded text-dark d-none tag-trigger",
+        class = "hide-expanded text-dark d-none tag-trigger tab-sidebar",
         `data-target` = target,
         icon
       ),
       a(
-        class = "show-expanded text-decoration-none text-dark tab-trigger",
+        class = "show-expanded text-decoration-none text-dark tab-trigger tab-sidebar",
         `data-target` = target,
         text
       ),

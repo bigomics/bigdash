@@ -1,3 +1,14 @@
+#' Navbar
+#' 
+#' Main navbar to pass to [bigPage()] `navbar` argument.
+#' 
+#' @param title Brand of the navbar.
+#' @param ... Content of the navbar, generally `navbar*`
+#' functions.
+#' 
+#' @importFrom htmltools tags div
+#' 
+#' @export 
 navbar <- function(
   title,
   ...
@@ -17,8 +28,8 @@ navbar <- function(
         class = "navbar-toggler",
         type = "button",
         `data-bs-toggle` = "collapse",
-        `data-bs-target` = "#navbarSupportedContent",
-        `aria-controls` = "navbarSupportedContent",
+        `data-bs-target` = "#navbarContent",
+        `aria-controls` = "navbarContent",
         `aria-expanded` = "false",
         `aria-label` = "Toggle navigation",
         span(
@@ -27,9 +38,9 @@ navbar <- function(
       ),
       div(
         class = "collapse navbar-collapse",
-        id = "navbarSupportedContent",
+        id = "navbarContent",
         tags$ul(
-          class = "navbar-nav me-auto mb-2 mb-lg-0",
+          class = "navbar-nav ms-auto mb-2 mb-lg-0",
           ...
         )
       )
@@ -37,16 +48,123 @@ navbar <- function(
   )
 }
 
-navbarItem <- function(
+#' Navbar Tab
+#' 
+#' A navbar item to use in [navbar()] which
+#' toggles a [bigTabItem()].
+#' 
+#' @param target Target [bigTabItem()] this should
+#' show.
+#' @param ... Content of the navbar button.
+#' 
+#' @importFrom htmltools tags
+#' 
+#' @export 
+navbarTab <- function(
   target,
   ...
 ) {
   tags$li(
     class = "nav-item",
     tags$a(
-      class = "nav-link",
+      class = "nav-link tab-trigger",
       `data-target` = target,
       ...
+    )
+  )
+}
+
+#' Navbar Dropdown
+#' 
+#' A navbar dropdown menu.
+#' 
+#' @param title Title of the dropdown, displayed on
+#' the navbar.
+#' @param ... Content of the dropdown, see 
+#' [navbarDropdownTab()] and [navbarDropdownItem()].
+#' 
+#' @importFrom htmltools tags
+#' 
+#' @export 
+navbarDropdown <- function(
+  title,
+  ...
+) {
+  if(missing(title))
+    stop("Missing `title`")
+
+  id <- make_id()
+
+  tags$li(
+    class = "nav-item dropdown",
+    tags$a(
+      class = "nav-link dropdown-toggle",
+      id = id, 
+      role = "button",
+      `data-bs-toggle` = "dropdown",
+      `aria-expanded` = "false",
+      title
+    ),
+    tags$ul(
+      class = "dropdown-menu",
+      `aria-labelledby` = id,
+      ...
+    )
+  )
+}
+
+#' Dropdown Item
+#' 
+#' A dropdown item to use in [navbarDropdown()]:
+#' 
+#' @param title Title of the button.
+#' @param link Link the item opens.
+#' @param ... Attributes passed to `<a>` tag.
+#' 
+#' @importFrom htmltools tags
+#' 
+#' @export 
+navbarDropdownItem <- function(
+  title,
+  ...,
+  link = "#"
+) {
+  tags$li(
+    tags$a(
+      class = "dropdown-item",
+      href = link,
+      title,
+      ...
+    )
+  )
+}
+
+#' Navbar Dropdown Tab
+#' 
+#' A navbar dropdown item that opens a tab,
+#' used in [navbarDropdown()].
+#' 
+#' @param title Title of the button.
+#' @param target Target tab this should display.
+#' 
+#' @importFrom htmltools tags
+#' 
+#' @export 
+navbarDropdownTab <- function(
+  title,
+  target
+) {
+  if(missing(title))
+    stop("Missing `title`")
+
+  if(missing(target))
+    stop("Missing `target`")
+
+  tags$li(
+    tags$a(
+      class = "dropdown-item tab-trigger",
+      `data-target` = target,
+      title
     )
   )
 }
