@@ -17,7 +17,7 @@ navbar <- function(
     stop("Missing `title`")
 
   tags$nav(
-    class = "navbar navbar-light bg-white",
+    class = "navbar navbar-light bg-white mb-0",
     div(
       class = "container-fluid",
       tags$span(
@@ -67,7 +67,7 @@ navbarTab <- function(
   tags$li(
     class = "nav-item",
     tags$a(
-      class = "nav-link tab-trigger",
+      class = "nav-link cursor-pointer tab-trigger",
       `data-target` = target,
       ...
     )
@@ -162,7 +162,7 @@ navbarDropdownTab <- function(
 
   tags$li(
     tags$a(
-      class = "dropdown-item tab-trigger",
+      class = "dropdown-item cursor-pointer tab-trigger",
       `data-target` = target,
       title
     )

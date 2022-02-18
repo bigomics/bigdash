@@ -16,7 +16,7 @@ settings <- function(
     h4(
       title,
       icon("chevron-down", class = "settings-icon"),
-      class = "settings-label"
+      class = "settings-label cursor-pointer mb-3"
     ),
     div(
       ...,

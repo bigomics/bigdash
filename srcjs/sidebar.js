@@ -100,4 +100,11 @@ $(function() {
     let target = $(e.currentTarget).data('target');
     toggleTabs(target)
   });
+
+  $('.sidebar-menu').on('click', (e) => {
+    console.log(e.currentTarget);
+    $(e.currentTarget)
+      .find('.sidebar-menu-icon')
+      .toggleClass('fa-chevron-down fa-chevron-up');
+  })
 });
