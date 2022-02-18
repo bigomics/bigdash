@@ -1,5 +1,7 @@
 import 'jquery';
 
+let sidebarHelp = {};
+
 export const handleSidebar = () => {
   // Collapse click
   $('.sidebar-label').on('click', (e) => {
@@ -16,6 +18,12 @@ const toggleFirstTab = () => {
 }
 
 const toggleTabs = (target) => {
+  // reset be we set in case some help is missing
+  $('#sidebar-help-title')
+    .html('');
+  $('#sidebar-help-content')
+    .html('');
+      
   $('#big-tabs')
     .find('.big-tab')
     .each((index, tab) => {
@@ -30,6 +38,15 @@ const toggleTab = (tab, target) => {
     $(tab).removeClass('d-none');
     $(tab).show();
     $(tab).trigger('shown');
+
+    // truthy in case it is missing
+    if(sidebarHelp[name]) {
+      $('#sidebar-help-title')
+        .html(sidebarHelp[name].title);
+      $('#sidebar-help-content')
+        .html(sidebarHelp[name].text);
+    }
+
     return;
   }
 
@@ -40,6 +57,7 @@ const toggleTab = (tab, target) => {
 
 const sidebarCollapse = () => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
+  $('#sidebar-help-container').toggle();
   toggleCollapseLabel();
   toggleCollapseContent();
 }
@@ -93,6 +111,9 @@ const isExpanded = () => {
 }
 
 $(function() {
+  // data to render in the sidebar help
+  sidebarHelp = JSON.parse($("#sidebar-help").text());
+
   // on load toggle first tab
   toggleFirstTab();
 
@@ -102,7 +123,6 @@ $(function() {
   });
 
   $('.sidebar-menu').on('click', (e) => {
-    console.log(e.currentTarget);
     $(e.currentTarget)
       .find('.sidebar-menu-icon')
       .toggleClass('fa-chevron-down fa-chevron-up');

@@ -9,6 +9,12 @@
   border-right: 1px solid $mid-grey;
 }
 
+#sidebar-help-container {
+  width: 230px;
+  position: absolute;
+  bottom: 1rem;
+}
+
 .sidebar-expanded {
   width: 230px;
 }

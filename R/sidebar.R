@@ -18,8 +18,8 @@ sidebar <- function(
       class = "sidebar-label cursor-pointer mb-3"
     ),
     div(
-      ...,
-      class = "sidebar-content"
+      class = "sidebar-content",
+      ...
     )
   )
 }
