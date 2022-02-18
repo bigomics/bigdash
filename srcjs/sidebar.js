@@ -19,10 +19,7 @@ const toggleFirstTab = () => {
 
 const toggleTabs = (target) => {
   // reset be we set in case some help is missing
-  $('#sidebar-help-title')
-    .html('');
-  $('#sidebar-help-content')
-    .html('');
+  $('#sidebar-help-container').hide();
       
   $('#big-tabs')
     .find('.big-tab')
@@ -45,6 +42,9 @@ const toggleTab = (tab, target) => {
         .html(sidebarHelp[name].title);
       $('#sidebar-help-content')
         .html(sidebarHelp[name].text);
+      $('#sidebar-help-container').show();
+    } else {
+      $('#sidebar-help-container').hide();
     }
 
     return;
