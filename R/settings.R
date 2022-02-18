@@ -4,6 +4,8 @@
 #' 
 #' @param ... Content of the sidebar.
 #' 
+#' @importFrom htmltools div h4 div
+#' 
 #' @export 
 settings <- function(
   ...
@@ -17,12 +19,7 @@ settings <- function(
     ),
     div(
       ...,
-      class = "settings-content",
-      tags$a(
-        `data-toggle` = "settings-collapse",
-        class = "btn btn-sm btn-default",
-        span("Collapse")
-      )
+      class = "settings-content"
     )
   )
 }

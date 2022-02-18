@@ -1,9 +1,6 @@
 import 'shiny';
 
 export const handleSettings = () => {
-  $('[data-toggle=settings-collapse]').on('click', (e) => {
-    settingsCollapse(e.currentTarget);
-  });
   $('.settings-label').on('click', (e) => {
     settingsCollapse(e.currentTarget);
   });
