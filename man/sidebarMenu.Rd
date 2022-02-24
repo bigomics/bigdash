@@ -9,7 +9,7 @@ sidebarMenu(text, ...)
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
 
-\item{...}{Children, \code{\link[=sidebarMenuElement]{sidebarMenuElement()}}.}
+\item{...}{Children, \code{\link[=sidebarMenuItem]{sidebarMenuItem()}}.}
 }
 \description{
 Menu for the side bar to pass to \code{\link[=sidebar]{sidebar()}}.

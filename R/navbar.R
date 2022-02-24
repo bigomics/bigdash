@@ -74,6 +74,30 @@ navbarTab <- function(
   )
 }
 
+#' Navbar Item
+#' 
+#' A navbar item to use in [navbar()].
+#' 
+#' @param .class Additional class to pass to `nav-item`
+#' @param ... Content of the navbar button.
+#' 
+#' @importFrom htmltools tags
+#' 
+#' @export 
+navbarItem <- function(
+  ...,
+  .class = ""
+) {
+  class <- sprintf("nav-item %s", .class)
+  tags$li(
+    class = class,
+    tags$a(
+      class = "nav-link",
+      ...
+    )
+  )
+}
+
 #' Navbar Dropdown
 #' 
 #' A navbar dropdown menu.

@@ -9,7 +9,7 @@ bigTabItem(name, ...)
 \arguments{
 \item{name}{Name of tab.
 This is to be reference in the \code{target} argument
-of the \code{\link[=sidebarMenuElement]{sidebarMenuElement()}}.}
+of the \code{\link[=sidebarMenuItem]{sidebarMenuItem()}}.}
 
 \item{...}{Content of the tab.}
 }

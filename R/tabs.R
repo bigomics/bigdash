@@ -20,7 +20,7 @@ bigTabs <- function(
 #' 
 #' @param name Name of tab.
 #' This is to be reference in the `target` argument
-#' of the [sidebarMenuElement()].
+#' of the [sidebarMenuItem()].
 #' @param ... Content of the tab.
 #' 
 #' @export 

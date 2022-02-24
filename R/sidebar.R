@@ -50,7 +50,7 @@ sidebarItem <- function(
 #' Menu for the side bar to pass to [sidebar()].
 #' 
 #' @param text Text to display when the sidebar is expanded.
-#' @param ... Children, [sidebarMenuElement()].
+#' @param ... Children, [sidebarMenuItem()].
 #' 
 #' @export 
 sidebarMenu <- function(
@@ -97,7 +97,7 @@ sidebarMenu <- function(
 #' make visible.
 #' 
 #' @export 
-sidebarMenuElement <- function(
+sidebarMenuItem <- function(
   text,
   target
 ) {

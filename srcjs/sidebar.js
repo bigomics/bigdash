@@ -58,8 +58,19 @@ const toggleTab = (tab, target) => {
 const sidebarCollapse = () => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
   $('#sidebar-help-container').toggle();
+  collapseHelp();
   toggleCollapseLabel();
   toggleCollapseContent();
+}
+
+const collapseHelp = () => {
+  let expanded = $('#sidebar-container').hasClass('sidebar-expanded')
+  if(expanded){
+    $('#sidebar-help-container').show();
+    return;
+  }
+    
+  $('#sidebar-help-container').hide();
 }
 
 const toggleCollapseContent = () => {
