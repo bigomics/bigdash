@@ -1,0 +1,17 @@
+html {
+  .nav-tabs {
+
+    border: 0;
+
+    .nav-link {
+      border: 0;
+      color: $mid-grey;
+
+      &.active {
+        border-bottom: 1px solid black;
+        color: $black;
+      }
+    }
+
+  }
+}

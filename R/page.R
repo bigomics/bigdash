@@ -33,7 +33,7 @@ bigPage <- function(
     dependencies(),
     navbar,
     div(
-      class = "row",
+      class = "d-flex",
       id = "app",
       div(
         id = "sidebar-container",
@@ -57,7 +57,7 @@ bigPage <- function(
         settings
       ),
       div(
-        class = "col p-0",
+        class = "flex-grow-1 p-0",
         ...
       )
     )
