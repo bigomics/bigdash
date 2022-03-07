@@ -6,11 +6,13 @@
 \alias{draggableItem}
 \title{Masonry}
 \usage{
-draggable(...)
+draggable(inputId, ...)
 
-draggableItem(..., width = NULL, class = "")
+draggableItem(inputId, ..., width = NULL, class = "")
 }
 \arguments{
+\item{inputId}{Id of input.}
+
 \item{...}{Content, HTML tags.}
 
 \item{width}{Used to defined column width, e.g.: 6 results in col-6}

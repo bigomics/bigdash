@@ -1,3 +1,4 @@
+import 'shiny';
 import {Swappable, Plugins} from '@shopify/draggable';
 
 export const handleDrag = () => {
@@ -8,7 +9,7 @@ export const handleDrag = () => {
     return;
   }
 
-  new Swappable(containers, {
+  let swap = new Swappable(containers, {
     draggable: '.draggable-item',
     mirror: {
       appendTo: containerSelector,
@@ -16,4 +17,44 @@ export const handleDrag = () => {
     },
     plugins: [Plugins.ResizeMirror],
   });
+
+  swap.on('swappable:stop', (e) => {
+    setTimeout(() => {
+      $(e.data.dragEvent.data.sourceContainer).trigger('change');
+    }, 50);
+  });
+
+  var dragInput = new Shiny.InputBinding();
+
+  $.extend(dragInput, {
+    find: function(scope) {
+      return $(scope).find('.draggable-container');
+    },
+    getValue: function(el) {
+      let data = [];
+      $(el)
+        .find('.draggable-item')
+        .each((index, item) => {
+          data.push($(item).attr('id'));
+        });
+
+      return data;
+    },
+    setValue: function(el, value) {
+      // TODO
+    },
+    receiveMessage: function(el, value){
+      this.setValue(el, value);
+    },
+    subscribe: function (el, callback) {
+      $(el).on('change.draggable-container', () => {
+        callback(true);
+      })
+    },
+    unsubscribe: function(el) {
+      $(el).off('.draggable-container');
+    },
+  });
+
+  Shiny.inputBindings.register(dragInput, 'bigui.drag'); 
 }
