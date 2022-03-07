@@ -35,27 +35,8 @@ bigPage <- function(
     div(
       class = "d-flex",
       id = "app",
-      div(
-        id = "sidebar-container",
-        class = "sidebar-expanded d-none d-md-block",
-        sidebar,
-        div(
-          id = "sidebar-help-container",
-          class = "p-2",
-          h4(
-            id = "sidebar-help-title"
-          ),
-          hr_(),
-          div(
-            id = "sidebar-help-content"
-          )
-        )
-      ),
-      div(
-        id = "settings-container",
-        class = "settings-expanded d-none d-md-block",
-        settings
-      ),
+      sidebar,
+      settings,
       div(
         class = "flex-grow-1 p-0",
         ...

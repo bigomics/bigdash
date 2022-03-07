@@ -12,15 +12,19 @@ settings <- function(
   ...
 ) {
   div(
-    class = "settings m-4",
-    h4(
-      title,
-      icon("chevron-down", class = "settings-icon"),
-      class = "settings-label cursor-pointer mb-3"
-    ),
+    id = "settings-container",
+    class = "settings-expanded d-none d-md-block",
     div(
-      ...,
-      class = "settings-content"
+      class = "settings m-4",
+      h4(
+        title,
+        icon("chevron-down", class = "settings-icon"),
+        class = "settings-label cursor-pointer mb-3"
+      ),
+      div(
+        ...,
+        class = "settings-content"
+      )
     )
   )
 }

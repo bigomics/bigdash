@@ -11,19 +11,42 @@ sidebar <- function(
   ...
 ) {
   div(
-    class = "sidebar m-4",
-    h4(
-      title,
-      icon("chevron-down", class = "sidebar-icon"),
-      class = "sidebar-label cursor-pointer mb-3"
+    id = "sidebar-container",
+    class = "sidebar-expanded d-none d-md-block",
+    div(
+      class = "sidebar m-4",
+      h4(
+        title,
+        icon("chevron-down", class = "sidebar-icon"),
+        class = "sidebar-label cursor-pointer mb-3"
+      ),
+      div(
+        class = "sidebar-content",
+        ...
+      )
     ),
     div(
-      class = "sidebar-content",
-      ...
+      id = "sidebar-help-container",
+      class = "p-2",
+      h4(
+        id = "sidebar-help-title"
+      ),
+      hr_(),
+      div(
+        id = "sidebar-help-content"
+      )
     )
   )
 }
 
+#' Sidebar Item
+#' 
+#' A sidebar item to place as child of [sidebar()].
+#' 
+#' @param title Title of the sidebar.
+#' @param target Target [bigTabItem()] this should toggle.
+#' 
+#' @export 
 sidebarItem <- function(
   title,
   target

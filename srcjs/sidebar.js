@@ -123,12 +123,8 @@ const isExpanded = () => {
 
 $(function() {
   // data to render in the sidebar help
-  try {
+  if($("#sidebar-help").length > 0)
     sidebarHelp = JSON.parse($("#sidebar-help").text());
-  } catch (error) {
-    console.error(error);
-    sidebarHelp = {};
-  }
 
   // on load toggle first tab
   toggleFirstTab();
