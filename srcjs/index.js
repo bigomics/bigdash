@@ -1,10 +1,10 @@
 import 'shiny';
 import { handleSidebar } from './sidebar.js';
 import { handleSettings } from './settings.js';
-import { handleDrag } from './drag.js';
+import { handleSwap } from './swap.js';
 
 $(function(){
-  handleDrag();
+  handleSwap();
   handleSidebar();
   handleSettings();
 });

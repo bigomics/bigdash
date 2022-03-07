@@ -1,8 +1,8 @@
 import 'shiny';
 import {Swappable, Plugins} from '@shopify/draggable';
 
-export const handleDrag = () => {
-  const containerSelector = '.draggable-container';
+export const handleSwap = () => {
+  const containerSelector = '.swappable-container';
   const containers = document.querySelectorAll(containerSelector);
 
   if (containers.length === 0) {
@@ -10,7 +10,7 @@ export const handleDrag = () => {
   }
 
   let swap = new Swappable(containers, {
-    draggable: '.draggable-item',
+    draggable: '.swappable-item',
     mirror: {
       appendTo: containerSelector,
       constrainDimensions: true,
@@ -24,16 +24,16 @@ export const handleDrag = () => {
     }, 50);
   });
 
-  var dragInput = new Shiny.InputBinding();
+  var swapInput = new Shiny.InputBinding();
 
-  $.extend(dragInput, {
+  $.extend(swapInput, {
     find: function(scope) {
-      return $(scope).find('.draggable-container');
+      return $(scope).find('.swappable-container');
     },
     getValue: function(el) {
       let data = [];
       $(el)
-        .find('.draggable-item')
+        .find('.swappable-item')
         .each((index, item) => {
           data.push($(item).attr('id'));
         });
@@ -48,21 +48,21 @@ export const handleDrag = () => {
       for(let i = 0; i < value.length; i++) {
         $(el)
           .find(`#${value[i-1]}`)
-          .insertBefore(`#${value[i]}`)
+          .insertBefore(`#${value[i]}`);
       }
     },
     receiveMessage: function(el, value){
       this.setValue(el, value);
     },
     subscribe: function (el, callback) {
-      $(el).on('change.draggable-container', () => {
+      $(el).on('change.swappable-container', () => {
         callback(true);
       })
     },
     unsubscribe: function(el) {
-      $(el).off('.draggable-container');
+      $(el).off('.swappable-container');
     },
   });
 
-  Shiny.inputBindings.register(dragInput, 'bigui.drag'); 
+  Shiny.inputBindings.register(swapInput, 'bigui.swap'); 
 }

@@ -1,9 +1,9 @@
-#' Draggable
+#' Swappable
 #' 
-#' Create a draggable grid.
+#' Create swappable elements.
+#' `swappableItem`s within `swappable` can be swapper.
 #' 
 #' @param id,inputId Id of input.
-#' @param width Used to defined column width, e.g.: 6 results in col-6
 #' @param class Any additional class to pass to parent div.
 #' @param ... Content, HTML tags.
 #' @param order List of `inputId`s of `draggableItem` in desired
@@ -12,10 +12,10 @@
 #' 
 #' @importFrom jsonlite toJSON
 #' 
-#' @name masonry
+#' @name swappable
 #' 
 #' @export 
-draggable <- function(
+swappable <- function(
   inputId,
  ...
 ) {
@@ -24,38 +24,33 @@ draggable <- function(
 
   div(
     id = inputId,
-    class = "row draggable-container",
+    class = "swappable-container",
     ...
   )
 }
 
-#' @rdname masonry
+#' @rdname swappable
 #' @export 
-draggableItem <- function(
+swappableItem <- function(
   inputId,
   ...,
-  width = NULL,
   class = ""
 ) {
   if(missing(inputId))
     stop("Missing `inputId`")
 
-  .class <- sprintf("%s draggable-item", class)
-
-  .width <- "col"
-  if(!is.null(width))
-    .width <- sprintf("%s-%s", .width, width)
+  .class <- sprintf("%s swappable-item", class)
 
   div(
     id = inputId,
-    class = paste(.class, .width),
+    class = .class,
     ...
   )
 }
 
-#' @rdname masonry
+#' @rdname swappable
 #' @export 
-update_draggable <- function(
+update_swappable <- function(
   id,
   order,
   session = shiny::getDefaultReactiveDomain()
