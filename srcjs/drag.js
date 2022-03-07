@@ -41,7 +41,15 @@ export const handleDrag = () => {
       return data;
     },
     setValue: function(el, value) {
-      // TODO
+      // we need at least two items to sort
+      if(value.length < 2)
+        return;
+
+      for(let i = 0; i < value.length; i++) {
+        $(el)
+          .find(`#${value[i-1]}`)
+          .insertBefore(`#${value[i]}`)
+      }
     },
     receiveMessage: function(el, value){
       this.setValue(el, value);

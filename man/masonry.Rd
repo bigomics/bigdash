@@ -4,21 +4,29 @@
 \alias{masonry}
 \alias{draggable}
 \alias{draggableItem}
-\title{Masonry}
+\alias{update_draggable}
+\title{Draggable}
 \usage{
 draggable(inputId, ...)
 
 draggableItem(inputId, ..., width = NULL, class = "")
+
+update_draggable(id, order, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
-\item{inputId}{Id of input.}
-
 \item{...}{Content, HTML tags.}
 
 \item{width}{Used to defined column width, e.g.: 6 results in col-6}
 
 \item{class}{Any additional class to pass to parent div.}
+
+\item{id, inputId}{Id of input.}
+
+\item{order}{List of \code{inputId}s of \code{draggableItem} in desired
+order.}
+
+\item{session}{A value reactive domain.}
 }
 \description{
-Create a masonry grid.
+Create a draggable grid.
 }

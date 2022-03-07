@@ -1,11 +1,14 @@
-#' Masonry
+#' Draggable
 #' 
-#' Create a masonry grid.
+#' Create a draggable grid.
 #' 
-#' @param inputId Id of input.
+#' @param id,inputId Id of input.
 #' @param width Used to defined column width, e.g.: 6 results in col-6
 #' @param class Any additional class to pass to parent div.
 #' @param ... Content, HTML tags.
+#' @param order List of `inputId`s of `draggableItem` in desired
+#' order.
+#' @param session A value reactive domain.
 #' 
 #' @importFrom jsonlite toJSON
 #' 
@@ -48,4 +51,20 @@ draggableItem <- function(
     class = paste(.class, .width),
     ...
   )
+}
+
+#' @rdname masonry
+#' @export 
+update_draggable <- function(
+  id,
+  order,
+  session = shiny::getDefaultReactiveDomain()
+) {
+  if(missing(id))
+    stop("Missing `id`")
+
+  if(missing(order))
+    stop("Missing `order`")
+
+  session$sendInputMessage(id, as.list(order))
 }
