@@ -64,5 +64,5 @@ export const handleSwap = () => {
     },
   });
 
-  Shiny.inputBindings.register(swapInput, 'bigui.swap'); 
+  Shiny.inputBindings.register(swapInput, 'bigdash.swap'); 
 }

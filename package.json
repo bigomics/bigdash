@@ -1,5 +1,5 @@
 {
-  "name": "bigui",
+  "name": "bigdash",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devOpifex/bigui.git"
+    "url": "git+https://github.com/bigomics/bigdash.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/devOpifex/bigui/issues"
+    "url": "https://github.com/bigomics/bigdash/issues"
   },
-  "homepage": "https://github.com/devOpifex/bigui#readme",
+  "homepage": "https://github.com/bigomics/bigdash#readme",
   "devDependencies": {
     "webpack": "^5.68.0",
     "webpack-cli": "^4.9.2",

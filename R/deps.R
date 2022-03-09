@@ -5,8 +5,8 @@
 #' @keywords internal
 dependencies <- function() {
   htmlDependency(
-    "bigui",
-    version = utils::packageVersion("bigui"),
+    "bigdash",
+    version = utils::packageVersion("bigdash"),
     src = "assets",
     script = c(
       src = "index.js"
@@ -14,6 +14,6 @@ dependencies <- function() {
     stylesheet = c(
       src = "style.min.css"
     ),
-    package = "bigui"
+    package = "bigdash"
   )
 }

@@ -20,5 +20,5 @@ hr_ <- function() {
 pkg_file <- function(
   path
 ) {
-  system.file(path,  package = "bigui")
+  system.file(path,  package = "bigdash")
 }
