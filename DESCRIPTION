@@ -1,18 +1,18 @@
-Package: bigui
-Title: What the Package Does (One Line, Title Case)
+Package: bigdash
+Title: Dashboard Layout and Theme for 'BigOmics'
 Version: 0.0.0.9000
 Authors@R: 
     c(
         person("John", "Coene", , "john@opifex.org", role = c("aut", "cre")),
-        person("Carson", "Sievert", role = "ctb", email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844"))
+        person(family = "BigOmics", role = c("fnd", "cph"))
     )
-Description: What the package does (one paragraph).
+Description: 'Shiny' dashboard layout and theme.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Imports: 
     bslib,
-    shiny,
+    shiny (>= 1.7.0),
     jsonlite,
     htmltools
