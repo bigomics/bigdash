@@ -12,9 +12,10 @@ sidebar <- function(
 ) {
   div(
     id = "sidebar-container",
-    class = "sidebar-expanded d-none d-md-block",
+    class = "sidebar-expanded flex-shrink-1 d-md-block",
     div(
-      class = "sidebar m-4",
+      class = "sidebar m-4 position-fixed",
+      id = "sidebar-wrapper",
       h4(
         title,
         icon("chevron-down", class = "sidebar-icon"),
@@ -27,11 +28,11 @@ sidebar <- function(
     ),
     div(
       id = "sidebar-help-container",
-      class = "p-2",
+      class = "p-2 position-fixed",
       h4(
         id = "sidebar-help-title"
       ),
-      hr_(),
+      hr_(style = "max-width:10rem;"),
       div(
         id = "sidebar-help-content"
       )

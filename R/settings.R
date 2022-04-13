@@ -13,7 +13,7 @@ settings <- function(
 ) {
   div(
     id = "settings-container",
-    class = "settings-expanded d-none d-md-block",
+    class = "settings-expanded d-none flex-shrink-1 d-md-block",
     div(
       class = "settings m-4",
       h4(
@@ -23,8 +23,50 @@ settings <- function(
       ),
       div(
         ...,
-        class = "settings-content"
+        id = "settings-content"
       )
+    )
+  )
+}
+
+#' Tab Settings
+#' 
+#' Tab settings, to place within [bigTabItem()].
+#' 
+#' @param ... Content.
+#' 
+#' @importFrom jsonlite toJSON
+#' @importFrom htmltools span
+#' 
+#' @export 
+tabSettings <- function(
+  ...
+) {
+  items <- list(...) |> 
+    lapply(as.character) |> 
+    span(
+      class = "tab-settings d-none",
+      type = "application/json"
+    )
+}
+
+#' Tab Settings Item
+#' 
+#' Tab settings item to pass to [tabSettings()],
+#' these are generally inputs that will appear in the 
+#' settings siderbar.
+#' 
+#' @param element Content.
+#' 
+#' @export 
+tabSettingsItem <- function(
+  element
+) {
+  structure(
+    element,
+    class = c(
+      "tagSettingsItem",
+      class(element)
     )
   )
 }

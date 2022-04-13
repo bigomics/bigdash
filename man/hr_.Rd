@@ -4,7 +4,7 @@
 \alias{hr_}
 \title{Horizontal Rule}
 \usage{
-hr_()
+hr_(...)
 }
 \description{
 Horizontal rule with little margin.

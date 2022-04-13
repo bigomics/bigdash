@@ -12,8 +12,8 @@ make_id <- function(){
 #' Horizontal rule with little margin.
 #' 
 #' @keywords internal
-hr_ <- function() {
-  htmltools::tags$hr(class = "mt-1 mp-1")
+hr_ <- function(...) {
+  htmltools::tags$hr(class = "mt-1 mp-1", ...)
 }
 
 #' @keywords internal

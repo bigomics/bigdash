@@ -38,7 +38,7 @@ bigPage <- function(
       sidebar,
       settings,
       div(
-        class = "flex-grow-1 p-0",
+        class = "flex-grow-1 p-0 w-100",
         ...
       )
     )

@@ -31,28 +31,40 @@ const toggleTabs = (target) => {
 const toggleTab = (tab, target) => {
   let name = $(tab).data('name');
 
-  if(name == target) {
-    $(tab).removeClass('d-none');
-    $(tab).show();
-    $(tab).trigger('shown');
-
-    // truthy in case it is missing
-    if(sidebarHelp[name]) {
-      $('#sidebar-help-title')
-        .html(sidebarHelp[name].title);
-      $('#sidebar-help-content')
-        .html(sidebarHelp[name].text);
-      $('#sidebar-help-container').show();
-    } else {
-      $('#sidebar-help-container').hide();
-    }
-
-    return;
+  // we hide the tab content
+  // it's not the one being shown
+  if(name != target) {
+    $(tab).addClass('d-none');
+    $(tab).hide();
+    $(tab).trigger('hidden');
+    return ;
   }
 
-  $(tab).addClass('d-none');
-  $(tab).hide();
-  $(tab).trigger('hidden');
+  // we show the tab content
+  $(tab).removeClass('d-none');
+  $(tab).show();
+  $(tab).trigger('shown');
+
+  // we show the associated help
+  // truthy in case it is missing
+  if(sidebarHelp[name]) {
+    $('#sidebar-help-title')
+      .html(sidebarHelp[name].title);
+    $('#sidebar-help-content')
+      .html(sidebarHelp[name].text);
+    $('#sidebar-help-container').show();
+  } else {
+    $('#sidebar-help-container').hide();
+  }
+
+  // we display the settings
+  $('#settings-content').html('');
+  let settings = $(tab)
+    .find('.tab-settings')
+    .first()
+    .text();
+
+  $('#settings-content').html(settings);
 }
 
 const sidebarCollapse = () => {
@@ -97,6 +109,7 @@ const toggleCollapseLabel = () => {
   }
 
   if(!isExpanded()) {
+    $('#sidebar-wrapper').removeClass('m-4');
     css = {
       'transform': 'rotate(-90deg)',
       'margin-top': '3.5rem',
@@ -104,8 +117,10 @@ const toggleCollapseLabel = () => {
     cssIcon = {
       'position': 'absolute',
       'top': 0,
-      'right': '1rem',
+      'right': '4rem',
     }
+  } else {
+    $('#sidebar-wrapper').addClass('m-4');
   }
 
   $('#sidebar-container')
