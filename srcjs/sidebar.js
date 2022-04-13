@@ -109,7 +109,7 @@ const toggleCollapseLabel = () => {
   }
 
   if(!isExpanded()) {
-    $('#sidebar-wrapper').removeClass('m-4');
+    $('#sidebar-wrapper').removeClass('p-2');
     css = {
       'transform': 'rotate(-90deg)',
       'margin-top': '3.5rem',
@@ -120,7 +120,7 @@ const toggleCollapseLabel = () => {
       'right': '4rem',
     }
   } else {
-    $('#sidebar-wrapper').addClass('m-4');
+    $('#sidebar-wrapper').addClass('p-2');
   }
 
   $('#sidebar-container')
