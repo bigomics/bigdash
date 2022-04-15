@@ -14,7 +14,7 @@ sidebar <- function(
     id = "sidebar-container",
     class = "sidebar-expanded flex-shrink-1 d-md-block",
     div(
-      class = "sidebar position-fixed p-2",
+      class = "sidebar m-4",
       id = "sidebar-wrapper",
       h4(
         title,

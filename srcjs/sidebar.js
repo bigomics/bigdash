@@ -70,7 +70,7 @@ const toggleTab = (tab, target) => {
 const sidebarCollapse = () => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
   $('#sidebar-help-container').toggle();
-  $('#sidebar-wrapper').toggleClass('p-2');
+  $('#sidebar-wrapper').toggleClass('m-4');
   collapseHelp();
   toggleCollapseLabel();
   toggleCollapseContent();

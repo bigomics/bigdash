@@ -30,9 +30,9 @@ const toggleCollapseLabel = () => {
     'margin-top': 0,
   };
   let cssIcon = {
-    'position': 'relative',
-    'top': 0,
-    'right': 0,
+    'position': 'absolute',
+    'top': '1.7rem',
+    'right': '1rem',
   }
 
   $('#settings-content').toggle();

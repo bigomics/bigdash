@@ -13,7 +13,7 @@ settings <- function(
 ) {
   div(
     id = "settings-container",
-    class = "settings-expanded d-none flex-shrink-1 d-md-block",
+    class = "settings-expanded position-relative d-none flex-shrink-1 d-md-block",
     div(
       class = "settings m-4",
       h4(
