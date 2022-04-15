@@ -70,6 +70,7 @@ const toggleTab = (tab, target) => {
 const sidebarCollapse = () => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
   $('#sidebar-help-container').toggle();
+  $('#sidebar-wrapper').toggleClass('p-2');
   collapseHelp();
   toggleCollapseLabel();
   toggleCollapseContent();
@@ -109,7 +110,6 @@ const toggleCollapseLabel = () => {
   }
 
   if(!isExpanded()) {
-    $('#sidebar-wrapper').removeClass('p-2');
     css = {
       'transform': 'rotate(-90deg)',
       'margin-top': '3.5rem',
@@ -119,8 +119,6 @@ const toggleCollapseLabel = () => {
       'top': 0,
       'right': '4rem',
     }
-  } else {
-    $('#sidebar-wrapper').addClass('p-2');
   }
 
   $('#sidebar-container')
