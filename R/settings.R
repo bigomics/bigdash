@@ -15,7 +15,7 @@ settings <- function(
     id = "settings-container",
     class = "settings-expanded position-relative d-none flex-shrink-1 d-md-block",
     div(
-      class = "settings m-4",
+      class = "settings p-2",
       h4(
         title,
         icon("chevron-down", class = "settings-icon"),

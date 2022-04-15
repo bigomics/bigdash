@@ -16,9 +16,13 @@
 }
 
 .sidebar-expanded {
-  width: 230px;
+  min-width: 10rem;
+}
+
+.sidebar-expanded > .sidebar{
+  min-width: 9rem;
 }
 
 .sidebar-collapsed {
-  width: 60px;
+  min-width: 4rem;
 }

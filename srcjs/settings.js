@@ -8,6 +8,7 @@ export const handleSettings = () => {
 
 const settingsCollapse = () => {
   $('#settings-container').toggleClass('settings-expanded settings-collapsed');
+  $('.settings').toggleClass('p-2');
   toggleCollapseLabel();
   toggleCollapseContent();
 }
@@ -31,8 +32,8 @@ const toggleCollapseLabel = () => {
   };
   let cssIcon = {
     'position': 'absolute',
-    'top': '1.7rem',
-    'right': '1rem',
+    'top': '0.8rem',
+    'right': '2rem',
   }
 
   $('#settings-content').toggle();
@@ -40,12 +41,12 @@ const toggleCollapseLabel = () => {
   if(!isExpanded()) {
     css = {
       'transform': 'rotate(-90deg)',
-      'margin-top': '5rem',
+      'margin-top': '3rem',
     };
     cssIcon = {
       'position': 'absolute',
-      'top': 0,
-      'right': '1rem',
+      'top': '0rem',
+      'right': '5rem',
     }
   }
 
