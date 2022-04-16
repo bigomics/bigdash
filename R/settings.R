@@ -3,13 +3,17 @@
 #' Settings content to pass to [bigPage()].
 #' 
 #' @inheritParams sidebar
+#' @param .posthook JavaScript function as string to run
+#' after the settings have been rendered.
 #' 
 #' @importFrom htmltools div h4 div
+#' @importFrom shiny HTML
 #' 
 #' @export 
 settings <- function(
   title = "Settings",
-  ...
+  ...,
+  .posthook = NULL
 ) {
   div(
     id = "settings-container",
@@ -25,6 +29,11 @@ settings <- function(
         ...,
         id = "settings-content"
       )
+    ),
+    tags$script(
+      id = "settings-posthook",
+      type = "application/JavaScript",
+      HTML(.posthook)
     )
   )
 }

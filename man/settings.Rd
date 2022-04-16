@@ -4,12 +4,15 @@
 \alias{settings}
 \title{Settings}
 \usage{
-settings(title = "Settings", ...)
+settings(title = "Settings", ..., .posthook = NULL)
 }
 \arguments{
 \item{title}{Title of the sidebar.}
 
 \item{...}{Content of the sidebar.}
+
+\item{.posthook}{JavaScript function as string to run
+after the settings have been rendered.}
 }
 \description{
 Settings content to pass to \code{\link[=bigPage]{bigPage()}}.

@@ -65,6 +65,11 @@ const toggleTab = (tab, target) => {
     .text();
 
   $('#settings-content').html(settings);
+
+  // run hook
+  let hook = eval($('#settings-posthook').text());
+  if(hook)
+    eval(hook());
 }
 
 const sidebarCollapse = () => {
