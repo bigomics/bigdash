@@ -58,13 +58,6 @@ const toggleTab = (tab, target) => {
   }
 
   // we display the settings
-  $('#settings-content').html('');
-  let settings = $(tab)
-    .find('.tab-settings')
-    .first()
-    .text();
-
-  $('#settings-content').html(settings);
 
   // run hook
   let hook = eval($('#settings-posthook').text());

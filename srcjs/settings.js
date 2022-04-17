@@ -1,6 +1,7 @@
 import 'shiny';
 
 export const handleSettings = () => {
+  moveSettings();
   $('.settings-label').on('click', (e) => {
     settingsCollapse();
   });
@@ -68,3 +69,16 @@ $(function(){
     $('.settings-label').trigger('click');
   }, 50);
 });
+
+
+const moveSettings = () => {
+  $('.big-tab')
+    .each((index, el) => {
+      let settings = $(el)
+        .find('.tab-settings')
+        .first();
+
+      $(settings).data('target', $(el).data('name'));
+      $(settings).appendTo('#settings-content');
+    });
+}

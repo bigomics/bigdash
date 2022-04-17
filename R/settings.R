@@ -40,7 +40,9 @@ settings <- function(
 
 #' Tab Settings
 #' 
-#' Tab settings, to place within [bigTabItem()].
+#' Tab settings, to place within [bigTabItem()],
+#' every [bigTabItem()] expect max one [tabSettings()].
+#' These ultimately appear in the settings sidebar.
 #' 
 #' @param ... Content.
 #' 
@@ -51,12 +53,10 @@ settings <- function(
 tabSettings <- function(
   ...
 ) {
-  items <- list(...) |> 
-    lapply(as.character) |> 
-    span(
-      class = "tab-settings d-none",
-      type = "application/json"
-    )
+  div(
+    class = "d-none tab-settings",
+    ...
+  )
 }
 
 #' Tab Settings Item

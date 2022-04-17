@@ -10,5 +10,7 @@ tabSettings(...)
 \item{...}{Content.}
 }
 \description{
-Tab settings, to place within \code{\link[=bigTabItem]{bigTabItem()}}.
+Tab settings, to place within \code{\link[=bigTabItem]{bigTabItem()}},
+every \code{\link[=bigTabItem]{bigTabItem()}} expect max one \code{\link[=tabSettings]{tabSettings()}}.
+These ultimately appear in the settings sidebar.
 }
