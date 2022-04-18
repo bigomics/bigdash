@@ -58,6 +58,19 @@ const toggleTab = (tab, target) => {
   }
 
   // we display the settings
+  $('.tab-settings')
+    .each((index, el) => {
+      let tg = $(el).data('target');
+      console.log(tg);
+      if(tg != name) {
+        $(el).addClass('d-none');
+        $(el).trigger('hidden');
+        return;
+      }
+
+      $(el).removeClass('d-none');
+      $(el).trigger('shown');
+    });
 
   // run hook
   let hook = eval($('#settings-posthook').text());
