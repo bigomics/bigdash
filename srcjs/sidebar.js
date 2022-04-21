@@ -158,9 +158,29 @@ $(function() {
     toggleTabs(target)
   });
 
+  let collapse = [];
+  $('.sidebar-content')
+    .find('.collapse')
+    .each((index, el) => {
+      collapse.push({
+        id: $(el).attr('id'),
+        obj: new bootstrap.Collapse(el, {toggle: false}),
+      });
+    });
+
+  console.log(collapse);
+
   $('.sidebar-menu').on('click', (e) => {
     $(e.currentTarget)
       .find('.sidebar-menu-icon')
       .toggleClass('fa-chevron-down fa-chevron-up');
+    let target = $(e.currentTarget).data('target');
+
+    collapse.map((el) => {
+      if(el.id == target)
+        el.obj.toggle();
+      else
+        el.obj.hide();
+    });
   })
 });

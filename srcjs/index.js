@@ -5,6 +5,6 @@ import { handleSwap } from './swap.js';
 
 $(function(){
   handleSwap();
-  handleSidebar();
   handleSettings();
+  handleSidebar();
 });

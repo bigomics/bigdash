@@ -14,7 +14,7 @@ sidebar <- function(
     id = "sidebar-container",
     class = "sidebar-expanded flex-shrink-1 d-md-block",
     div(
-      class = "sidebar position-fixed p-2",
+      class = "sidebar p-2",
       id = "sidebar-wrapper",
       h4(
         title,
@@ -28,7 +28,7 @@ sidebar <- function(
     ),
     div(
       id = "sidebar-help-container",
-      class = "p-2 position-fixed",
+      class = "p-2",
       h4(
         id = "sidebar-help-title"
       ),
@@ -90,9 +90,8 @@ sidebarMenu <- function(
     p(
       class = "w-100 mb-2",
       tags$a(
-        class = "sidebar-menu text-decoration-none text-dark",
-        `data-bs-toggle` = "collapse",
-        href = sprintf("#%s", id),
+        class = "sidebar-menu text-decoration-none text-dark cursor-pointer",
+        `data-target` = id,
         span(
           class = "fw-bold",
           text
