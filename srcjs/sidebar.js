@@ -26,7 +26,20 @@ const toggleTabs = (target) => {
     .find('.big-tab')
     .each((index, tab) => {
       toggleTab(tab, target);
-    })
+    });
+
+  $('.tab-trigger')
+    .each((index, el) => {
+      let name = $(el).data('target');
+      if(target == name){
+        $(`[data-target='${name}']`).removeClass('text-muted');
+        $(`[data-target='${name}']`).addClass('text-dark fw-bold');
+        return;
+      }
+      
+      $(`[data-target='${name}']`).addClass('text-muted');
+      $(`[data-target='${name}']`).removeClass('text-dark fw-bold');
+    });
 }
 
 const toggleTab = (tab, target) => {
@@ -62,7 +75,6 @@ const toggleTab = (tab, target) => {
   $('.tab-settings')
     .each((index, el) => {
       let tg = $(el).data('target');
-      $(`[data-target='${tg}']`).toggleClass('text-muted text-dark fw-bold');
 
       if(tg != name) {
         $(el).addClass('d-none');
