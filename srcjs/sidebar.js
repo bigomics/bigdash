@@ -10,9 +10,10 @@ export const handleSidebar = () => {
 }
 
 const toggleFirstTab = () => {
-  let target = $('.tab-trigger.tab-sidebar')
-    .first()
-    .data('target');
+  let $el = $('.tab-trigger.tab-sidebar')
+    .first();
+  
+  let target = $el.data('target');
 
   toggleTabs(target);
 }
@@ -61,7 +62,8 @@ const toggleTab = (tab, target) => {
   $('.tab-settings')
     .each((index, el) => {
       let tg = $(el).data('target');
-      console.log(tg);
+      $(`[data-target='${tg}']`).toggleClass('text-muted text-dark fw-bold');
+
       if(tg != name) {
         $(el).addClass('d-none');
         $(el).trigger('hidden');
@@ -155,7 +157,7 @@ $(function() {
 
   $('.tab-trigger').on('click', (e) => {
     let target = $(e.currentTarget).data('target');
-    toggleTabs(target)
+    toggleTabs(target);
   });
 
   let collapse = [];
@@ -167,8 +169,6 @@ $(function() {
         obj: new bootstrap.Collapse(el, {toggle: false}),
       });
     });
-
-  console.log(collapse);
 
   $('.sidebar-menu').on('click', (e) => {
     $(e.currentTarget)

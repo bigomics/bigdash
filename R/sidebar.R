@@ -63,7 +63,7 @@ sidebarItem <- function(
     p(
       title,
       `data-target` = target,
-      class = "tab-trigger tab-sidebar cursor-pointer fw-bold w-100 mb-2"
+      class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-2 text-muted"
     ),
     hr_()
   )
@@ -90,7 +90,7 @@ sidebarMenu <- function(
     p(
       class = "w-100 mb-2",
       tags$a(
-        class = "sidebar-menu text-decoration-none text-dark cursor-pointer",
+        class = "sidebar-menu text-decoration-none text-muted cursor-pointer",
         `data-target` = id,
         span(
           class = "fw-bold",
@@ -132,9 +132,9 @@ sidebarMenuItem <- function(
 
   tagList(
     p(
-      class = "w-100 mb-2",
+      class = "w-100 mb-2 sidebar-menu-item",
       a(
-        class = "text-decoration-none text-dark cursor-pointer tab-trigger tab-sidebar",
+        class = "text-decoration-none text-muted cursor-pointer tab-trigger tab-sidebar",
         `data-target` = target,
         text
       ),
