@@ -126,7 +126,7 @@ const toggleCollapseContent = () => {
 const toggleCollapseLabel = () => {
   let css = {
     'transform': 'none',
-    'margin-top': 0,
+    'margin-top': '1rem',
   };
   let cssIcon = {
     'position': 'relative',
