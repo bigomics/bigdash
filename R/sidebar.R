@@ -32,7 +32,7 @@ sidebar <- function(
       h4(
         id = "sidebar-help-title"
       ),
-      hr_(style = "max-width:10rem;"),
+      hr_(),
       div(
         id = "sidebar-help-content"
       )

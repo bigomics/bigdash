@@ -33,8 +33,8 @@ const toggleCollapseLabel = () => {
   };
   let cssIcon = {
     'position': 'absolute',
-    'top': '0.8rem',
-    'right': '2rem',
+    'top': '1.8rem',
+    'right': '2.4rem',
   }
 
   $('#settings-content').toggle();
@@ -46,8 +46,8 @@ const toggleCollapseLabel = () => {
     };
     cssIcon = {
       'position': 'absolute',
-      'top': '0rem',
-      'right': '5rem',
+      'top': '0.1rem',
+      'right': '4.5rem',
     }
   }
 
