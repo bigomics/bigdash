@@ -9,3 +9,8 @@
   border-top: none;
   vertical-align: 0;
 }
+
+.dropdown.show {
+  left: -5rem;
+  background-color: #fff;
+}
