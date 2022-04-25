@@ -21,6 +21,7 @@ export const handleSwap = () => {
   swap.on('swappable:stop', (e) => {
     setTimeout(() => {
       $(e.data.dragEvent.data.sourceContainer).trigger('change');
+      $(e.data.dragEvent.data.sourceContainer).trigger('resize');
     }, 50);
   });
 
