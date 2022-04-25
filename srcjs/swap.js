@@ -20,8 +20,9 @@ export const handleSwap = () => {
 
   swap.on('swappable:stop', (e) => {
     setTimeout(() => {
+      console.log(e.data.dragEvent.data.sourceContainer);
       $(e.data.dragEvent.data.sourceContainer).trigger('change');
-      $(e.data.dragEvent.data.sourceContainer).trigger('resize');
+      $(e.data.dragEvent.data.sourceContainer).find('.shiny-plot-output').trigger('resize');
     }, 50);
   });
 
