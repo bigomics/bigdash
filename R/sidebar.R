@@ -93,7 +93,6 @@ sidebarMenu <- function(
         class = "sidebar-menu text-decoration-none text-muted cursor-pointer",
         `data-target` = id,
         span(
-          class = "fw-bold",
           text
         ),
         icon(

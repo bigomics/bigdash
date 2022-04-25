@@ -122,7 +122,7 @@ navbarDropdown <- function(
   tags$li(
     class = "nav-item dropdown",
     tags$a(
-      class = "nav-link dropdown-toggle text-mid-blue fw-bold",
+      class = "nav-link dropdown-toggle text-mid-blue",
       id = id, 
       role = "button",
       `data-bs-toggle` = "dropdown",
