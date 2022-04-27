@@ -1,4 +1,5 @@
 import 'jquery';
+import 'shiny';
 
 let sidebarHelp = {};
 
@@ -58,6 +59,10 @@ const toggleTab = (tab, target) => {
   $(tab).removeClass('d-none');
   $(tab).show();
   $(tab).trigger('shown');
+  try {
+    Shiny.setInputValue('nav', name);
+  } catch(error) {
+  }
 
   // we show the associated help
   // truthy in case it is missing
