@@ -8,7 +8,7 @@
 big_theme <- function() {
   bs_theme(
     version = 5L,
-    primary = "#004CA7",
+    primary = "#3181DE",
     secondary = "#F2FAFF",
     success = "#86A563",
     info = "#6ABEEA",
