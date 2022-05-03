@@ -1,16 +1,22 @@
-.navbar {
-  border-bottom: 1px solid $mid-grey;
-}
+html {
+  .navbar {
+    border-bottom: 1px solid $mid-grey;
+  }
 
-.dropdown-toggle::after {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  content: "\f078";
-  border-top: none;
-  vertical-align: 0;
-}
+  .dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f078";
+    border-top: none;
+    vertical-align: 0;
+  }
 
-.dropdown-menu.show {
-  left: -7rem;
-  background-color: #fff;
+  .dropdown-menu.show {
+    left: -7rem;
+    background-color: #fff;
+  }
+
+  .nav-tabs .nav-link {
+    color: $mid-grey;
+  }
 }
