@@ -3,6 +3,7 @@
 #' Create swappable elements.
 #' `swappableItem`s within `swappable` can be swapper.
 #' 
+#' @param el Element to apply type to.
 #' @param id,inputId Id of input.
 #' @param class Any additional class to pass to parent div.
 #' @param ... Content, HTML tags.
@@ -97,6 +98,7 @@
 #'  shinyApp(ui, server)
 #' 
 #' @importFrom jsonlite toJSON
+#' @importFrom htmltools tagAppendAttributes
 #' 
 #' @name swappable
 #' 
@@ -117,6 +119,12 @@ swappable <- function(
 
 #' @rdname swappable
 #' @export 
+asSwappable <- \(el){
+  tagAppendAttributes(el, class = "swappable-container")
+}
+
+#' @rdname swappable
+#' @export 
 swappableItem <- function(
   inputId,
   ...,
@@ -132,6 +140,12 @@ swappableItem <- function(
     class = .class,
     ...
   )
+}
+
+#' @rdname swappable
+#' @export 
+asSwappableItem <- \(el){
+  tagAppendAttributes(el, class = "swappable-item")
 }
 
 #' @rdname swappable

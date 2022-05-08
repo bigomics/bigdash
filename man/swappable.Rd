@@ -2,18 +2,26 @@
 % Please edit documentation in R/swappable.R
 \name{swappable}
 \alias{swappable}
+\alias{asSwappable}
 \alias{swappableItem}
+\alias{asSwappableItem}
 \alias{update_swappable}
 \title{Swappable}
 \usage{
 swappable(inputId, ...)
 
+asSwappable(el)
+
 swappableItem(inputId, ..., class = "")
+
+asSwappableItem(el)
 
 update_swappable(id, order, session = shiny::getDefaultReactiveDomain())
 }
 \arguments{
 \item{...}{Content, HTML tags.}
+
+\item{el}{Element to apply type to.}
 
 \item{class}{Any additional class to pass to parent div.}
 
