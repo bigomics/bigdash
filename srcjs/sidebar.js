@@ -76,6 +76,7 @@ const toggleTab = (tab, target) => {
     $('#sidebar-help-container').hide();
   }
 
+  let found = false;
   // we display the settings
   $('.tab-settings')
     .each((index, el) => {
@@ -87,9 +88,18 @@ const toggleTab = (tab, target) => {
         return;
       }
 
+      found = true;
       $(el).removeClass('d-none');
       $(el).trigger('shown');
     });
+  
+  if(!found){
+    $('#settings-container').removeClass('d-md-block');
+    $('#settings-container').hide();
+  } else {
+    $('#settings-container').addClass('d-md-block');
+    $('#settings-container').show();
+  }
 
   // run hook
   let hook = eval($('#settings-posthook').text());
