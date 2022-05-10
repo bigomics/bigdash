@@ -68,7 +68,10 @@ const toggleTab = (tab, target) => {
   // truthy in case it is missing
   if(sidebarHelp[name]) {
     $('#sidebar-help-title')
-      .html(sidebarHelp[name].title);
+      .html(
+        `${sidebarHelp[name].title}
+        <i class='fas fa-chevron-down float-right'></i>`
+      );
     $('#sidebar-help-content')
       .html(sidebarHelp[name].text);
     $('#sidebar-help-container').show();

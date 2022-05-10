@@ -30,11 +30,14 @@ sidebar <- function(
       id = "sidebar-help-container",
       class = "p-2",
       h4(
-        id = "sidebar-help-title"
+        id = "sidebar-help-title",
+        `data-bs-toggle` = "collapse",
+        href = "#sidebar-help-content"
       ),
       hr_(),
       div(
-        id = "sidebar-help-content"
+        id = "sidebar-help-content",
+        class = "collapse"
       )
     )
   )
