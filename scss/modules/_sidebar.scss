@@ -32,3 +32,11 @@
 .sidebar-menu-item {
   padding-left: 1rem;
 }
+
+.active-sidebar {
+  border-left: .3rem solid $danger;
+}
+
+.active-sidebar-space {
+  padding-left: 1rem;
+}

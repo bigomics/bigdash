@@ -35,8 +35,17 @@ const toggleTabs = (target) => {
       if(target == name){
         $(`[data-target='${name}']`).removeClass('text-muted');
         $(`[data-target='${name}']`).addClass('text-dark fw-bold');
+
+        if($(`[data-target='${name}']`).is('p'))
+          $(`[data-target='${name}']`).addClass('active-sidebar active-sidebar-space');
+
+        if(!$(`[data-target='${name}']`).is('p'))
+          $(`[data-target='${name}']`).parent().addClass('active-sidebar');
         return;
       }
+
+      $(`[data-target='${name}']`).removeClass('active-sidebar active-sidebar-space');
+      $(`[data-target='${name}']`).parent().removeClass('active-sidebar');
       
       $(`[data-target='${name}']`).addClass('text-muted');
       $(`[data-target='${name}']`).removeClass('text-dark fw-bold');
