@@ -34,9 +34,18 @@
 }
 
 .active-sidebar {
-  border-left: .3rem solid $warning;
+  border-left: .3rem solid $warning !important;
 }
 
-.active-sidebar-space {
+.sidebar-menu{
+  padding-left: 1rem;
+}
+
+.sidebar-menu-item{
+  border-left: .3rem solid transparent;
+}
+
+.tab-sidebar{
+  border-left: .3rem solid transparent;
   padding-left: 1rem;
 }
