@@ -1,59 +1,66 @@
-.cursor-pointer {
-  cursor: pointer;
-}
+html {
+  .cursor-pointer {
+    cursor: pointer;
+  }
 
-.bg-light-grey {
-  background-color: $light-grey;
-}
+  .bg-light-grey {
+    background-color: $light-grey;
+  }
 
-.bg-brand-blue {
-  background-color: $brand-blue;
-}
+  .bg-brand-blue {
+    background-color: $brand-blue;
+  }
 
-.bg-pale-blue {
-  background-color: $pale-blue;
-}
+  .bg-pale-blue {
+    background-color: $pale-blue;
+  }
 
-.bg-mid-blue {
-  background-color: $mid-blue;
-}
+  .bg-mid-blue {
+    background-color: $mid-blue;
+  }
 
-.bg-light-blue {
-  background-color: $light-blue;
-}
+  .bg-light-blue {
+    background-color: $light-blue;
+  }
 
-.bg-dark-green {
-  background-color: $dark-green;
-}
+  .bg-dark-green {
+    background-color: $dark-green;
+  }
 
-.bg-light-green {
-  background-color: $light-green;
-}
+  .bg-light-green {
+    background-color: $light-green;
+  }
 
-.bg-orange {
-  background-color: $orange;
-}
+  .bg-orange {
+    background-color: $orange;
+  }
 
-.bg-light-orange {
-  background-color: $light-orange;
-}
+  .bg-light-orange {
+    background-color: $light-orange;
+  }
 
-.text-light-grey {
-  color: $light-grey;
-}
+  .text-light-grey {
+    color: $light-grey;
+  }
 
-.text-mid-grey {
-  color: $mid-grey;
-}
+  .text-mid-grey {
+    color: $mid-grey;
+  }
 
-.text-mid-blue {
-  color: $mid-blue !important;
-}
+  .text-mid-blue {
+    color: $mid-blue !important;
+  }
 
-hr {
-  background-color: $mid-grey;
-}
+  hr {
+    background-color: $mid-grey;
+  }
 
-.w-8 {
-  width: 8rem;
+  .w-8 {
+    width: 8rem;
+  }
+
+  h4 {
+      font-weight: 600;
+      font-size: 1.2em;
+  } 
 }

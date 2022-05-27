@@ -10,3 +10,4 @@
 ^dev$
 ^scss$
 ^LICENSE\.md$
+^\.vscode$
