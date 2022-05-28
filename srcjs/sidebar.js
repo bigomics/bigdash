@@ -1,5 +1,6 @@
 import 'jquery';
 import 'shiny';
+import { isMobile } from './utils';
 
 let sidebarHelp = {};
 
@@ -71,6 +72,7 @@ const toggleTab = (tab, target) => {
   try {
     Shiny.setInputValue('nav', name);
   } catch(error) {
+    console.error(error);
   }
 
   // we show the associated help
@@ -87,6 +89,9 @@ const toggleTab = (tab, target) => {
   } else {
     $('#sidebar-help-container').hide();
   }
+
+  if(isMobile())
+    return;
 
   let found = false;
   // we display the settings

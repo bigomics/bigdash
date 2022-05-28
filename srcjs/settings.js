@@ -1,4 +1,5 @@
 import 'shiny';
+import { isMobile } from './utils';
 
 export const handleSettings = () => {
   moveSettings();
@@ -72,6 +73,12 @@ $(function(){
 
 
 const moveSettings = () => {
+  if(isMobile()){
+    $('.tab-settings').removeClass('d-none');
+    $('#settings-container').hide();
+    return;
+  }
+
   $('.big-tab')
     .each((index, el) => {
       let settings = $(el)
