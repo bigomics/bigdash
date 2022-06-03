@@ -10,7 +10,7 @@ bigPage(
   settings = htmltools::tagList(),
   settings_position = c("right", "left"),
   title = "BigOmics",
-  navbar = htmltools::tagList(),
+  navbar = NULL,
   lang = NULL,
   theme = big_theme()
 )

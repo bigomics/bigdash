@@ -4,14 +4,14 @@
 \alias{sidebar}
 \title{Sidebar}
 \usage{
-sidebar(title = "Menu", ..., top = NULL)
+sidebar(title = "Menu", ..., top_expanded = NULL, top_collapsed = NULL)
 }
 \arguments{
 \item{title}{Title of the sidebar.}
 
 \item{...}{Content of the sidebar.}
 
-\item{top}{Top of page content, above title.}
+\item{top_expanded, top_collapsed}{Top of page content, above title.}
 }
 \description{
 Sidebar content to pass to \code{\link[=bigPage]{bigPage()}}.

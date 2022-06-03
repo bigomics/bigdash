@@ -4,16 +4,20 @@
 #' 
 #' @param title Title of the sidebar.
 #' @param ... Content of the sidebar.
-#' @param top Top of page content, above title.
+#' @param top_expanded,top_collapsed Top of page content, above title.
 #' 
 #' @export 
 sidebar <- function(
   title = "Menu",
   ...,
-  top = NULL
+  top_expanded = NULL,
+  top_collapsed = NULL
 ) {
-  if(!is.null(top))
-    top <- div(id = "sidebar-top", top)
+  if(!is.null(top_expanded))
+    top_expanded <- div(id = "sidebar-top-expanded", top_expanded)
+
+  if(!is.null(top_collapsed))
+    top_collapsed <- div(id = "sidebar-top-collapsed", top_collapsed, class = "d-none")
 
   div(
     id = "sidebar-container",
@@ -21,7 +25,8 @@ sidebar <- function(
     div(
       class = "sidebar p-2",
       id = "sidebar-wrapper",
-      top,
+      top_expanded,
+      top_collapsed,
       h4(
         title,
         icon("chevron-down", class = "sidebar-icon float-right"),

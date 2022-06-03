@@ -24,11 +24,15 @@ bigPage <- function(
   settings = htmltools::tagList(),
   settings_position = c("right", "left"),
   title = "BigOmics",
-  navbar = htmltools::tagList(),
+  navbar = NULL,
   lang = NULL,
   theme = big_theme()
 ) {
   settings_position <- match.arg(settings_position)
+
+  style <- ""
+  if(is.null(navbar))
+    style <- "min-height:100vh;"
 
   bootstrapPage(
     title = title,
@@ -39,6 +43,7 @@ bigPage <- function(
     div(
       class = "d-flex",
       id = "app",
+      style = style,
       sidebar,
       if(settings_position == "left") settings,
       div(

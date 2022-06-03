@@ -128,7 +128,8 @@ const sidebarCollapse = () => {
   $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
   $('#sidebar-help-container').toggle();
   $('#sidebar-wrapper').toggleClass('p-2');
-  $('#sidebar-top').toggle();
+  $('#sidebar-top-expanded').toggleClass('d-none');
+  $('#sidebar-top-collapsed').toggleClass('d-none');
   collapseHelp();
   toggleCollapseLabel();
   toggleCollapseContent();
