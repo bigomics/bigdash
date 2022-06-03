@@ -34,6 +34,9 @@ const toggleCollapseLabel = () => {
   };
   let cssIcon = {
     'float': 'right',
+    'position': 'relative',
+    'top': 'inherit',
+    'right': 'inherit',
   }
 
   $('#settings-content').toggle();
@@ -44,7 +47,9 @@ const toggleCollapseLabel = () => {
       'margin-top': '3rem',
     };
     cssIcon = {
-      'flaot': 'right'
+      'position': 'absolute',
+      'top': '0.1rem',
+      'right': '4.5rem',
     }
   }
 
