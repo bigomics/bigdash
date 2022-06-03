@@ -18,7 +18,7 @@ sidebar <- function(
       id = "sidebar-wrapper",
       h4(
         title,
-        icon("chevron-down", class = "sidebar-icon"),
+        icon("chevron-down", class = "sidebar-icon float-right"),
         class = "sidebar-label cursor-pointer mb-3"
       ),
       div(
