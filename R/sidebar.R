@@ -12,6 +12,9 @@ sidebar <- function(
   ...,
   top = NULL
 ) {
+  if(!is.null(top))
+    top <- div(id = "sidebar-top", top)
+
   div(
     id = "sidebar-container",
     class = "sidebar-expanded flex-shrink-1 d-md-block",
