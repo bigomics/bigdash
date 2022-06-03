@@ -4,11 +4,13 @@
 #' 
 #' @param title Title of the sidebar.
 #' @param ... Content of the sidebar.
+#' @param top Top of page content, above title.
 #' 
 #' @export 
 sidebar <- function(
   title = "Menu",
-  ...
+  ...,
+  top = NULL
 ) {
   div(
     id = "sidebar-container",
@@ -16,6 +18,7 @@ sidebar <- function(
     div(
       class = "sidebar p-2",
       id = "sidebar-wrapper",
+      top,
       h4(
         title,
         icon("chevron-down", class = "sidebar-icon float-right"),
