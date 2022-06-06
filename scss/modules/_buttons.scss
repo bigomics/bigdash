@@ -9,4 +9,75 @@ html {
     color: white;
   }
 
+  .btn-outline-primary-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $brand-blue;
+      color: $brand-blue;
+      background-color: transparent;
+    }
+  }
+
+  .btn-outline-info-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $light-blue;
+      color: $light-blue;
+      background-color: transparent;
+    }
+  }
+
+  .btn-outline-danger-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $danger;
+      color: $danger;
+      background-color: transparent;
+    }
+  }
+
+  .btn-outline-warning-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $warning;
+      color: $warning;
+      background-color: transparent;
+    }
+  }
+
+  .btn-outline-dark-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $black;
+      color: $black;
+      background-color: transparent;
+    }
+  }
+
+  .btn-outline-success-hover {
+    background-color: transparent;
+    border-color: $dark-grey;
+    color: $dark-grey;
+
+    &:hover {
+      border-color: $dark-green;
+      color: $dark-green;
+      background-color: transparent;
+    }
+  }
 }
