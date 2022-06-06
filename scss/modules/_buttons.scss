@@ -9,6 +9,12 @@ html {
     color: white;
   }
 
+  .btn-primary {
+    &:hover {
+      color: white;
+    }
+  }
+
   .btn-outline-primary-hover {
     background-color: transparent;
     border-color: $dark-grey;
