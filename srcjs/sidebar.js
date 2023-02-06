@@ -14,7 +14,7 @@ export const handleSidebar = () => {
 const toggleFirstTab = () => {
   let $el = $('.tab-trigger.tab-sidebar')
     .first();
-  
+
   let target = $el.data('target');
 
   toggleTabs(target);
@@ -23,7 +23,7 @@ const toggleFirstTab = () => {
 const toggleTabs = (target) => {
   // reset be we set in case some help is missing
   $('#sidebar-help-container').hide();
-      
+
   $('#big-tabs')
     .find('.big-tab')
     .each((index, tab) => {
@@ -47,7 +47,7 @@ const toggleTabs = (target) => {
 
       $(`[data-target='${name}']`).removeClass('active-sidebar active-sidebar-space');
       $(`[data-target='${name}']`).parent().removeClass('active-sidebar');
-      
+
       $(`[data-target='${name}']`).addClass('text-muted');
       $(`[data-target='${name}']`).removeClass('text-dark fw-bold');
     });
@@ -109,7 +109,7 @@ const toggleTab = (tab, target) => {
       $(el).removeClass('d-none');
       $(el).trigger('shown');
     });
-  
+
   if(!found){
     $('#settings-container').removeClass('d-md-block');
     $('#settings-container').hide();
@@ -141,7 +141,7 @@ const collapseHelp = () => {
     $('#sidebar-help-container').show();
     return;
   }
-    
+
   $('#sidebar-help-container').hide();
 }
 
@@ -216,10 +216,19 @@ $(function() {
       });
     });
 
-  $('.sidebar-menu').on('click', (e) => {
-    $(e.currentTarget)
+  $('.sidebar-menu').click(function(){
+    $('.sidebar-menu').not(this)
       .find('.sidebar-menu-icon')
-      .toggleClass('fa-chevron-down fa-chevron-up');
+      .removeClass('fa-chevron-down')
+      .removeClass('fa-chevron-up')
+      .addClass('fa-chevron-up');
+    $(this)
+      .find('.sidebar-menu-icon')
+      .toggleClass('fa-chevron-up fa-chevron-down');
+  })
+
+  $('.sidebar-menu').on('click', (e) => {
+
     let target = $(e.currentTarget).data('target');
 
     collapse.map((el) => {
