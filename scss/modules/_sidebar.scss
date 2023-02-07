@@ -4,7 +4,7 @@
 }
 
 #sidebar-container {
-  min-height: 92vh;   
+  min-height: 92vh;
   padding: 0;
   border-right: 1px solid $mid-grey;
   background-color: $pale-blue;
@@ -48,4 +48,5 @@
 .tab-sidebar{
   border-left: .3rem solid transparent;
   padding-left: .7rem;
+  display: block;
 }
