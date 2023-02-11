@@ -221,7 +221,7 @@ $(function() {
       .find('.sidebar-menu-icon')
       .removeClass('fa-chevron-down')
       .removeClass('fa-chevron-up')
-      .addClass('fa-chevron-up');
+      .addClass('fa-chevron-down');
     $(this)
       .find('.sidebar-menu-icon')
       .toggleClass('fa-chevron-up fa-chevron-down');
