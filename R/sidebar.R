@@ -29,7 +29,7 @@ sidebar <- function(
       top_collapsed,
       h4(
         title,
-        icon("chevron-down", class = "sidebar-icon float-right"),
+        icon("chevron-left", class = "sidebar-icon float-right"),
         class = "sidebar-label cursor-pointer mb-3"
       ),
       div(

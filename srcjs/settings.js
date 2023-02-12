@@ -37,6 +37,7 @@ const toggleCollapseLabel = () => {
     'position': 'relative',
     'top': 'inherit',
     'right': 'inherit',
+    'transform': 'rotate(0deg)',
   }
 
   $('#settings-content').toggle();
@@ -50,6 +51,7 @@ const toggleCollapseLabel = () => {
       'position': 'absolute',
       'top': '0.1rem',
       'right': '4.5rem',
+      'transform': 'rotate(-90deg)',
     }
   }
 

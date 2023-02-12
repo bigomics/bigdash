@@ -166,6 +166,7 @@ const toggleCollapseLabel = () => {
     'position': 'relative',
     'top': 0,
     'right': 0,
+    'transform': 'rotate(0deg)',
   }
 
   if(!isExpanded()) {
@@ -177,6 +178,7 @@ const toggleCollapseLabel = () => {
       'position': 'absolute',
       'top': 0,
       'right': '4rem',
+      'transform': 'rotate(-90deg)',
     }
   }
 

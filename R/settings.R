@@ -22,7 +22,7 @@ settings <- function(
       class = "settings p-2 mt-3",
       h4(
         title,
-        icon("chevron-down", class = "settings-icon"),
+        icon("chevron-right", class = "settings-icon"),
         class = "settings-label cursor-pointer mb-3"
       ),
       div(
