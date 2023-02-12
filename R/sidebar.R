@@ -1,12 +1,12 @@
 #' Sidebar
-#' 
+#'
 #' Sidebar content to pass to [bigPage()].
-#' 
+#'
 #' @param title Title of the sidebar.
 #' @param ... Content of the sidebar.
 #' @param top_expanded,top_collapsed Top of page content, above title.
-#' 
-#' @export 
+#'
+#' @export
 sidebar <- function(
   title = "Menu",
   ...,
@@ -55,13 +55,13 @@ sidebar <- function(
 }
 
 #' Sidebar Item
-#' 
+#'
 #' A sidebar item to place as child of [sidebar()].
-#' 
+#'
 #' @param title Title of the sidebar.
 #' @param target Target [bigTabItem()] this should toggle.
-#' 
-#' @export 
+#'
+#' @export
 sidebarItem <- function(
   title,
   target
@@ -84,20 +84,20 @@ sidebarItem <- function(
 }
 
 #' Sidebar Menu
-#' 
+#'
 #' Menu for the side bar to pass to [sidebar()].
-#' 
+#'
 #' @param text Text to display when the sidebar is expanded.
 #' @param ... Children, [sidebarMenuItem()].
-#' 
-#' @export 
+#'
+#' @export
 sidebarMenu <- function(
   text,
   ...
 ) {
   if(missing(text))
     stop("Missing `text`")
-  
+
   id <- make_id()
 
   tagList(
@@ -125,14 +125,14 @@ sidebarMenu <- function(
 }
 
 #' Element for the Sidebar menu
-#' 
+#'
 #' Element in the collapsible [sidebarMenu()].
-#' 
+#'
 #' @inheritParams sidebarMenu
 #' @param target `name` of the target [bigTabItem()] that this should
 #' make visible.
-#' 
-#' @export 
+#'
+#' @export
 sidebarMenuItem <- function(
   text,
   target
