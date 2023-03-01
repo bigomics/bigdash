@@ -3,7 +3,8 @@ import { isMobile } from './utils';
 
 export const handleSettings = () => {
   moveSettings();
-  $('.settings-label').on('click', (e) => {
+  $('.settings-label').on('mouseenter', (e) => {
+    console.log("I am the mouse entering settings-label");
     settingsCollapse();
   });
 }
