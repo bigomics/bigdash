@@ -3,14 +3,29 @@ import { isMobile } from './utils';
 
 export const handleSettings = () => {
   moveSettings();
-  $('#settings-container').on('mouseenter', (e) => {
-    console.log("I am the mouse entering settings-label");
-    settingsCollapse();
-  });
+
+  let $container = $('#settings-container')
+    .find('.settings-content');
+
+  $('#settings-container').mouseover(function(){
+    settingsExpand();
+    $container.show();
+  }).mouseout(function(){
+    settingsCollapse()
+    $container.hide();
+  })
+}
+const settingsExpand = () => {
+  $('#settings-container').removeClass('settings-collapsed');
+  $('#settings-container').addClass('settings-expanded');
+  $('.settings').toggleClass('p-2');
+  toggleCollapseLabel();
+  toggleCollapseContent();
 }
 
 const settingsCollapse = () => {
-  $('#settings-container').toggleClass('settings-expanded settings-collapsed');
+  $('#settings-container').removeClass('settings-expanded');
+  $('#settings-container').addClass('settings-collapsed');
   $('.settings').toggleClass('p-2');
   toggleCollapseLabel();
   toggleCollapseContent();
