@@ -68,7 +68,7 @@ const toggleCollapseLabel = () => {
     'transform': 'rotate(0deg)',
   }
 
-  $('#settings-content').toggle();
+  //$('#settings-content').toggle();
 
   if(!isExpanded()) {
     css = {
