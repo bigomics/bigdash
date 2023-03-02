@@ -7,20 +7,32 @@ export const handleSettings = () => {
   let $container = $('#settings-container')
     .find('.settings-content');
 
-  $('#settings-container').mouseover(function(){
-    settingsExpand();
-    $container.show();
-  }).mouseout(function(){
-    settingsCollapse()
-    $container.hide();
-  })
+    if(!isMobile()){
+      // show settings tab on desktop with click behavior
+      $('#settings-container').mouseover(function(){
+        settingsExpand();
+        $container.show();
+        $('.tab-settings').show();
+      }).mouseout(function(){
+        settingsCollapse();
+        $container.hide();
+        $('.tab-settings').hide();
+      })
+
+    }else if(isMobile){
+      // hide settings tab on mobile
+        $('.tab-settings').removeClass('d-none');
+        $('#settings-container').hide();
+        $('#tab-settings').hide();
+        return;
+    }
 }
 const settingsExpand = () => {
   $('#settings-container').removeClass('settings-collapsed');
   $('#settings-container').addClass('settings-expanded');
   $('.settings').toggleClass('p-2');
   toggleCollapseLabel();
-  toggleCollapseContent();
+  //toggleCollapseContent();
 }
 
 const settingsCollapse = () => {
@@ -28,20 +40,20 @@ const settingsCollapse = () => {
   $('#settings-container').addClass('settings-collapsed');
   $('.settings').toggleClass('p-2');
   toggleCollapseLabel();
-  toggleCollapseContent();
+  //toggleCollapseContent();
 }
 
-const toggleCollapseContent = () => {
-  let $container = $('#settings-container')
-    .find('.settings-content');
+// const toggleCollapseContent = () => {
+//   let $container = $('#settings-container')
+//     .find('.settings-content');
 
-  if(isExpanded()) {
-    $container.show();
-    return
-  }
+//   if(isExpanded()) {
+//     $container.show();
+//     return
+//   }
 
-  $container.hide();
-}
+//   $container.hide();
+// }
 
 const toggleCollapseLabel = () => {
   let css = {
@@ -84,19 +96,19 @@ const isExpanded = () => {
   return $('#settings-container').hasClass('settings-expanded');
 }
 
-$(function(){
-  setTimeout(() => {
-    $('.settings-label').trigger('click');
-  }, 50);
-});
+// $(function(){
+//   setTimeout(() => {
+//     $('.settings-').trigger('click');
+//   }, 50);
+// });
 
 
 const moveSettings = () => {
-  if(isMobile()){
-    $('.tab-settings').removeClass('d-none');
-    $('#settings-container').hide();
-    return;
-  }
+  // if(isMobile()){
+  //   $('.tab-settings').removeClass('d-none');
+  //   $('#settings-container').hide();
+  //   return;
+  // }
 
   $('.big-tab')
     .each((index, el) => {
