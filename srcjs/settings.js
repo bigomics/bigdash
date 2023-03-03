@@ -7,30 +7,39 @@ export const handleSettings = () => {
   let $container = $('#settings-container')
     .find('.settings-content');
 
-    if(!isMobile()){
+  if(!isMobile()){
+    // check if lock is unlocked and run mouse events
+    
       // show settings tab on desktop with click behavior
-      $('#settings-container').mouseover(function(){
-        settingsExpand();
-        $container.show();
-        $('.tab-settings').show();
-      }).mouseout(function(){
-        settingsCollapse();
-        $container.hide();
-        $('.tab-settings').hide();
-      })
-
-    }else if(isMobile){
-      // hide settings tab on mobile
-        $('.tab-settings').removeClass('d-none');
-        $('#settings-container').hide();
-        $('#tab-settings').hide();
-        return;
-    }
+    $('#settings-container').mouseover(function(){
+      settingsExpand();
+      $container.show();
+      $('.tab-settings').show();
+    }).mouseout(function(){
+      settingsCollapse();
+      $container.hide();
+      $('.tab-settings').hide();
+    })
+  }else if(isMobile){
+    // hide settings tab on mobile
+      $('.tab-settings').removeClass('d-none');
+      $('#settings-container').hide();
+      $('#tab-settings').hide();
+      return;
+  };
+  
+  
+  $('#settings-lock').toggleClass("settings-unlocked settings-locked");
 }
 const settingsExpand = () => {
+  //change settings sidebar css upon expanding
   $('#settings-container').removeClass('settings-collapsed');
   $('#settings-container').addClass('settings-expanded');
-  $('.settings').toggleClass('p-2');
+  //change icon css style for expanded position
+  $('.settings-lock').removeClass('settings-lock-collapsed');
+  $('.settings-lock').addClass('settings-lock-expanded');
+  $('.settings').addClass('p-2');
+  //$('.settings').toggleClass('p-2');
   toggleCollapseLabel();
   //toggleCollapseContent();
 }
@@ -38,7 +47,13 @@ const settingsExpand = () => {
 const settingsCollapse = () => {
   $('#settings-container').removeClass('settings-expanded');
   $('#settings-container').addClass('settings-collapsed');
-  $('.settings').toggleClass('p-2');
+  
+  //change icon css style for expanded position
+  $('.settings-lock').removeClass('settings-lock-expanded');
+  $('.settings-lock').addClass('settings-lock-collapsed');
+  $('.settings').removeClass('p-2');
+  //not sure what this does
+  //$('.settings').toggleClass('p-2');
   toggleCollapseLabel();
   //toggleCollapseContent();
 }

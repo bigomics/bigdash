@@ -21,7 +21,8 @@ settings <- function(
     div(
       class = "settings p-2 mt-3",
       div(
-        icon("lock-open", class = "settings-lock")
+        class = "settings-lock settings-unlocked settings-lock-collapsed",
+        icon("lock-open"),
       ),
       h4(
         

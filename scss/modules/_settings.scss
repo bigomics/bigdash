@@ -15,9 +15,15 @@
   max-width: 2.5rem;
 }
 
-.settings-lock{
+.settings-lock-collapsed{
   display: inline-block;
   width: 100%;
   text-align: center;
 }
+
+.settings-lock-expanded{
+  display: inline-block;
+  margin-left: 3px;
+}
+
 
