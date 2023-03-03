@@ -32,16 +32,13 @@ export const handleSettings = () => {
 
   $(".settings-lock").click(function(){
       if (lockState === false) {
-        $('#settings-container').addClass("settings.locked")
+        $('#settings-container').addClass("settings.locked");
         settingsExpand();
         lockState = true;
-        console.info("locked settings bar")
       }
       else {
-        $('#settings-container').removeClass("settings.locked")
-        settingsCollapse();
+        $('#settings-container').removeClass("settings.locked");
         lockState = false;
-        console.info("unlocked settings bar")
      }
   });
 }
