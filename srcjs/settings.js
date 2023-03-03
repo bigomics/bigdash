@@ -27,9 +27,23 @@ export const handleSettings = () => {
       $('#tab-settings').hide();
       return;
   };
-  
-  
-  $('#settings-lock').toggleClass("settings-unlocked settings-locked");
+
+  var lockState = false; //false will lock settings upon click
+
+  $(".settings-lock").click(function(){
+      if (lockState === false) {
+        $('#settings-container').addClass("settings.locked")
+        settingsExpand();
+        lockState = true;
+        console.info("locked settings bar")
+      }
+      else {
+        $('#settings-container').removeClass("settings.locked")
+        settingsCollapse();
+        lockState = false;
+        console.info("unlocked settings bar")
+     }
+  });
 }
 const settingsExpand = () => {
   //change settings sidebar css upon expanding

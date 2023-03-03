@@ -22,7 +22,7 @@ settings <- function(
       class = "settings p-2 mt-3",
       div(
         class = "settings-lock settings-unlocked settings-lock-collapsed",
-        icon("lock-open"),
+        icon("lock-open", class = "settings-locked-icon"),
       ),
       h4(
         
