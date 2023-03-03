@@ -39,6 +39,7 @@ const settingsExpand = () => {
   $('.settings-lock').removeClass('settings-lock-collapsed');
   $('.settings-lock').addClass('settings-lock-expanded');
   $('.settings').addClass('p-2');
+  $('.settings').removeClass('mt-3');
   //$('.settings').toggleClass('p-2');
   toggleCollapseLabel();
   //toggleCollapseContent();
@@ -47,11 +48,11 @@ const settingsExpand = () => {
 const settingsCollapse = () => {
   $('#settings-container').removeClass('settings-expanded');
   $('#settings-container').addClass('settings-collapsed');
-  
   //change icon css style for expanded position
   $('.settings-lock').removeClass('settings-lock-expanded');
   $('.settings-lock').addClass('settings-lock-collapsed');
   $('.settings').removeClass('p-2');
+  $('.settings').addClass('mt-3');
   //not sure what this does
   //$('.settings').toggleClass('p-2');
   toggleCollapseLabel();
