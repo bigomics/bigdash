@@ -20,9 +20,14 @@ settings <- function(
     class = "settings-expanded position-relative d-none flex-shrink-1 d-md-block",
     div(
       class = "settings p-2 mt-3",
+      div(
+        icon("lock-open", class = "settings-lock")
+      ),
       h4(
+        
         title,
         icon("chevron-right", class = "settings-icon"),
+        
         class = "settings-label cursor-pointer mb-3"
       ),
       div(
