@@ -22,7 +22,7 @@ settings <- function(
       class = "settings p-2 mt-3",
       div(
         class = "settings-lock settings-unlocked settings-lock-collapsed",
-        tags$i(class = "fa-solid fa-lock-open settings-locked-icon"),
+        tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-locked-icon"),
       ),
       h4(
         
