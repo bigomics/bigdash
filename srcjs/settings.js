@@ -32,13 +32,22 @@ export const handleSettings = () => {
 
   $(".settings-lock").click(function(){
       if (lockState === false) {
-        $('#settings-container').addClass("settings.locked");
-        settingsExpand();
+        $('#settings-container').removeClass("settings-unlocked");
+        $('#settings-container').addClass("settings-locked");
+        //settingsExpand();
+        //$container.show();
+        //$('.tab-settings').show();
         lockState = true;
+        console.info("lock locked")
       }
       else {
-        $('#settings-container').removeClass("settings.locked");
-        lockState = false;
+        $('#settings-container').removeClass("settings-locked");
+        $('#settings-container').addClass("settings-unlocked");
+        //settingsExpand();
+        //$container.show();
+        //$('.tab-settings').show();
+        //lockState = false;
+        console.info("lock unlocked")
      }
   });
 }
