@@ -22,14 +22,13 @@ settings <- function(
       class = "settings p-2 mt-3",
       div(
         class = "settings-lock settings-unlocked settings-lock-collapsed",
-        icon("lock-open", class = "settings-locked-icon"),
+        tags$i(class = "fa-solid fa-lock-open settings-locked-icon"),
       ),
       h4(
         
         title,
         icon("chevron-right", class = "settings-icon"),
-        
-        class = "settings-label cursor-pointer mb-3"
+        class = "settings-label mb-3"
       ),
       div(
         ...,

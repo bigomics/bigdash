@@ -38,6 +38,8 @@ export const handleSettings = () => {
         $('#settings-container').removeClass("settings-unlocked");
         $('#settings-container').addClass("settings-locked");
         $('#settings-container').off('mouseout');
+        $('.settings-locked-icon').removeClass("fa-lock-open");
+        $('.settings-locked-icon').addClass("fa-lock");
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
@@ -52,6 +54,10 @@ export const handleSettings = () => {
           $container.hide();
           $('.tab-settings').hide();
         })
+        $('.settings-locked-icon').removeClass("fa-lock");
+        $('.settings-locked-icon').addClass("fa-lock-open");
+
+
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
