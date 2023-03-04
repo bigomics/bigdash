@@ -15,7 +15,9 @@ export const handleSettings = () => {
       settingsExpand();
       $container.show();
       $('.tab-settings').show();
-    }).mouseout(function(){
+    })
+    
+    $('#settings-container').mouseout(function(){
       settingsCollapse();
       $container.hide();
       $('.tab-settings').hide();
@@ -28,35 +30,51 @@ export const handleSettings = () => {
       return;
   };
 
-  var lockState = false; //false will lock settings upon click
+  var lockState = false; //false will lock settings upon lock click
 
   $(".settings-lock").click(function(){
+    console.info("click event triggered")
       if (lockState === false) {
         $('#settings-container').removeClass("settings-unlocked");
         $('#settings-container').addClass("settings-locked");
+        $('#settings-container').off('mouseout');
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
         lockState = true;
-        console.info("lock locked")
-      }
-      else {
+        console.info("lock locked");
+        
+      } else {
         $('#settings-container').removeClass("settings-locked");
         $('#settings-container').addClass("settings-unlocked");
+        $('#settings-container').mouseout(function(){
+          settingsCollapse();
+          $container.hide();
+          $('.tab-settings').hide();
+        })
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
-        //lockState = false;
-        console.info("lock unlocked")
+        lockState = false;
+        console.info("lock unlocked, should not be working");
      }
   });
 }
+
+var mouseoutHandler = function() {
+  settingsCollapse();
+  $container.hide();
+  $('.tab-settings').hide();
+};
+
 const settingsExpand = () => {
   //change settings sidebar css upon expanding
   $('#settings-container').removeClass('settings-collapsed');
+  $('#settings-container').removeClass('settings-expanded');
   $('#settings-container').addClass('settings-expanded');
   //change icon css style for expanded position
   $('.settings-lock').removeClass('settings-lock-collapsed');
+  $('.settings-lock').removeClass('settings-lock-expanded');
   $('.settings-lock').addClass('settings-lock-expanded');
   $('.settings').addClass('p-2');
   $('.settings').removeClass('mt-3');
@@ -67,11 +85,14 @@ const settingsExpand = () => {
 
 const settingsCollapse = () => {
   $('#settings-container').removeClass('settings-expanded');
+  $('#settings-container').removeClass('settings-collapsed');
   $('#settings-container').addClass('settings-collapsed');
   //change icon css style for expanded position
   $('.settings-lock').removeClass('settings-lock-expanded');
+  $('.settings-lock').removeClass('settings-lock-collapsed');
   $('.settings-lock').addClass('settings-lock-collapsed');
   $('.settings').removeClass('p-2');
+  $('.settings').removeClass('mt-3');
   $('.settings').addClass('mt-3');
   //not sure what this does
   //$('.settings').toggleClass('p-2');
