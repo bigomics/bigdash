@@ -19,9 +19,9 @@ settings <- function(
     id = "settings-container",
     class = "settings-expanded position-relative d-none flex-shrink-1 d-md-block",
     div(
-      class = "settings p-2 mt-3",
+      class = "settings p-2",
       div(
-        class = "settings-lock settings-unlocked settings-lock-collapsed",
+        class = "settings-lock settings-unlocked settings-lock-expanded",
         tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-locked-icon"),
       ),
       h4(
