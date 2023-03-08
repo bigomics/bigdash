@@ -11,13 +11,13 @@ export const handleSettings = () => {
     // check if lock is unlocked and run mouse events
     
       // show settings tab on desktop with click behavior
-    $('#settings-container').mouseover(function(){
+    $('#settings-container').mouseenter(function(){
       settingsExpand();
       $container.show();
       $('.tab-settings').show();
     })
     
-    $('#settings-container').mouseout(function(){
+    $('#settings-container').mouseleave(function(){
       settingsCollapse();
       $container.hide();
       $('.tab-settings').hide();
@@ -34,12 +34,16 @@ export const handleSettings = () => {
 
   $(".settings-lock").click(function(){
     console.info("click event triggered")
+
       if (lockState === false) {
         $('#settings-container').removeClass("settings-unlocked");
         $('#settings-container').addClass("settings-locked");
-        $('#settings-container').off('mouseout');
         $('.settings-locked-icon').removeClass("fa-lock-open");
         $('.settings-locked-icon').addClass("fa-lock");
+        //$('.settings-lock').removeClass("settings-lock-collapsed");
+        //$('.settings-lock').addClass("settings-lock-expanded");
+        $('#settings-container').off("mouseleave");
+        
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
@@ -49,15 +53,13 @@ export const handleSettings = () => {
       } else {
         $('#settings-container').removeClass("settings-locked");
         $('#settings-container').addClass("settings-unlocked");
-        $('#settings-container').mouseout(function(){
+        $('#settings-container').mouseleave(function(){
           settingsCollapse();
           $container.hide();
           $('.tab-settings').hide();
         })
         $('.settings-locked-icon').removeClass("fa-lock");
         $('.settings-locked-icon').addClass("fa-lock-open");
-
-
         //settingsExpand();
         //$container.show();
         //$('.tab-settings').show();
@@ -67,7 +69,7 @@ export const handleSettings = () => {
   });
 }
 
-var mouseoutHandler = function() {
+var mouseleaveHandler = function() {
   settingsCollapse();
   $container.hide();
   $('.tab-settings').hide();
@@ -75,6 +77,7 @@ var mouseoutHandler = function() {
 
 const settingsExpand = () => {
   //change settings sidebar css upon expanding
+  $('.settings-lock').show(); // show lock when settings sidebar is expanded
   $('#settings-container').removeClass('settings-collapsed');
   $('#settings-container').removeClass('settings-expanded');
   $('#settings-container').addClass('settings-expanded');
@@ -95,11 +98,9 @@ const settingsCollapse = () => {
   $('#settings-container').addClass('settings-collapsed');
   //change icon css style for expanded position
   $('.settings-lock').removeClass('settings-lock-expanded');
-  $('.settings-lock').removeClass('settings-lock-collapsed');
-  $('.settings-lock').addClass('settings-lock-collapsed');
   $('.settings').removeClass('p-2');
-  $('.settings').removeClass('mt-3');
   $('.settings').addClass('mt-3');
+  $('.settings-lock').hide(); // lock should be hidden when settings is collapsed
   //not sure what this does
   //$('.settings').toggleClass('p-2');
   toggleCollapseLabel();
