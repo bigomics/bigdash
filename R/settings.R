@@ -19,14 +19,10 @@ settings <- function(
     id = "settings-container",
     class = "position-relative d-none flex-shrink-1 d-md-block",
     div(
-      class = "settings p-2",
-      div(
-        class = "settings-lock settings-unlocked",
-        tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-locked-icon"),
-      ),
+      class = "settings p-2 mt-3",
       h4(
-        
         title,
+        tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-lock settings-unlocked"),
         icon("chevron-right", class = "settings-icon"),
         class = "settings-label mb-3"
       ),
