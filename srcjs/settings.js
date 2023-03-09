@@ -10,13 +10,15 @@ export const handleSettings = () => {
   if(!isMobile()){
     // check if lock is unlocked and run mouse events
     
-      // show settings tab on desktop with click behavior
+    // show settings tab on desktop with mouse entering settings
     $('#settings-container').mouseenter(function(){
       settingsExpand();
       $container.show();
       $('.tab-settings').show();
     })
     
+    // hide settings tab on desktop with mouse entering settings
+    //this code can be wrapped in a function, since its used in many places
     $('#settings-container').mouseleave(function(){
       settingsCollapse();
       $container.hide();
@@ -30,15 +32,17 @@ export const handleSettings = () => {
       return;
   };
 
-  var lockState = false; //false will lock settings upon lock click
+  // lockstate = false will lock settings upon lock click
+  // lockstate = true will unlock settings upon lock click
+  var lockState = false;
 
   $(".settings-lock").click(function(){
     // click listener to change the locked and unlocked settings
       if (lockState === false) {
         $('#settings-container').removeClass("settings-unlocked");
         $('#settings-container').addClass("settings-locked");
-        $('.settings-locked-icon').removeClass("fa-lock-open");
-        $('.settings-locked-icon').addClass("fa-lock");
+        $('.settings-lock').removeClass("fa-lock-open");
+        $('.settings-lock').addClass("fa-lock");
         $('#settings-container').off("mouseleave");
         lockState = true;
       } else {
@@ -49,8 +53,8 @@ export const handleSettings = () => {
           $container.hide();
           $('.tab-settings').hide();
         })
-        $('.settings-locked-icon').removeClass("fa-lock");
-        $('.settings-locked-icon').addClass("fa-lock-open");
+        $('.settings-lock').removeClass("fa-lock");
+        $('.settings-lock').addClass("fa-lock-open");
         lockState = false;
      }
   });
@@ -65,7 +69,6 @@ const settingsExpand = () => {
   $('.settings-lock').removeClass('settings-lock-collapsed');
   $('.settings-lock').addClass('settings-lock-expanded');
   $('.settings').addClass('p-2');
-  $('.settings').removeClass('mt-3');
   toggleCollapseLabel();
 }
 
@@ -76,7 +79,6 @@ const settingsCollapse = () => {
   //change icon css style for expanded position
   $('.settings-lock').removeClass('settings-lock-expanded');
   $('.settings').removeClass('p-2');
-  $('.settings').addClass('mt-3');
   $('.settings-lock').hide(); // lock should be hidden when settings is collapsed
   toggleCollapseLabel();
 }
