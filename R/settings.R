@@ -17,13 +17,18 @@ settings <- function(
 ) {
   div(
     id = "settings-container",
-    class = "settings-expanded position-relative d-none flex-shrink-1 d-md-block",
+    class = "position-relative d-none flex-shrink-1 d-md-block",
     div(
-      class = "settings p-2 mt-3",
+      class = "settings p-2",
+      div(
+        class = "settings-lock settings-unlocked",
+        tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-locked-icon"),
+      ),
       h4(
+        
         title,
         icon("chevron-right", class = "settings-icon"),
-        class = "settings-label cursor-pointer mb-3"
+        class = "settings-label mb-3"
       ),
       div(
         ...,

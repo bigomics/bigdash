@@ -3,28 +3,82 @@ import { isMobile } from './utils';
 
 export const handleSettings = () => {
   moveSettings();
-  $('.settings-label').on('click', (e) => {
-    settingsCollapse();
-  });
-}
 
-const settingsCollapse = () => {
-  $('#settings-container').toggleClass('settings-expanded settings-collapsed');
-  $('.settings').toggleClass('p-2');
-  toggleCollapseLabel();
-  toggleCollapseContent();
-}
-
-const toggleCollapseContent = () => {
   let $container = $('#settings-container')
     .find('.settings-content');
 
-  if(isExpanded()) {
-    $container.show();
-    return
-  }
+  if(!isMobile()){
+    // check if lock is unlocked and run mouse events
+    
+      // show settings tab on desktop with click behavior
+    $('#settings-container').mouseenter(function(){
+      settingsExpand();
+      $container.show();
+      $('.tab-settings').show();
+    })
+    
+    $('#settings-container').mouseleave(function(){
+      settingsCollapse();
+      $container.hide();
+      $('.tab-settings').hide();
+    })
+  }else if(isMobile){
+    // hide settings tab on mobile
+      $('.tab-settings').removeClass('d-none');
+      $('#settings-container').hide();
+      $('#tab-settings').hide();
+      return;
+  };
 
-  $container.hide();
+  var lockState = false; //false will lock settings upon lock click
+
+  $(".settings-lock").click(function(){
+    // click listener to change the locked and unlocked settings
+      if (lockState === false) {
+        $('#settings-container').removeClass("settings-unlocked");
+        $('#settings-container').addClass("settings-locked");
+        $('.settings-locked-icon').removeClass("fa-lock-open");
+        $('.settings-locked-icon').addClass("fa-lock");
+        $('#settings-container').off("mouseleave");
+        lockState = true;
+      } else {
+        $('#settings-container').removeClass("settings-locked");
+        $('#settings-container').addClass("settings-unlocked");
+        $('#settings-container').mouseleave(function(){
+          settingsCollapse();
+          $container.hide();
+          $('.tab-settings').hide();
+        })
+        $('.settings-locked-icon').removeClass("fa-lock");
+        $('.settings-locked-icon').addClass("fa-lock-open");
+        lockState = false;
+     }
+  });
+}
+
+const settingsExpand = () => {
+  //change settings sidebar css upon expanding
+  $('.settings-lock').show(); // show lock when settings sidebar is expanded
+  $('#settings-container').removeClass('settings-collapsed');
+  $('#settings-container').addClass('settings-expanded');
+  //change icon css style for expanded position
+  $('.settings-lock').removeClass('settings-lock-collapsed');
+  $('.settings-lock').addClass('settings-lock-expanded');
+  $('.settings').addClass('p-2');
+  $('.settings').removeClass('mt-3');
+  toggleCollapseLabel();
+}
+
+const settingsCollapse = () => {
+  $('#settings-container').removeClass('settings-expanded');
+  $('#settings-container').removeClass('settings-collapsed');
+  $('#settings-container').addClass('settings-collapsed');
+  //change icon css style for expanded position
+  $('.settings-lock').removeClass('settings-lock-expanded');
+  $('.settings').removeClass('p-2');
+  $('.settings').addClass('mt-3');
+  $('.settings-lock').hide(); // lock should be hidden when settings is collapsed
+  toggleCollapseLabel();
 }
 
 const toggleCollapseLabel = () => {
@@ -39,8 +93,6 @@ const toggleCollapseLabel = () => {
     'right': 'inherit',
     'transform': 'rotate(0deg)',
   }
-
-  $('#settings-content').toggle();
 
   if(!isExpanded()) {
     css = {
@@ -68,20 +120,7 @@ const isExpanded = () => {
   return $('#settings-container').hasClass('settings-expanded');
 }
 
-$(function(){
-  setTimeout(() => {
-    $('.settings-label').trigger('click');
-  }, 50);
-});
-
-
 const moveSettings = () => {
-  if(isMobile()){
-    $('.tab-settings').removeClass('d-none');
-    $('#settings-container').hide();
-    return;
-  }
-
   $('.big-tab')
     .each((index, el) => {
       let settings = $(el)

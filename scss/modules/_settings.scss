@@ -14,3 +14,26 @@
   width: 2.5rem;
   max-width: 2.5rem;
 }
+
+.settings-lock-collapsed{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.settings-lock-expanded{
+  display: inline-block;
+  margin-bottom:3px;
+}
+
+.settings-lock{
+  opacity: .7;
+}
+
+.settings-label{
+  margin-top: 0px;
+}
+
+.settings-icon{
+  float: right;
+}
