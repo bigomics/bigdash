@@ -24,10 +24,6 @@
   max-width: 2.5rem;
 }
 
-.sidebar-menu-item {
-  padding-left: 1rem;
-}
-
 .active-sidebar {
   border-left: .3rem solid $warning !important;
 }
@@ -38,12 +34,12 @@
 }
 
 .sidebar-menu-item{
+  padding-left: 1rem;
   border-left: .3rem solid transparent;
 }
 
 .tab-sidebar{
   border-left: .3rem solid transparent;
-  padding-left: .7rem;
+  padding: .7rem .7rem;
   display: block;
-  line-height: 1em;
 }

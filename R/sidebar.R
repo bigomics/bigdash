@@ -77,7 +77,7 @@ sidebarItem <- function(
     p(
       title,
       `data-target` = target,
-      class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-2 text-muted"
+      class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-0 text-muted"
     ),
     hr_()
   )
@@ -102,7 +102,7 @@ sidebarMenu <- function(
 
   tagList(
     p(
-      class = "w-100 mb-2",
+      class = "w-100 mb-0",
       tags$a(
         class = "sidebar-menu text-decoration-none text-muted cursor-pointer",
         `data-target` = id,
@@ -110,7 +110,7 @@ sidebarMenu <- function(
           text
         ),
         icon(
-          "chevron-down",
+          "chevron-right",
           class = "sidebar-menu-icon float-right mt-1 text-mid-grey"
         )
       )
@@ -145,7 +145,7 @@ sidebarMenuItem <- function(
 
   tagList(
     p(
-      class = "w-100 mb-2 sidebar-menu-item",
+      class = "w-100 mb-0 sidebar-menu-item",
       a(
         class = "text-decoration-none text-muted cursor-pointer tab-trigger tab-sidebar",
         `data-target` = target,

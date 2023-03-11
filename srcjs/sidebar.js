@@ -221,12 +221,12 @@ $(function() {
   $('.sidebar-menu').click(function(){
     $('.sidebar-menu').not(this)
       .find('.sidebar-menu-icon')
+      .removeClass('fa-chevron-right')
       .removeClass('fa-chevron-down')
-      .removeClass('fa-chevron-up')
-      .addClass('fa-chevron-down');
+      .addClass('fa-chevron-right');
     $(this)
       .find('.sidebar-menu-icon')
-      .toggleClass('fa-chevron-up fa-chevron-down');
+      .toggleClass('fa-chevron-down fa-chevron-right');
   })
 
   $('.sidebar-menu').on('click', (e) => {
