@@ -29,7 +29,7 @@ sidebar <- function(
       top_collapsed,
       h4(
         title,
-        icon("chevron-left", class = "sidebar-icon float-right"),
+        icon("angles-left", class = "sidebar-icon float-right"),
         class = "sidebar-label cursor-pointer mb-3"
       ),
       div(
@@ -110,7 +110,7 @@ sidebarMenu <- function(
           text
         ),
         icon(
-          "chevron-right",
+          "angle-right",
           class = "sidebar-menu-icon float-right mt-1 text-mid-grey"
         )
       )

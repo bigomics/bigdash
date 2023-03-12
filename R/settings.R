@@ -23,7 +23,7 @@ settings <- function(
       h4(
         title,
         tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-lock settings-unlocked"),
-        icon("chevron-right", class = "settings-icon"),
+        icon("angles-right", class = "settings-icon"),
         class = "settings-label mb-3"
       ),
       div(

@@ -81,7 +81,7 @@ const toggleTab = (tab, target) => {
     $('#sidebar-help-title')
       .html(
         `${sidebarHelp[name].title}
-        <i class='fas fa-chevron-down float-right'></i>`
+        <i class='fas fa-angle-down float-right'></i>`
       );
     $('#sidebar-help-content')
       .html(sidebarHelp[name].text);
@@ -221,12 +221,12 @@ $(function() {
   $('.sidebar-menu').click(function(){
     $('.sidebar-menu').not(this)
       .find('.sidebar-menu-icon')
-      .removeClass('fa-chevron-right')
-      .removeClass('fa-chevron-down')
-      .addClass('fa-chevron-right');
+      .removeClass('fa-angle-right')
+      .removeClass('fa-angle-down')
+      .addClass('fa-angle-right');
     $(this)
       .find('.sidebar-menu-icon')
-      .toggleClass('fa-chevron-down fa-chevron-right');
+      .toggleClass('fa-angle-down fa-angle-right');
   })
 
   $('.sidebar-menu').on('click', (e) => {

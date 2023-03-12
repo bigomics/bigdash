@@ -9,3 +9,6 @@ packer: sass
 
 sass:
 	Rscript dev/sass.R
+
+install: packer sass
+	R CMD INSTALL .
