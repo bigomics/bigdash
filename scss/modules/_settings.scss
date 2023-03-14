@@ -4,10 +4,12 @@
   border-left: 1px solid $mid-grey;
   border-right: 1px solid $mid-grey;
   background-color: $pale-blue;
+  margin-left: 5%;
 }
 
 .settings-expanded {
   min-width: 12rem;
+  padding-left: 3px;
 }
 
 .settings-collapsed {
