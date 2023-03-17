@@ -12,17 +12,13 @@ export const handleSettings = () => {
     
     // show settings tab on desktop with mouse entering settings
     $('#settings-container').mouseenter(function(){
-      settingsExpand();
-      $container.show();
-      $('.tab-settings').show();
+      settingsExpand($container);
     })
     
     // hide settings tab on desktop with mouse entering settings
     //this code can be wrapped in a function, since its used in many places
     $('#settings-container').mouseleave(function(){
       settingsCollapse();
-      $container.hide();
-      $('.tab-settings').hide();
     })
   }else if(isMobile){
     // hide settings tab on mobile
@@ -50,7 +46,7 @@ export const handleSettings = () => {
         $('#settings-container').addClass("settings-unlocked");
         $('#settings-container').mouseleave(function(){
           settingsCollapse();
-          $container.hide();
+          $('#settings-container').hide();
           $('.tab-settings').hide();
         })
         $('.settings-lock').removeClass("fa-lock");
@@ -69,6 +65,8 @@ const settingsExpand = () => {
   $('.settings-lock').removeClass('settings-lock-collapsed');
   $('.settings-lock').addClass('settings-lock-expanded');
   $('.settings').addClass('p-2');
+  $('#settings-container').show();
+  $('.tab-settings').show();
   toggleCollapseLabel();
 }
 
@@ -80,6 +78,8 @@ const settingsCollapse = () => {
   $('.settings-lock').removeClass('settings-lock-expanded');
   $('.settings').removeClass('p-2');
   $('.settings-lock').hide(); // lock should be hidden when settings is collapsed
+  $('#settings-container').hide();
+  $('.tab-settings').hide();
   toggleCollapseLabel();
 }
 
