@@ -5,6 +5,7 @@
 
 #sidebar-container {
   min-height: 92vh;
+  width: 12rem;
   padding: 0;
   border-right: 1px solid $mid-grey;
   background-color: $pale-blue;
@@ -20,8 +21,8 @@
 }
 
 .sidebar-collapsed {
-  width: 2.5rem;
-  max-width: 2.5rem;
+  width: 3rem;
+  max-width: 3rem;
 }
 
 .active-sidebar {

@@ -1,5 +1,6 @@
 #settings-container {
   min-height: 92vh;   
+  width: 12rem;    
   padding: 0;
   border-left: 1px solid $mid-grey;
   border-right: 1px solid $mid-grey;
@@ -12,8 +13,8 @@
 }
 
 .settings-collapsed {
-  width: 2.5rem;
-  max-width: 2.5rem;
+  width: 3rem;
+  max-width: 3rem;
 }
 
 .settings-lock-collapsed{
