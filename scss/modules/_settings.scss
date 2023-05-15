@@ -5,10 +5,12 @@
   border-left: 1px solid $mid-grey;
   border-right: 1px solid $mid-grey;
   background-color: $pale-blue;
+  height: calc(100vh - 48px);
 }
 
 .settings-expanded {
   min-width: 12rem;
+  width: 12rem;
   padding-left: 3px;
 }
 

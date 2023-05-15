@@ -5,6 +5,7 @@
 
 #sidebar-container {
   min-height: 92vh;
+  height: calc(100vh - 48px);
   width: 12rem;
   padding: 0;
   border-right: 1px solid $mid-grey;
@@ -17,7 +18,11 @@
 }
 
 .sidebar-expanded > .sidebar{
-  min-width: 10rem;
+  //min-width: 10rem;
+  width: 12rem;
+  min-width: 12rem;//this is the value that was on omicspg
+	max-height: calc(100vh - 300px);
+	overflow-y: auto;
 }
 
 .sidebar-collapsed {
@@ -27,21 +32,62 @@
 
 .active-sidebar {
   border-left: .3rem solid $warning !important;
+  background-color: #EFEFEF;
 }
 
 .sidebar-menu{
   padding: .7rem 0rem .7rem 1rem;
   line-height: 1.4rem;
   display: block;
+  font-size: 18px;
+	font-weight: bold;
+  color: #333 !important;
 }
 
 .sidebar-menu-item{
   padding-left: 1rem;
   border-left: .3rem solid transparent;
+  font-size: 17px;
+	line-height: 1.1rem;
+	font-weight: 400;
+	color: #333 !important;	
+	padding: 0 0.4rem 0 0.4rem;
+}
+
+.sidebar-item {
+	font-size: 18px;
+	font-weight: bold;
+	color: #333 !important;
 }
 
 .tab-sidebar{
   border-left: .3rem solid transparent;
-  padding: .7rem .7rem;
+  line-height: 1.1rem;
+	padding: 0.65rem 0rem 0.65rem 0.7rem; //this is the value that was on omicspg
+  //padding: .7rem .7rem;
   display: block;
+}
+
+#sidebar-help-title {
+  padding-top: 10rem;
+}
+
+#sidebar-help-container {
+  width: 11.5rem;
+  font-size: 12px;
+  line-height: 1.2em;
+  background: url("assets/img/mascotte-sc.png") no-repeat;
+  background-size: 5rem 5rem;
+  background-position: 3.5rem 5rem;
+  position: absolute;
+  bottom: 10px;
+}
+
+.sidebar-label {
+	font-size: 18px;
+}
+
+// 'disable' text-muted
+.text-muted {
+	color: #333 !important;
 }

@@ -1,6 +1,7 @@
 html {
   .navbar {
     border-bottom: 1px solid $mid-grey;
+    padding-top: 0.3rem;
   }
 
   .navbar > .dropdown-toggle::after {
@@ -16,7 +17,31 @@ html {
     background-color: #fff;
   }
 
-  .nav-tabs .nav-link {
-    color: $mid-grey;
+  .nav-tabs {
+    border: 0;
+    .nav-link {
+      border: 0;
+      color: $mid-grey;
+      color: #b8b8b8;
+	    border-bottom: solid 1px;
+      &.active {
+        border-bottom: 1px solid black;
+        color: $black;
+      }
+    }
   }
+
+  .nav-link.dropdown-toggle::after {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    content: "\f078";
+    border-top: none;
+    vertical-align: 0;
+  }
+
+  // disable on button dropdown elements
+  .btn.dropdown-toggle::after {
+    content: none;	
+  }
+
 }
