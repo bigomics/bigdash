@@ -86,4 +86,90 @@ html {
       background-color: transparent;
     }
   }
+
+  .btn-circle-xs,
+  .btn-circle-xs:focus {
+    background: #FFFFFF;
+    color: #DDD;
+    text-shadow: 0 0 0px #ccc;
+    border: 0px;
+    border-radius: 3px !important;
+  }
+
+  .btn-circle-xs:hover {
+    background-color: #fff;
+    color: #444;
+    border: 0px;
+    border-radius: 3px;
+  }
+
+  .run-button,
+  .load-button {
+    outline: none;
+    border-color: #1967be;
+    box-shadow: 0 0 5px #1967be;
+  }
+
+  .action-button .fab .fa {
+    font-size: 16px;
+    margin-top: 0px;
+  }
+
+  .btn-social-icon {
+    padding: 0px;
+    width: 28px;
+    height: 24px;
+  }
+
+  #social-buttons {
+    position: fixed;
+    font-weight: 300;
+    font-size: 30px !important;
+    color: #FFFFFF88;
+    bottom: 10px;
+    left: 10px;
+    z-index: 9999;
+  }
+
+  .radioGroupButtons {
+    margin-top: -3px;
+    margin-bottom: -3px;
+  }
+
+  .btn-xl {
+      padding: .3rem 1.5rem;
+      margin: 20px;
+      font-size: 2.0rem;
+      border-radius: .3rem;
+  }
+
+  .red-button {
+    color: white;
+    background-color: #e45c00;
+    background-image: none;
+    border: 0px;
+    padding: 8px 12px;
+  }
+
+  .red-button:hover,
+  .red-button:focus,
+  .red-button:active,
+  .red-button:active:hover {
+    background-color: #b44c00;
+  }
+
+
+  .blue-button {
+    color: white;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+  }
+
+  .blue-button:hover,
+  .blue-button:focus,
+  .blue-button:active,
+  .blue-button:active:hover {
+    background-color: #286090;
+    border-color: #204d74;
+  }
 }

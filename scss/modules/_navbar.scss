@@ -44,4 +44,22 @@ html {
     content: none;	
   }
 
+  .tabbable .nav-tabs {
+    padding: 0px;
+    margin: 5px 0px 20px 0px;
+    border-radius: 0px;
+    font-size: 18px;
+  }
+
+  .nav-tabs>li>a {
+    margin: 0px 20px 20px 0px;
+    padding: 2px 0px;
+    border-radius: 0px;
+  }
+
+  .nav-tabs > li.active {
+    border-top: 3px solid $main;
+    margin-top: -3px;
+  }
+
 }

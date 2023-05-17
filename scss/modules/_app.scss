@@ -1,7 +1,30 @@
 html {
-    #app {
-      min-height: calc(100vh - 48px);
-    }
-    
+  #app {
+    min-height: calc(100vh - 48px);
   }
   
+  body {
+    a {
+      color: $main;
+      text-decoration: none;
+    }
+    font-size: 14px;
+  }
+
+  .content {
+    min-height: 800px; 
+  }
+
+  h2 {
+      font-size: 1.85em;
+  }
+
+  h3 {
+      font-size: 1.5em;
+  }
+
+  h4 {
+      font-weight: 600;
+      font-size: 1.2em;
+  } 
+}
