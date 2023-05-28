@@ -152,6 +152,6 @@ sidebarMenuItem <- function(
         text
       ),
     ),
-    hr_()
+    hr_(`data-target` = target)
   )
 }
