@@ -14,7 +14,7 @@ make_id <- function(){
 #' @keywords internal
 hr_ <- function(...) {
   #  htmltools::tags$hr(class = "mt-1 mp-1", ...)
-  htmltools::tags$hr(class = "mt-0 mb-0", ...)
+  htmltools::tags$hr(class = "mt-0 mb-0 tab-trigger-hr", ...)
 }
 
 #' @keywords internal
