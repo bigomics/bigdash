@@ -133,3 +133,41 @@ const moveSettings = () => {
       $(settings).appendTo('#settings-content');
     });
 }
+
+const settingsClose = () => {
+	if($('#settings-container').hasClass('settings-expanded'))
+	    $('.setting-label').trigger('click');
+}
+
+Shiny.addCustomMessageHandler('close-settings', (msg) => {
+  settingsClose();
+});
+
+const settingsOpen = () => {
+	if($('#settings-container').hasClass('sidebar-collapsed'))
+	    $('.settings-label').trigger('click');
+}
+
+Shiny.addCustomMessageHandler('open-settings', (msg) => {
+  settingsOpen();
+});
+
+const settingsLock = () => {
+	if($('#settings-container').hasClass('settings-unlocked'))
+		$('.settings-lock').trigger('click');
+	if(!$('#settings-container').hasClass('settings-locked'))
+		$('.settings-lock').trigger('click');
+}
+
+Shiny.addCustomMessageHandler('lock-settings', (msg) => {
+  settingsLock();
+});
+
+const settingsUnlock = () => {
+	if($('#settings-container').hasClass('settings-locked'))
+		$('.settings-lock').trigger('click');
+}
+
+Shiny.addCustomMessageHandler('unlock-settings', (msg) => {
+  settingsUnlock();
+});

@@ -241,3 +241,91 @@ $(function() {
     });
   })
 });
+
+Shiny.addCustomMessageHandler('bigdash-hide-menuitem', (msg) => {
+  $(`.tab-trigger[data-target=${msg.value}]`).hide();
+});
+
+Shiny.addCustomMessageHandler('bigdash-show-menuitem', (msg) => {
+  $(`.tab-trigger[data-target=${msg.value}]`).show();
+});
+
+Shiny.addCustomMessageHandler('bigdash-hide-tab', (msg) => {
+  $(`.big-tab[data-name=${msg.value}]`).hide();
+});
+
+Shiny.addCustomMessageHandler('bigdash-show-tab', (msg) => {
+  $(`.big-tab[data-name=${msg.value}]`).show();
+});
+
+Shiny.addCustomMessageHandler('show-tabs', (msg) => {
+	setTimeout(() => {
+		$('.sidebar-content')
+			.children()
+			.each((index, el) => {
+				if($(el).hasClass('collapse'))
+					return;
+
+				$(el).show();
+			});
+
+	$('#sidebar-container .collapse')
+		.first()
+		.find('hr')
+		.first()
+		.hide();
+
+	if(!$('.big-tab[data-name="load-tab"]').is(':visible'))
+		return;
+
+	$('.tab-trigger[data-target="dataview-tab"]').trigger('click');
+	$('#sidebar-help-container').show();
+	}, 1000);
+});
+
+Shiny.addCustomMessageHandler('bigdash-select-tab', (msg) => {
+    $(`.tab-trigger[data-target=${msg.value}]`).trigger('click');
+});
+
+const sidebarClose = () => {
+    if($('#sidebar-container').hasClass('sidebar-expanded')) {
+	$('.sidebar-label').trigger('click');
+    }
+    $('#sidebar-help-container').hide();
+}
+
+Shiny.addCustomMessageHandler('sidebar-close', (msg) => {
+  sidebarClose(); 
+});
+
+const sidebarOpen = () => {
+  if($('#sidebar-container').hasClass('sidebar-collapsed')) {
+$('.sidebar-label').trigger('click');
+  }
+  $('#sidebar-help-container').show();
+}
+
+Shiny.addCustomMessageHandler('sidebar-open', (msg) => {
+  sidebarOpen();
+});
+
+const unloadSidebar = () => {
+  $('.sidebar-content')
+		.children()
+		.each((index, el) => {
+			if($(el).hasClass('collapse'))
+				return;
+
+			if(index == 0){
+				$(el).show();
+				return;
+			}
+
+			$(el).hide();
+		});
+  $('#sidebar-help-container').hide();
+}
+
+Shiny.addCustomMessageHandler('sidebar-unload', (msg) => {
+  unloadSidebar();
+});
