@@ -136,7 +136,7 @@ const moveSettings = () => {
 
 const settingsClose = () => {
 	if($('#settings-container').hasClass('settings-expanded'))
-	    $('.setting-label').trigger('click');
+		$('#settings-container').trigger('mouseenter');
 }
 
 Shiny.addCustomMessageHandler('close-settings', (msg) => {
@@ -144,8 +144,8 @@ Shiny.addCustomMessageHandler('close-settings', (msg) => {
 });
 
 const settingsOpen = () => {
-	if($('#settings-container').hasClass('sidebar-collapsed'))
-	    $('.settings-label').trigger('click');
+	if($('#settings-container').hasClass('settings-collapsed'))
+		$('#settings-container').trigger('mouseenter');
 }
 
 Shiny.addCustomMessageHandler('open-settings', (msg) => {
