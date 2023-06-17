@@ -136,7 +136,7 @@ const moveSettings = () => {
 
 const settingsClose = () => {
 	if($('#settings-container').hasClass('settings-expanded'))
-		$('#settings-container').trigger('mouseenter');
+		$('#settings-container').trigger('mouseleave');
 }
 
 Shiny.addCustomMessageHandler('close-settings', (msg) => {
