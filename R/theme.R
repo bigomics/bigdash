@@ -2,7 +2,7 @@
 #' 
 #' Default theme, passed to [bigPage()].
 #' 
-#' @importFrom bslib bs_theme font_google
+#' @importFrom bslib bs_theme font_face
 #' 
 #' @export 
 big_theme <- function() {
@@ -16,8 +16,13 @@ big_theme <- function() {
     warning = "#E3A45A",
     dark = "#3B4252",
     light = "#F8FBFF",
-    base_font = font_google(
-      "Lato"
+    base_font = font_face(
+        family = "Lato",
+        src = paste0(
+            "url(",
+            "../assets/lato.woff",
+            ") format('woff')"
+        )
     )
   )
 }
