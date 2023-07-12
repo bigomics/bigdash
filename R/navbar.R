@@ -11,11 +11,12 @@
 #' @export 
 navbar <- function(
   title,
+  center,
   ...
 ) {
   if(missing(title))
     stop("Missing `title`")
-
+ 
   tags$nav(
     class = "navbar navbar-light bg-white mb-0 pb-0",
     div(
@@ -37,7 +38,15 @@ navbar <- function(
         )
       ),
       div(
-        class = "collapse navbar-collapse",
+        class = "collapse navbar-collapse justify-content-center",
+        id = "navbarCenterContent",
+        tags$ul(
+          class = "navbar-nav mb-2 mb-lg-0",
+          center
+        )
+      ),
+      div(
+        class = "collapse navbar-collapse flex-grow-0",
         id = "navbarContent",
         tags$ul(
           class = "navbar-nav ms-auto mb-2 mb-lg-0",
