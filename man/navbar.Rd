@@ -4,7 +4,7 @@
 \alias{navbar}
 \title{Navbar}
 \usage{
-navbar(title, ...)
+navbar(title, center, ...)
 }
 \arguments{
 \item{title}{Brand of the navbar.}
