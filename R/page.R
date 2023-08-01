@@ -18,7 +18,7 @@
 #' @import shiny
 #' 
 #' @export 
-bigPage <- function(
+bigPage <- function( 
   ...,
   sidebar = htmltools::tagList(),
   settings = htmltools::tagList(),

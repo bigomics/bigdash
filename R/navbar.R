@@ -11,7 +11,7 @@
 #' @export 
 navbar <- function(
   title,
-  center,
+  center = NULL,
   ...
 ) {
   if(missing(title))
