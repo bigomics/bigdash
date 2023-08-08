@@ -195,7 +195,8 @@ const isExpanded = () => {
   return $('#sidebar-container').hasClass('sidebar-expanded');
 }
 
-$(function() {
+/* $(function() { */
+$(document).on('shiny:connected', function() {
   // data to render in the sidebar help
   if($("#sidebar-help").length > 0)
     sidebarHelp = JSON.parse($("#sidebar-help").text());
