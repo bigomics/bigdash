@@ -4,12 +4,12 @@
 \alias{hover_dropdown}
 \title{Create a Hover Dropdown UI Element}
 \usage{
-hover_dropdown(icon_class = "fa fa-cog", ...)
+hover_dropdown(..., icon_class = "fa fa-cog")
 }
 \arguments{
-\item{icon_class}{A character string that defines the class of the Font Awesome icon to use.}
-
 \item{...}{Arbitrary Shiny UI elements to display in the dropdown.}
+
+\item{icon_class}{A character string that defines the class of the Font Awesome icon to use.}
 }
 \value{
 A Shiny UI element that can be added to the UI definition of the app.
@@ -20,9 +20,8 @@ when the user hovers over the icon.
 }
 \examples{
 hover_dropdown(
-  dropdown_content = list(
-    div(class = "custom-item", "Item 1"),
-    div(class = "custom-item", "Item 2")
-  )
+  icon_class = "fa fa-cog",
+  div(class = "custom-item", "Item 1"),
+  div(class = "custom-item", "Item 2")
 )
 }

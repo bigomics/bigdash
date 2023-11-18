@@ -62,3 +62,28 @@ bs_alert <- function(..., conditional = TRUE, style = "primary") {
   )
   return(alert_tag)
 }
+
+#' Update Tab Elements
+#' @export
+update_tab_elements <- function(input_tab, tab_elements) {
+  # Safety check
+  if (!input_tab %in% names(tab_elements)) {
+    stop("Error: input_tab not found in tab_elements")
+  }
+  # Get the elements to enable or disable for this tab
+  elements <- tab_elements[[input_tab]]
+  
+  # Enable the elements
+  if (!is.null(elements$enable)) {
+    for (element in elements$enable) {
+      shinyjs::enable(element)
+    }
+  }
+  
+  # Disable the elements
+  if (!is.null(elements$disable)) {
+    for (element in elements$disable) {
+      shinyjs::disable(element)
+    }
+  }
+}
