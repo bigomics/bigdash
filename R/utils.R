@@ -74,7 +74,7 @@ bs_alert <- function(..., conditional = TRUE, style = "primary") {
 #' 
 #' @details Enables elements for the given input tab and disables all other elements.
 #' Checks that input_tab is valid name in tab_elements. Gets enable/disable elements
-#' for that tab, calls shinyjs::enable() on those elements. Disables all other elements.
+#' for that tab, calls shinyjs::show() on those elements. Hides all other elements.
 #' \dontrun{
 #'     tab_elements <- list(
 #'      "Heatmap" = list(enable = NULL,
@@ -99,19 +99,19 @@ update_tab_elements <- function(input_tab, tab_elements) {
   # Enable the elements
   if (!is.null(elements$enable)) {
     for (element in elements$enable) {
-      shinyjs::enable(element)
+      shinyjs::show(element)
     }
   } else {
     all_elements <- unlist(tab_elements)
     elements_to_enable <- setdiff(all_elements, elements$disable)  
     for (element in elements_to_enable) {
-      shinyjs::enable(element)
+      shinyjs::show(element)
     }
   }
   # Disable the elements
   if (!is.null(elements$disable)) {
     for (element in elements$disable) {
-      shinyjs::disable(element)
+      shinyjs::hide(element)
     }
 
   }
