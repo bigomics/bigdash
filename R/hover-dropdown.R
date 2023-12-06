@@ -22,7 +22,8 @@ hover_dropdown <- function(..., icon_class = "fa fa-cog") {
 
     tagList(
         div(class = "hover-dropdown",
-            tags$i(class = paste0(icon_class, " hover-dropdown-button")),
+            tags$i(class = paste0(icon_class, " hover-dropdown-button"),
+                   style = "font-size: 1.4em;"),
             div(
                 class = "hover-dropdown-content",
                 do.call(tagList, dropdown_content)
