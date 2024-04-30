@@ -11,7 +11,7 @@
 #' @export 
 navbar <- function(
   title,
-  center = NULL,
+  center = NULL, left = NULL,
   ...
 ) {
   if(missing(title))
@@ -35,6 +35,14 @@ navbar <- function(
         `aria-label` = "Toggle navigation",
         span(
           class = "navbar-toggler-icon"
+        )
+      ),
+      div(
+        class = "collapse navbar-collapse flex-grow-0",
+        id = "navbarLeftContent",
+        tags$ul(
+          class = "navbar-nav ms-auto mb-2 mb-lg-0",
+          left
         )
       ),
       div(
