@@ -129,7 +129,8 @@ navbarItem <- function(
 #' @export 
 navbarDropdown <- function(
   title,
-  ...
+  ...,
+  auto_close = "true"
 ) {
   if(missing(title))
     stop("Missing `title`")
@@ -143,6 +144,7 @@ navbarDropdown <- function(
       id = id, 
       role = "button",
       `data-bs-toggle` = "dropdown",
+      `data-bs-auto-close` = auto_close,
       `aria-expanded` = "false",
       title
     ),
