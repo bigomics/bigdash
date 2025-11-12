@@ -2,10 +2,36 @@
 % Please edit documentation in R/utils.R
 \name{update_tab_elements}
 \alias{update_tab_elements}
-\title{Update Tab Elements}
+\title{Update tab elements}
 \usage{
 update_tab_elements(input_tab, tab_elements)
 }
+\arguments{
+\item{input_tab}{Character name of the input tab}
+
+\item{tab_elements}{Named list of elements to enable/disable for each tab}
+}
+\value{
+No return value, called for side effects
+}
 \description{
-Update Tab Elements
+Update tab elements
+}
+\details{
+Enables elements for the given input tab and disables all other elements.
+Checks that input_tab is valid name in tab_elements. Gets enable/disable elements
+for that tab, calls shinyjs::show() on those elements. Hides all other elements.
+\dontrun{
+    tab_elements <- list(
+     "Heatmap" = list(enable = NULL,
+                        disable = c("hm_clustmethod")),
+     "PCA/tSNE" = list(enable = NULL,
+                       disable = c("hm_features", "hm_splitby", "hm_level", "hm_filterXY", "hm_filterMitoRibo")),
+     "Parallel" = list(enable = NULL,
+                      disable = c("selected_phenotypes", "hm_clustmethod"))
+   )
+   shiny::observeEvent(input$tabs1, {
+     bigdash::update_tab_elements(input$tabs1, tab_elements)
+   })
+}
 }

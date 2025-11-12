@@ -60,11 +60,17 @@ sidebar <- function(
 #'
 #' @param title Title of the sidebar.
 #' @param target Target [bigTabItem()] this should toggle.
+#' @param icon Icon to display.
+#' @param badge Optional badge text (e.g., "new", "beta").
+#' @param badge_color Color of the badge (default: "success" for green).
 #'
 #' @export
 sidebarItem <- function(
   title,
-  target
+  target,
+  icon = NULL,
+  badge = NULL,
+  badge_color = "success"
 ) {
 
   if(missing(title))
@@ -73,9 +79,23 @@ sidebarItem <- function(
   if(missing(target))
     stop("Missing `target`")
 
+  if(!is.null(icon))
+    icon <- icon(icon)
+
+  badge_el <- NULL
+  if(!is.null(badge)) {
+    badge_el <- span(
+      badge,
+      class = sprintf("badge bg-%s float-right", badge_color),
+      style = "font-size: 0.65rem; padding: 0.25em 0.6em; border-radius: 10rem;"
+    )
+  }
+
   tagList(
     p(
+      icon,
       title,
+      badge_el,
       `data-target` = target,
       class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-0 text-muted"
     ),
@@ -131,11 +151,17 @@ sidebarMenu <- function(
 #' @inheritParams sidebarMenu
 #' @param target `name` of the target [bigTabItem()] that this should
 #' make visible.
+#' @param icon Icon to display.
+#' @param badge Optional badge text (e.g., "new", "beta").
+#' @param badge_color Color of the badge (default: "success" for green).
 #'
 #' @export
 sidebarMenuItem <- function(
   text,
-  target
+  target,
+  icon = NULL,
+  badge = NULL,
+  badge_color = "success"
 ) {
   if(missing(text))
     stop("Missing `text`")
@@ -143,13 +169,27 @@ sidebarMenuItem <- function(
   if(missing(target))
     stop("Missing `target`")
 
+  if(!is.null(icon))
+    icon <- icon(icon)
+
+  badge_el <- NULL
+  if(!is.null(badge)) {
+    badge_el <- span(
+      badge,
+      class = sprintf("badge bg-%s float-right", badge_color),
+      style = "font-size: 0.65rem; padding: 0.25em 0.6em; border-radius: 10rem;"
+    )
+  }
+
   tagList(
     p(
       class = "w-100 mb-0 sidebar-menu-item",
       a(
         class = "text-decoration-none text-muted cursor-pointer tab-trigger tab-sidebar",
         `data-target` = target,
-        text
+        icon,
+        text,
+        badge_el
       ),
     ),
     hr_(`data-target` = target)

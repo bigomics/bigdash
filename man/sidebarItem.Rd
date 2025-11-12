@@ -4,12 +4,18 @@
 \alias{sidebarItem}
 \title{Sidebar Item}
 \usage{
-sidebarItem(title, target)
+sidebarItem(title, target, icon = NULL, badge = NULL, badge_color = "success")
 }
 \arguments{
 \item{title}{Title of the sidebar.}
 
 \item{target}{Target \code{\link[=bigTabItem]{bigTabItem()}} this should toggle.}
+
+\item{icon}{Icon to display.}
+
+\item{badge}{Optional badge text (e.g., "new", "beta").}
+
+\item{badge_color}{Color of the badge (default: "success" for green).}
 }
 \description{
 A sidebar item to place as child of \code{\link[=sidebar]{sidebar()}}.

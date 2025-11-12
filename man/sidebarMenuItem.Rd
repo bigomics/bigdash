@@ -4,13 +4,25 @@
 \alias{sidebarMenuItem}
 \title{Element for the Sidebar menu}
 \usage{
-sidebarMenuItem(text, target)
+sidebarMenuItem(
+  text,
+  target,
+  icon = NULL,
+  badge = NULL,
+  badge_color = "success"
+)
 }
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
 
 \item{target}{\code{name} of the target \code{\link[=bigTabItem]{bigTabItem()}} that this should
 make visible.}
+
+\item{icon}{Icon to display.}
+
+\item{badge}{Optional badge text (e.g., "new", "beta").}
+
+\item{badge_color}{Color of the badge (default: "success" for green).}
 }
 \description{
 Element in the collapsible \code{\link[=sidebarMenu]{sidebarMenu()}}.

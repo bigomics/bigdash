@@ -4,7 +4,7 @@
 \alias{navbarDropdown}
 \title{Navbar Dropdown}
 \usage{
-navbarDropdown(title, ...)
+navbarDropdown(title, ..., auto_close = "true")
 }
 \arguments{
 \item{title}{Title of the dropdown, displayed on
