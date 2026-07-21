@@ -1,33 +1,36 @@
 import 'jquery';
 import 'shiny';
 import { isMobile } from './utils';
+import { scopedId, rootIdFor, eachRootId } from './scope';
 
-let sidebarHelp = {};
+let sidebarHelpByRoot = {};
 
 export const handleSidebar = () => {
   // Collapse click
   $('.sidebar-label').on('click', (e) => {
-    sidebarCollapse();
+    sidebarCollapse(rootIdFor($(e.currentTarget)));
   });
 }
 
-const toggleFirstTab = () => {
-  let $el = $('.tab-trigger.tab-sidebar')
+const toggleFirstTab = (id, $root) => {
+  let $el = $root
+    .find('.tab-trigger.tab-sidebar')
     .first();
 
   let target = $el.data('target');
 
-  toggleTabs(target);
+  if(target)
+    toggleTabs(target, id);
 }
 
-const toggleTabs = (target) => {
+const toggleTabs = (target, id) => {
   // reset be we set in case some help is missing
-  $('#sidebar-help-container').hide();
+  $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
 
-  $('#big-tabs')
+  $(`#${scopedId(id, 'big-tabs')}`)
     .find('.big-tab')
     .each((index, tab) => {
-      toggleTab(tab, target);
+      toggleTab(tab, target, id);
     });
 
   $('.tab-trigger')
@@ -53,7 +56,7 @@ const toggleTabs = (target) => {
     });
 }
 
-const toggleTab = (tab, target) => {
+const toggleTab = (tab, target, id) => {
   let name = $(tab).data('name');
 
   // we hide the tab content
@@ -77,17 +80,18 @@ const toggleTab = (tab, target) => {
 
   // we show the associated help
   // truthy in case it is missing
-  if(sidebarHelp[name]) {
-    $('#sidebar-help-title')
+  let help = (sidebarHelpByRoot[id] || {})[name];
+  if(help) {
+    $(`#${scopedId(id, 'sidebar-help-title')}`)
       .html(
-        `${sidebarHelp[name].title}
+        `${help.title}
         <i class='fas fa-angle-down float-right'></i>`
       );
-    $('#sidebar-help-content')
-      .html(sidebarHelp[name].text);
-    $('#sidebar-help-container').show();
+    $(`#${scopedId(id, 'sidebar-help-content')}`)
+      .html(help.text);
+    $(`#${scopedId(id, 'sidebar-help-container')}`).show();
   } else {
-    $('#sidebar-help-container').hide();
+    $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
   }
 
   if(isMobile())
@@ -110,46 +114,47 @@ const toggleTab = (tab, target) => {
       $(el).trigger('shown');
     });
 
+  let $settingsContainer = $(`#${scopedId(id, 'settings-container')}`);
   if(!found){
-    $('#settings-container').removeClass('d-md-block');
-    $('#settings-container').hide();
+    $settingsContainer.removeClass('d-md-block');
+    $settingsContainer.hide();
   } else {
-    $('#settings-container').addClass('d-md-block');
-    $('#settings-container').show();
+    $settingsContainer.addClass('d-md-block');
+    $settingsContainer.show();
   }
 
   // run hook
-  let hook = eval($('#settings-posthook').text());
+  let hook = eval($(`#${scopedId(id, 'settings-posthook')}`).text());
   if(hook)
     eval(hook());
 }
 
-const sidebarCollapse = () => {
-  $('#sidebar-container').toggleClass('sidebar-expanded sidebar-collapsed');
-  $('#sidebar-help-container').toggle();
-  $('#sidebar-wrapper').toggleClass('p-2');
-  $('#sidebar-top-expanded').toggleClass('d-none');
-  $('#sidebar-top-collapsed').toggleClass('d-none');
-  collapseHelp();
-  toggleCollapseLabel();
-  toggleCollapseContent();
+const sidebarCollapse = (id) => {
+  $(`#${scopedId(id, 'sidebar-container')}`).toggleClass('sidebar-expanded sidebar-collapsed');
+  $(`#${scopedId(id, 'sidebar-help-container')}`).toggle();
+  $(`#${scopedId(id, 'sidebar-wrapper')}`).toggleClass('p-2');
+  $(`#${scopedId(id, 'sidebar-top-expanded')}`).toggleClass('d-none');
+  $(`#${scopedId(id, 'sidebar-top-collapsed')}`).toggleClass('d-none');
+  collapseHelp(id);
+  toggleCollapseLabel(id);
+  toggleCollapseContent(id);
 }
 
-const collapseHelp = () => {
-  let expanded = $('#sidebar-container').hasClass('sidebar-expanded')
+const collapseHelp = (id) => {
+  let expanded = $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded')
   if(expanded){
-    $('#sidebar-help-container').show();
+    $(`#${scopedId(id, 'sidebar-help-container')}`).show();
     return;
   }
 
-  $('#sidebar-help-container').hide();
+  $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
 }
 
-const toggleCollapseContent = () => {
-  let $container = $('#sidebar-container')
+const toggleCollapseContent = (id) => {
+  let $container = $(`#${scopedId(id, 'sidebar-container')}`)
     .find('.sidebar-content');
 
-  if(isExpanded()) {
+  if(isExpanded(id)) {
     $container.show();
     return
   }
@@ -157,7 +162,7 @@ const toggleCollapseContent = () => {
   $container.hide();
 }
 
-const toggleCollapseLabel = () => {
+const toggleCollapseLabel = (id) => {
   let css = {
     'transform': 'none',
     'margin-top': '1rem',
@@ -169,7 +174,7 @@ const toggleCollapseLabel = () => {
     'transform': 'rotate(0deg)',
   }
 
-  if(!isExpanded()) {
+  if(!isExpanded(id)) {
     css = {
       'transform': 'rotate(-90deg)',
       'margin-top': '3.5rem',
@@ -182,31 +187,35 @@ const toggleCollapseLabel = () => {
     }
   }
 
-  $('#sidebar-container')
+  $(`#${scopedId(id, 'sidebar-container')}`)
     .find('.sidebar-label')
     .css(css);
 
-  $('#sidebar-container')
+  $(`#${scopedId(id, 'sidebar-container')}`)
     .find('.sidebar-icon')
     .css(cssIcon);
 }
 
-const isExpanded = () => {
-  return $('#sidebar-container').hasClass('sidebar-expanded');
+const isExpanded = (id) => {
+  return $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded');
 }
 
 /* $(function() { */
 $(document).on('shiny:connected', function() {
-  // data to render in the sidebar help
-  if($("#sidebar-help").length > 0)
-    sidebarHelp = JSON.parse($("#sidebar-help").text());
+  eachRootId((id, $root) => {
+    // data to render in the sidebar help
+    let $help = $root.find(`#${scopedId(id, 'sidebar-help')}`);
+    if($help.length > 0)
+      sidebarHelpByRoot[id] = JSON.parse($help.text());
 
-  // on load toggle first tab
-  toggleFirstTab();
+    // on load toggle first tab
+    toggleFirstTab(id, $root);
+  });
 
   $('.tab-trigger').on('click', (e) => {
-    let target = $(e.currentTarget).data('target');
-    toggleTabs(target);
+    let $trigger = $(e.currentTarget);
+    let target = $trigger.data('target');
+    toggleTabs(target, rootIdFor($trigger));
   });
 
   let collapse = [];
