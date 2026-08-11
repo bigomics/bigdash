@@ -89,6 +89,10 @@ html {
 
   .btn {
     --bs-btn-border-radius: 6px;
+    // The module headers size their icon buttons off these; without them the
+    // header grows ~4px and the buttons drift apart.
+    --bs-btn-padding-x: 1.2em;
+    --bs-btn-padding-y: 0.6em;
   }
 
   // header buttons of PlotModuleUI / TableModuleUI
