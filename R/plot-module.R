@@ -255,6 +255,14 @@ PlotModuleUI <- function(id,
     header_buttons <- div()
   }
 
+  ## Resolved before the button is built: with no host app to supply the
+  ## editor, the button would open an empty modal.
+  getEditorContent <- bd_hook("editor_content")
+  if (editor && is.null(getEditorContent)) {
+    warning("[PlotModuleUI] editor = TRUE but no bigdash.editor_content hook registered")
+    editor <- FALSE
+  }
+
   if (editor) {
     editor_button <- shiny::div(
       class = "edit-button",
@@ -436,12 +444,6 @@ PlotModuleUI <- function(id,
     )
   }
 
-  getEditorContent <- bd_hook("editor_content")
-  if (editor && is.null(getEditorContent)) {
-    warning("[PlotModuleUI] editor = TRUE but no bigdash.editor_content hook registered")
-    editor <- FALSE
-    editor_button <- NULL
-  }
   editor_content <- if (!editor) NULL else getEditorContent(
     plot_type = plot_type,
     ns = ns,

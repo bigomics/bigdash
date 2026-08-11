@@ -11,7 +11,11 @@
 
 #' @keywords internal
 send_nav <- function(session, type, value = NULL) {
-  if (!inherits(session, "ShinySession")) {
+  ## Same class list shiny:::validate_session_object accepts. Inside
+  ## moduleServer the session is a bare `session_proxy`, which does NOT
+  ## inherit from ShinySession, so checking for that alone rejects every
+  ## call made from within a module.
+  if (!inherits(session, c("ShinySession", "MockShinySession", "session_proxy"))) {
     stop("`session` must be a Shiny session object", call. = FALSE)
   }
   session$sendCustomMessage(type, if (is.null(value)) list() else list(value = value))
