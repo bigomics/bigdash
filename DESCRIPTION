@@ -1,7 +1,7 @@
 Package: bigdash
 Title: Dashboard Layout and Theme for 'BigOmics'
-Version: 0.0.1
-Authors@R: 
+Version: 0.0.0.9005
+Authors@R:
     c(
         person("John", "Coene", , "john@opifex.org", role = c("aut", "cre")),
         person(family = "BigOmics", role = c("fnd", "cph"))
@@ -10,9 +10,33 @@ Description: 'Shiny' dashboard layout and theme.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-Imports: 
+Depends:
+    R (>= 4.1)
+Imports:
+    bigLoaders,
     bslib,
-    shiny (>= 1.7.0),
+    DT,
+    htmltools,
+    htmlwidgets,
     jsonlite,
-    htmltools
+    shiny (>= 1.7.0),
+    shinyjs,
+    stringr
+Suggests:
+    ggiraph,
+    ggplot2,
+    grid,
+    iheatmapr,
+    openxlsx,
+    pairsD3,
+    plotly,
+    reticulate,
+    showtext,
+    svglite,
+    svgPanZoom,
+    sysfonts,
+    visNetwork,
+    webshot2
+Remotes:
+    bigomics/bigLoaders
+Config/roxygen2/version: 8.1.0

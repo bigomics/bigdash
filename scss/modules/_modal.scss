@@ -1,0 +1,60 @@
+// Fullscreen modals opened by the zoom/edit buttons of PlotModuleUI and
+// TableModuleUI.
+html {
+
+    .modal-title {
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: -5px;
+	margin-bottom: 5px;
+	font-size: 2em;
+	font-weight: 600;
+    }
+
+    .modal-dialog {
+        box-shadow: 10px 10px 30px #999;
+        display: flex !important;
+        margin: auto;
+    }
+
+    .modal-dialog.modal-lg {
+        width: 640px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-dialog.modal-sm {
+        width: 300px;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-footer .btn {
+	margin-left: 5px;
+	margin-bottom: 0;
+	font-size: 14px;
+    }
+
+    .modal-content {
+	border: 0;
+    }
+
+    .modal-content .well {
+	font-size: 1.3em;
+	line-height: 1.2em;
+	width: 100%;
+    }
+
+    .modal-backdrop {
+	background-color: #FFF;
+    }
+
+    .modal-backdrop.show,
+    .modal-backdrop.in {
+	opacity: 0.85;
+    }
+
+    .modal-body {
+	height: auto;
+    }
+}

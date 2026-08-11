@@ -86,4 +86,35 @@ html {
       background-color: transparent;
     }
   }
+
+  .btn {
+    --bs-btn-border-radius: 6px;
+  }
+
+  // header buttons of PlotModuleUI / TableModuleUI
+  .btn-circle-xs,
+  .btn-circle-xs:focus {
+    background: #FFFFFF;
+    color: #DDD;
+    text-shadow: 0 0 0px #ccc;
+    border: 0px;
+    border-radius: 3px !important;
+  }
+
+  .btn-circle-xs:hover {
+    background-color: #fff;
+    color: #444;
+    border: 0px;
+    border-radius: 3px;
+  }
+
+  // confirmation checkmark flashed by addTick()
+  .tick {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .show-tick .tick {
+    opacity: 1;
+  }
 }

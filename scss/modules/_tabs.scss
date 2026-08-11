@@ -5,17 +5,24 @@ html {
 
     .nav-link {
       border: 0;
-      color: $mid-grey;
+      border-bottom: solid 0px;
+      color: #b8b8b8;
+      background-color: transparent;
 
       &.active {
-        border-bottom: 1px solid black;
+        border-bottom: solid 1px;
         color: $black;
+        background-color: transparent;
       }
     }
 
   }
-  
+
   .big-tabs {
     line-height: 1.1em;
+  }
+
+  .big-tab {
+    padding: 0px 15px;
   }
 }
