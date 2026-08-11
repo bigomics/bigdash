@@ -95,7 +95,19 @@ html {
     --bs-btn-padding-y: 0.6em;
   }
 
-  // header buttons of PlotModuleUI / TableModuleUI
+  // header buttons of PlotModuleUI / TableModuleUI.
+  // The sizing comes from shinyWidgets in Omics Playground; declared here so a
+  // standalone app gets the same compact button without that dependency. Same
+  // values, so the two agree when both are loaded.
+  .btn.btn-circle-xs {
+    width: 19px;
+    height: 19px;
+    font-size: 13px;
+    line-height: 0.1;
+    padding: 1px 0px;
+    text-align: center;
+  }
+
   .btn-circle-xs,
   .btn-circle-xs:focus {
     background: #FFFFFF;
