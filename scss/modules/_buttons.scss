@@ -124,13 +124,17 @@ html {
     border-radius: 3px;
   }
 
-  // confirmation checkmark flashed by addTick()
-  .tick {
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-  }
+}
 
-  .show-tick .tick {
-    opacity: 1;
-  }
+// Confirmation checkmark flashed by addTick(). Left outside the `html` block
+// so the specificity stays (0,1,0) exactly as in Omics Playground: `.tick` is
+// also what D3 and plotly emit for axis ticks, and nesting it would raise the
+// specificity of an `opacity: 0` rule that already has a wide blast radius.
+.tick {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.show-tick .tick {
+  opacity: 1;
 }
