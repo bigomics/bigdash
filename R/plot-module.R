@@ -21,7 +21,21 @@
 #' @param no.download,download.fmt Download button: disable, or restrict formats.
 #' @param editor Show the plot editor button. Requires a `bigdash.editor_content`
 #'   hook, see [bd_hook()].
-#' @param ... Remaining arguments control sizing and the editor defaults.
+#' @param label Unused, kept for backwards compatibility.
+#' @param just.info Hide the options button.
+#' @param info.width Width of the info popover.
+#' @param show.maximize Show the zoom button.
+#' @param height,width Length-2 vectors: card size, then modal size.
+#' @param card_footer_height Height of the caption footer.
+#' @param pdf.width,pdf.height Default PDF/PNG export size, in inches.
+#' @param cards Render several plots as tabs within one card.
+#' @param card_names Tab labels, one per card, when `cards = TRUE`.
+#' @param header_buttons Extra controls placed in the card header.
+#' @param translate,translate_js Passed to the `bigdash.tspan` hook, see [bd_hook()].
+#' @param ns_parent Namespace function of the calling module, used by the editor.
+#' @param plot_type Which editor panel set to build, e.g. `"volcano"`.
+#' @param bar_color_default,palette_default,bars_order_default Editor defaults.
+#' @param color_selection,color_selection_default,subplot_order Editor toggles.
 #'
 #' @export
 PlotModuleUI <- function(id,
@@ -539,7 +553,13 @@ PlotModuleUI <- function(id,
 #' @param add.watermark `FALSE`, or a position passed to the `bigdash.watermark_png`
 #'   / `bigdash.watermark_pdf` hooks. See [bd_hook()].
 #' @param parent_session Session of the calling module, needed by the editor.
-#' @param ... Remaining arguments control sizing, resolution and PDF geometry.
+#' @param height,width Length-2 vectors: card size, then modal size.
+#' @param res Length-2 vector: card resolution, then modal resolution.
+#' @param download.contrast.name Reactive appended to the download filename.
+#' @param pdf.width,pdf.height,pdf.pointsize PDF export geometry.
+#' @param remove_margins Strip plot margins before export.
+#' @param vis.delay Seconds to wait before screenshotting a visNetwork.
+#' @param card Index of this plot when the UI was built with `cards = TRUE`.
 #'
 #' @export
 PlotModuleServer <- function(id,

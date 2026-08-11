@@ -48,14 +48,26 @@ download and click-to-label.}
 
 \item{download.fmt}{Formats offered in the download menu.}
 
+\item{height, width}{Length-2 vectors: card size, then modal size.}
+
+\item{res}{Length-2 vector: card resolution, then modal resolution.}
+
 \item{download.pdf, download.png, download.html, download.csv, download.excel, download.obj}{Override the generated \code{\link[shiny:downloadHandler]{shiny::downloadHandler()}}.}
+
+\item{download.contrast.name}{Reactive appended to the download filename.}
+
+\item{pdf.width, pdf.height, pdf.pointsize}{PDF export geometry.}
 
 \item{add.watermark}{\code{FALSE}, or a position passed to the \code{bigdash.watermark_png}
 / \code{bigdash.watermark_pdf} hooks. See \code{\link[=bd_hook]{bd_hook()}}.}
 
-\item{parent_session}{Session of the calling module, needed by the editor.}
+\item{remove_margins}{Strip plot margins before export.}
 
-\item{...}{Remaining arguments control sizing, resolution and PDF geometry.}
+\item{vis.delay}{Seconds to wait before screenshotting a visNetwork.}
+
+\item{card}{Index of this plot when the UI was built with \code{cards = TRUE}.}
+
+\item{parent_session}{Session of the calling module, needed by the editor.}
 }
 \description{
 Plot module server

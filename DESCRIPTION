@@ -16,6 +16,8 @@ Imports:
     bigLoaders,
     bslib,
     DT,
+    grDevices,
+    graphics,
     htmltools,
     htmlwidgets,
     jsonlite,

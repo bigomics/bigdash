@@ -63,6 +63,18 @@ importFrom(bslib,
   bs_theme,
   font_face
 )
+importFrom(grDevices,
+  dev.off,
+  pdf,
+  png
+)
+importFrom(graphics,
+  frame,
+  mtext,
+  par,
+  plot.new,
+  text
+)
 importFrom(htmltools,
   div,
   h4,
@@ -75,4 +87,10 @@ importFrom(jsonlite,toJSON)
 importFrom(shiny,
   HTML,
   addResourcePath
+)
+importFrom(utils,
+  head,
+  packageVersion,
+  tail,
+  write.csv
 )

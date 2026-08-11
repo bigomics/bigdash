@@ -1,3 +1,19 @@
+##
+## Copyright (c) 2018-2026 BigOmics Analytics SA. All rights reserved.
+##
+
+#' Base functions used by the plot and table modules
+#'
+#' The moved Omics Playground code calls these unqualified; declared here so
+#' they resolve through the namespace rather than the search path.
+#'
+#' @importFrom grDevices dev.off pdf png
+#' @importFrom graphics frame mtext par plot.new text
+#' @importFrom utils head tail write.csv packageVersion
+#' @name bigdash-base-imports
+#' @keywords internal
+NULL
+
 #' Application hooks
 #'
 #' `PlotModule`/`TableModule` were extracted from Omics Playground, which wires

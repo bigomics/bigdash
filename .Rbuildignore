@@ -1,5 +1,6 @@
 ^test\.R$
 ^srcjs$
+^react$
 ^node_modules$
 ^package\.json$
 ^package-lock\.json$
@@ -13,3 +14,4 @@
 ^\.vscode$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.github$
