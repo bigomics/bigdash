@@ -86,4 +86,55 @@ html {
       background-color: transparent;
     }
   }
+
+  .btn {
+    --bs-btn-border-radius: 6px;
+    // The module headers size their icon buttons off these; without them the
+    // header grows ~4px and the buttons drift apart.
+    --bs-btn-padding-x: 1.2em;
+    --bs-btn-padding-y: 0.6em;
+  }
+
+  // header buttons of PlotModuleUI / TableModuleUI.
+  // The sizing comes from shinyWidgets in Omics Playground; declared here so a
+  // standalone app gets the same compact button without that dependency. Same
+  // values, so the two agree when both are loaded.
+  .btn.btn-circle-xs {
+    width: 19px;
+    height: 19px;
+    font-size: 13px;
+    line-height: 0.1;
+    padding: 1px 0px;
+    text-align: center;
+  }
+
+  .btn-circle-xs,
+  .btn-circle-xs:focus {
+    background: #FFFFFF;
+    color: #DDD;
+    text-shadow: 0 0 0px #ccc;
+    border: 0px;
+    border-radius: 3px !important;
+  }
+
+  .btn-circle-xs:hover {
+    background-color: #fff;
+    color: #444;
+    border: 0px;
+    border-radius: 3px;
+  }
+
+}
+
+// Confirmation checkmark flashed by addTick(). Left outside the `html` block
+// so the specificity stays (0,1,0) exactly as in Omics Playground: `.tick` is
+// also what D3 and plotly emit for axis ticks, and nesting it would raise the
+// specificity of an `opacity: 0` rule that already has a wide blast radius.
+.tick {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.show-tick .tick {
+  opacity: 1;
 }

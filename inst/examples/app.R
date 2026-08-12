@@ -12,6 +12,15 @@ ui <- bigPage(
     center = NULL,
     left = NULL,
     navbarDropdown(
+      "Support",
+      navbarDropdownItem(
+        "Documentation"
+      ),
+      navbarDropdownItem(
+        "Contact"
+      )
+    ),
+    navbarDropdown(
       "Tutorials",
       navbarDropdownItem(
         "Get started"

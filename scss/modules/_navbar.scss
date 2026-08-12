@@ -1,5 +1,7 @@
 html {
   .navbar {
+    padding-top: 2px;
+    height: 36px;
     border-bottom: 2px solid $brand-blue;
     padding-top: .25rem;
     padding-bottom: 0;
@@ -16,7 +18,12 @@ html {
     padding-bottom: .25rem;
   }
 
-  .navbar > .dropdown-toggle::after {
+  .navbar-custom {
+    border-bottom: 1px solid gray !important;
+  }
+
+  .navbar > .dropdown-toggle::after,
+  .nav-link.dropdown-toggle::after {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
     content: "\f078";
@@ -24,12 +31,34 @@ html {
     vertical-align: 0;
   }
 
+  // ...but not on DropdownMenu's button
+  .btn.dropdown-toggle::after {
+    content: none;
+  }
+
   .dropdown-menu.show {
     left: -7rem;
     background-color: #fff;
   }
 
-  .nav-tabs .nav-link {
-    color: $mid-grey;
+  ul.nav.navbar-nav {
+    display: inline-block !important;
+  }
+
+  ul.nav.navbar-nav > li {
+    display: inline-block;
+  }
+
+  ul.nav.navbar-nav > li > a {
+    padding: 0px 6px 1px 6px;
+    color: grey;
+    background-color: #e7eaed;
+    border-radius: 5px;
+    font-size: calc(100% - 12%);
+  }
+
+  ul.nav.navbar-nav > li > a:hover ul.nav.navbar-nav > li > a:active {
+    color: black;
+    font-size: calc(100% - 20%);
   }
 }

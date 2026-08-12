@@ -21,6 +21,8 @@ Update tab elements
 Enables elements for the given input tab and disables all other elements.
 Checks that input_tab is valid name in tab_elements. Gets enable/disable elements
 for that tab, calls shinyjs::show() on those elements. Hides all other elements.
+}
+\examples{
 \dontrun{
     tab_elements <- list(
      "Heatmap" = list(enable = NULL,

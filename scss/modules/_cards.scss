@@ -1,0 +1,69 @@
+// Card chrome shared by PlotModuleUI, TableModuleUI and CardUI.
+html {
+
+    .card {
+        --bs-card-spacer-y: 0.6rem !important;
+    }
+
+    .card-header {
+        border-bottom: 0px !important;
+        height: 33px;
+    }
+
+    // Hidden by default; the .card-footer-checked switch reveals it.
+    .card-footer {
+        background-color: $pale-blue;
+        padding: 2px 0 0 2px;
+        height: 3em !important;
+        max-height: 3em !important;
+        min-height: 3em !important;
+        display: none;
+    }
+
+    .caption {
+        font-size: 13px;
+        font-weight: 400;
+        line-height: 1.1em;
+        margin: 4px;
+
+        // clamp to two lines
+        // https://stackoverflow.com/questions/33058004/applying-an-ellipsis-to-multiline-text
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .caption:hover {
+        overflow: auto;
+    }
+
+    .caption2 {
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 1.1em;
+        padding: 2rem 0rem 0rem 0rem;
+    }
+
+    .form-check.form-switch {
+        font-size: 1em;
+        float: left;
+    }
+
+    .form-check-input:checked {
+        background-color: #4081dc;
+        border-color: #b8ddff;
+    }
+}
+
+// card_names tabs of a multi-card PlotModuleUI
+.nav-pills {
+    .nav-link {
+	color: #888888;
+    }
+
+    .nav-link.active {
+	color: black;
+	background-color: #FFFFFF;
+    }
+}

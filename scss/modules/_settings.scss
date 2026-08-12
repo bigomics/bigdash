@@ -1,12 +1,15 @@
 .bigdash-settings-shell {
-  min-height: 92vh;   
-  width: 12rem;    
-  padding: 15px 0;
+  min-height: 92vh;
+  height: 100vh;
+  width: 12rem;
+  padding: 0;
+  padding-top: 10px;
   border-left: 1px solid $light-grey;
-  background-color: $pale-blue;
+  background-color: aliceblue;
 }
 
 .settings-expanded {
+  width: 12rem;
   min-width: 12rem;
   padding-left: 3px;
 }
