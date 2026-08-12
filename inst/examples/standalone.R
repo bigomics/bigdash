@@ -44,6 +44,7 @@ ui <- bigPage(
       bslib::layout_columns(
         col_widths = c(7, 5),
         row_heights = list("420px"),
+        class = "p-3",
         PlotModuleUI(
           "scatter",
           title = "Sepal vs petal",
@@ -84,12 +85,15 @@ ui <- bigPage(
       tabSettings(
         numericInput("nrows", "Rows", value = 150, min = 5, max = 150, step = 5)
       ),
-      TableModuleUI(
-        "tbl",
-        title = "Iris measurements",
-        info.text = "The raw iris data behind the scatter plot.",
-        caption = "Sortable and searchable; the zoom button opens it fullscreen.",
-        height = c(560, 800)
+      div(
+        class = "p-3",
+        TableModuleUI(
+          "tbl",
+          title = "Iris measurements",
+          info.text = "The raw iris data behind the scatter plot.",
+          caption = "Sortable and searchable; the zoom button opens it fullscreen.",
+          height = c(560, 800)
+        )
       )
     )
   )
