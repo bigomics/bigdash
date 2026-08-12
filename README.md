@@ -3,7 +3,7 @@
 
 # bigdash
 
-Dashboard layout and theme for [shiny](https://shiny.rstudio.com).
+[Shiny](https://shiny.rstudio.com) dashboard layout and theme for Omics Playground. 
 
 ## Installation
 
@@ -16,6 +16,7 @@ remotes::install_github("bigomics/bigdash")
 
 ## Examples
 
-For examples, see folder [inst/examples](inst/examples)
+For code examples, see folder [inst/examples](inst/examples)
 
+<img src="inst/examples/standalone.png" width="800">
 
