@@ -5,19 +5,21 @@
 #' @inheritParams sidebar
 #' @param .posthook JavaScript function as string to run
 #' after the settings have been rendered.
-#' 
+#'
 #' @importFrom htmltools div h4 div
 #' @importFrom shiny HTML
-#' 
-#' @export 
+#'
+#' @export
 settings <- function(
   title = "Settings",
   ...,
-  .posthook = NULL
+  .posthook = NULL,
+  id = BIGDASH_DEFAULT_ID
 ) {
   div(
-    id = "settings-container",
-    class = "position-relative d-none flex-shrink-1 d-md-block",
+    id = scoped_id(id, "settings-container"),
+    `data-bigdash-id` = id,
+    class = "bigdash-settings-shell position-relative d-none flex-shrink-1 d-md-block",
     div(
       class = "settings p-2 mt-3",
       h4(
@@ -28,11 +30,11 @@ settings <- function(
       ),
       div(
         ...,
-        id = "settings-content"
+        id = scoped_id(id, "settings-content")
       )
     ),
     tags$script(
-      id = "settings-posthook",
+      id = scoped_id(id, "settings-posthook"),
       type = "application/JavaScript",
       HTML(.posthook)
     )

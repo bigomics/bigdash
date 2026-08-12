@@ -5,26 +5,30 @@
 #' @param title Title of the sidebar.
 #' @param ... Content of the sidebar.
 #' @param top_expanded,top_collapsed Top of page content, above title.
+#' @param id Namespace id, must match the `id` passed to the enclosing
+#' [bigPage()]. See [bigPage()] for details on nesting.
 #'
 #' @export
 sidebar <- function(
   title = "Menu",
   ...,
   top_expanded = NULL,
-  top_collapsed = NULL
+  top_collapsed = NULL,
+  id = BIGDASH_DEFAULT_ID
 ) {
   if(!is.null(top_expanded))
-    top_expanded <- div(id = "sidebar-top-expanded", top_expanded)
+    top_expanded <- div(id = scoped_id(id, "sidebar-top-expanded"), top_expanded)
 
   if(!is.null(top_collapsed))
-    top_collapsed <- div(id = "sidebar-top-collapsed", top_collapsed, class = "d-none")
+    top_collapsed <- div(id = scoped_id(id, "sidebar-top-collapsed"), top_collapsed, class = "d-none")
 
   div(
-    id = "sidebar-container",
-    class = "sidebar-expanded flex-shrink-1 d-md-block",
+    id = scoped_id(id, "sidebar-container"),
+    `data-bigdash-id` = id,
+    class = "bigdash-sidebar-shell sidebar-expanded flex-shrink-1 d-md-block",
     div(
       class = "sidebar p-2",
-      id = "sidebar-wrapper",
+      id = scoped_id(id, "sidebar-wrapper"),
       top_expanded,
       top_collapsed,
       h4(
@@ -38,16 +42,16 @@ sidebar <- function(
       )
     ),
     div(
-      id = "sidebar-help-container",
+      id = scoped_id(id, "sidebar-help-container"),
       class = "p-2",
       h4(
-        id = "sidebar-help-title",
+        id = scoped_id(id, "sidebar-help-title"),
         `data-bs-toggle` = "collapse",
-        href = "#sidebar-help-content"
+        href = paste0("#", scoped_id(id, "sidebar-help-content"))
       ),
       hr_(),
       div(
-        id = "sidebar-help-content",
+        id = scoped_id(id, "sidebar-help-content"),
         class = "collapse"
       )
     )

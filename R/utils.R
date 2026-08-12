@@ -24,6 +24,31 @@ pkg_file <- function(
   system.file(path,  package = "bigdash")
 }
 
+#' Default namespace id for [bigPage()] and friends.
+#'
+#' @keywords internal
+BIGDASH_DEFAULT_ID <- "app"
+
+#' Scope an internal element id to a [bigPage()] namespace.
+#'
+#' When `id` is the default (`"app"`), the plain `suffix` is returned so
+#' the generated markup and ids are unchanged from previous releases.
+#' For any other `id`, the ids are prefixed so that multiple [bigPage()]
+#' (or [sidebar()] / [bigTabs()] / [settings()] / [sidebarHelp()]) can be
+#' nested on the same page without colliding, e.g. when one bigdash
+#' dashboard is embedded as a tab/module inside another.
+#'
+#' @param id Namespace, as passed to [bigPage()] and friends.
+#' @param suffix Element suffix, e.g. `"sidebar-container"`.
+#'
+#' @keywords internal
+scoped_id <- function(id, suffix) {
+  if (is.null(id) || identical(id, BIGDASH_DEFAULT_ID)) {
+    return(suffix)
+  }
+  paste0(id, "-", suffix)
+}
+
 #' Boostrap alert
 #' @export
 bs_alert <- function(..., conditional = TRUE, style = "primary") {
