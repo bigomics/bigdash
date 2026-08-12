@@ -7,6 +7,8 @@ ui <- bigPage(
       src = "assets/img/bigomics.png",
       width = "110",
     ),
+    center = NULL,
+    left = NULL,
     navbarDropdown(
       "Support",
       navbarDropdownItem(
