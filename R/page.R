@@ -14,11 +14,18 @@
 #' of the same class as returned by [bslib::bs_theme()]
 #' for __Bootstrap 5.__
 #' @param settings_position Position of the settings bar.
-#' 
+#' @param id Namespace id for this page. Leave as the default `"app"`
+#' unless you are nesting a [bigPage()] inside another one (e.g. embedding
+#' a bigdash dashboard as a tab/module of a larger bigdash app). When
+#' nesting, pass a distinct `id` here and the *same* `id` to the
+#' [sidebar()], [bigTabs()], [settings()] and [sidebarHelp()] used to
+#' build this page, so their generated element ids don't collide with
+#' the outer page's.
+#'
 #' @import shiny
-#' 
-#' @export 
-bigPage <- function( 
+#'
+#' @export
+bigPage <- function(
   ...,
   sidebar = htmltools::tagList(),
   settings = htmltools::tagList(),
@@ -26,7 +33,8 @@ bigPage <- function(
   title = "BigOmics",
   navbar = NULL,
   lang = NULL,
-  theme = big_theme()
+  theme = big_theme(),
+  id = BIGDASH_DEFAULT_ID
 ) {
   settings_position <- match.arg(settings_position)
 
@@ -41,8 +49,9 @@ bigPage <- function(
     dependencies(),
     navbar,
     div(
-      class = "d-flex",
-      id = "app",
+      class = "d-flex bigdash-app",
+      id = id,
+      `data-bigdash-id` = id,
       style = style,
       sidebar,
       if(settings_position == "left") settings,

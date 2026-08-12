@@ -3,13 +3,17 @@
 #' Create big tabs.
 #' 
 #' @param ... Tabs, must be [bigTabItem()].
-#' 
-#' @export 
+#' @param id Namespace id, must match the `id` passed to the enclosing
+#' [bigPage()]. See [bigPage()] for details on nesting.
+#'
+#' @export
 bigTabs <- function(
-  ...
+  ...,
+  id = BIGDASH_DEFAULT_ID
 ) {
   div(
-    id = "big-tabs",
+    id = scoped_id(id, "big-tabs"),
+    `data-bigdash-id` = id,
     ...
   )
 }

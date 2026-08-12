@@ -5,14 +5,17 @@
 #' @param ... Elements defined by [sidebarTabHelp()].
 #' @param target Target tab when this should be displayed.
 #' @param title,text Title, and text of the help.
-#' 
+#' @param id Namespace id, must match the `id` passed to the enclosing
+#' [bigPage()]. See [bigPage()] for details on nesting.
+#'
 #' @importFrom jsonlite toJSON
-#' 
+#'
 #' @name sidebarHelp
-#' 
-#' @export 
+#'
+#' @export
 sidebarHelp <- function(
-  ...
+  ...,
+  id = BIGDASH_DEFAULT_ID
 ) {
   data <- list(...)
   for(i in seq(data)) {
@@ -23,7 +26,7 @@ sidebarHelp <- function(
     auto_unbox = TRUE
   )
   tags$script(
-    id = "sidebar-help",
+    id = scoped_id(id, "sidebar-help"),
     type = "application/json",
     HTML(json)
   )
