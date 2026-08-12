@@ -12,6 +12,8 @@ ui <- bigPage(
   title = "bigdash standalone",
   navbar = navbar(
     tags$img(src = "assets/img/bigomics.png", width = "110"),
+    center = NULL,
+    left = NULL,
     navbarDropdown(
       "Demo",
       navbarDropdownTab("Plots", "plots-tab"),
