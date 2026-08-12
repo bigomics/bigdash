@@ -29,14 +29,20 @@ export(tabSettingsItem)
 export(update_swappable)
 export(update_tab_elements)
 import(shiny)
-importFrom(bslib,bs_theme)
-importFrom(bslib,font_face)
-importFrom(htmltools,div)
-importFrom(htmltools,h4)
-importFrom(htmltools,htmlDependency)
-importFrom(htmltools,span)
-importFrom(htmltools,tagAppendAttributes)
-importFrom(htmltools,tags)
+importFrom(bslib,
+  bs_theme,
+  font_face
+)
+importFrom(htmltools,
+  div,
+  h4,
+  htmlDependency,
+  span,
+  tagAppendAttributes,
+  tags
+)
 importFrom(jsonlite,toJSON)
-importFrom(shiny,HTML)
-importFrom(shiny,addResourcePath)
+importFrom(shiny,
+  HTML,
+  addResourcePath
+)

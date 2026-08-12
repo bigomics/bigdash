@@ -8,8 +8,25 @@ let sidebarHelpByRoot = {};
 export const handleSidebar = () => {
   // Collapse click
   $('.sidebar-label').on('click', (e) => {
-    sidebarCollapse(rootIdFor($(e.currentTarget)));
+    sidebarToggle(rootIdFor($(e.currentTarget)));
   });
+
+  // flip the help chevron with the panel it toggles, delegated because the
+  // title is re-rendered on every tab switch
+  $(document)
+    .on('show.bs.collapse', '.sidebar-help-content', (e) => {
+      setHelpIcon(rootIdFor($(e.currentTarget)), true);
+    })
+    .on('hide.bs.collapse', '.sidebar-help-content', (e) => {
+      setHelpIcon(rootIdFor($(e.currentTarget)), false);
+    });
+}
+
+const setHelpIcon = (id, open) => {
+  $(`#${scopedId(id, 'sidebar-help-title')}`)
+    .find('.sidebar-help-icon')
+    .toggleClass('fa-angle-down', open)
+    .toggleClass('fa-angle-up', !open);
 }
 
 const toggleFirstTab = (id, $root) => {
@@ -82,10 +99,13 @@ const toggleTab = (tab, target, id) => {
   // truthy in case it is missing
   let help = (sidebarHelpByRoot[id] || {})[name];
   if(help) {
+    // the help panel opens upwards: the chevron points up while the panel
+    // is collapsed and down once it is open
+    let open = $(`#${scopedId(id, 'sidebar-help-content')}`).hasClass('show');
     $(`#${scopedId(id, 'sidebar-help-title')}`)
       .html(
         `${help.title}
-        <i class='fas fa-angle-down float-right'></i>`
+        <i class='fas fa-angle-${open ? 'down' : 'up'} float-right sidebar-help-icon'></i>`
       );
     $(`#${scopedId(id, 'sidebar-help-content')}`)
       .html(help.text);
@@ -129,16 +149,20 @@ const toggleTab = (tab, target, id) => {
     eval(hook());
 }
 
-const sidebarCollapse = (id) => {
+const setSidebarState = (id, expand) => {
+  // nothing to do, the sidebar already is in the requested state
+  if(expand === isExpanded(id))
+    return;
+
   $(`#${scopedId(id, 'sidebar-container')}`).toggleClass('sidebar-expanded sidebar-collapsed');
-  $(`#${scopedId(id, 'sidebar-help-container')}`).toggle();
   $(`#${scopedId(id, 'sidebar-wrapper')}`).toggleClass('p-2');
   $(`#${scopedId(id, 'sidebar-top-expanded')}`).toggleClass('d-none');
   $(`#${scopedId(id, 'sidebar-top-collapsed')}`).toggleClass('d-none');
   collapseHelp(id);
-  toggleCollapseLabel(id);
   toggleCollapseContent(id);
 }
+
+const sidebarToggle = (id) => setSidebarState(id, !isExpanded(id));
 
 const collapseHelp = (id) => {
   let expanded = $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded')
@@ -160,40 +184,6 @@ const toggleCollapseContent = (id) => {
   }
 
   $container.hide();
-}
-
-const toggleCollapseLabel = (id) => {
-  let css = {
-    'transform': 'none',
-    'margin-top': '1rem',
-  };
-  let cssIcon = {
-    'position': 'relative',
-    'top': 0,
-    'right': 0,
-    'transform': 'rotate(0deg)',
-  }
-
-  if(!isExpanded(id)) {
-    css = {
-      'transform': 'rotate(-90deg)',
-      'margin-top': '3.5rem',
-    };
-    cssIcon = {
-      'position': 'absolute',
-      'top': 0,
-      'right': '4rem',
-      'transform': 'rotate(-90deg)',
-    }
-  }
-
-  $(`#${scopedId(id, 'sidebar-container')}`)
-    .find('.sidebar-label')
-    .css(css);
-
-  $(`#${scopedId(id, 'sidebar-container')}`)
-    .find('.sidebar-icon')
-    .css(cssIcon);
 }
 
 const isExpanded = (id) => {

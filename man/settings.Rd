@@ -4,7 +4,7 @@
 \alias{settings}
 \title{Settings}
 \usage{
-settings(title = "Settings", ..., .posthook = NULL)
+settings(title = "Settings", ..., .posthook = NULL, id = BIGDASH_DEFAULT_ID)
 }
 \arguments{
 \item{title}{Title of the sidebar.}
@@ -13,6 +13,9 @@ settings(title = "Settings", ..., .posthook = NULL)
 
 \item{.posthook}{JavaScript function as string to run
 after the settings have been rendered.}
+
+\item{id}{Namespace id, must match the \code{id} passed to the enclosing
+\code{\link[=bigPage]{bigPage()}}. See \code{\link[=bigPage]{bigPage()}} for details on nesting.}
 }
 \description{
 Settings content to pass to \code{\link[=bigPage]{bigPage()}}.

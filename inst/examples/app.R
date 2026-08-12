@@ -5,17 +5,12 @@ ui <- bigPage(
   navbar = navbar(
     tags$img(
       src = "assets/img/bigomics.png",
-      width = "110",
+      height = "30",
     ),
-    navbarDropdown(
-      "Support",
-      navbarDropdownItem(
-        "Documentation"
-      ),
-      navbarDropdownItem(
-        "Contact"
-      )
-    ),
+    # center/left named explicitly so both dropdowns fall through to `...`,
+    # which navbar() renders right-aligned
+    center = NULL,
+    left = NULL,
     navbarDropdown(
       "Tutorials",
       navbarDropdownItem(
@@ -55,10 +50,8 @@ ui <- bigPage(
     )
   ),
   settings = settings(
-    "Settings",
-    p(
-      "Settings will appear here."
-    )
+    "Settings"
+    ## Settings will appear here
   ),
   sidebarHelp(
     sidebarTabHelp(
@@ -86,59 +79,35 @@ ui <- bigPage(
     ),
     bigTabItem(
       "tab1",
-      div(
-        class = "p-4",
-        h1("Hello"),
-        actionButton("reorder", "randomise order"),
-        swappable(
-          inputId = "swap",
-          fluidRow(
-            swappableItem(
-              inputId = "s1",
-              class = "col-6",
-              div(
-                class = "card",
-                div(
-                  class = "card-body",
-                  plotOutput("plot1")
-                )
-              )
-            ),
-            swappableItem(
-              inputId = "s2",
-              class = "col-3",
-              div(
-                class = "card",
-                div(
-                  class = "card-body",
-                  h3("Something")
-                )
-              )
-            ),
-            swappableItem(
-              inputId = "s3",
-              class = "col-3",
-              div(
-                class = "card",
-                div(
-                  class = "card-body",
-                  h5("Something else")
-                )
-              )
-            )
-          )
+      # settings for this tab only, moved into the right-hand
+      # settings panel when the tab is activated
+      tabSettings(
+        selectInput(
+          "dataset",
+          "Dataset",
+          choices = c("Example A", "Example B", "Example C")
+        ),
+        sliderInput(
+          "ngenes",
+          "Number of genes",
+          min = 10,
+          max = 1000,
+          value = 100,
+          step = 10
+        ),
+        checkboxInput(
+          "normalize",
+          "Normalize counts",
+          value = TRUE
         )
-      )
-    ),
-    bigTabItem(
-      "tab2",
+      ),
       div(
         class = "p-4",
         h2("World"),
         tabsetPanel(
           tabPanel(
             "First tab",
-            h1("First tab")
+            verbatimTextOutput("settings_values"),
           ),
           tabPanel(
             "Second tab",
@@ -148,7 +117,7 @@ ui <- bigPage(
       )
     ),
     bigTabItem(
-      "tab3",
+      "tab2",
       div(
         class = "p-4",
         h2("profile")
@@ -158,25 +127,14 @@ ui <- bigPage(
 )
 
 server <- function(input, output) {
-  output$plot1 <- renderPlot({
-    plot(cars)
-  })
-
-  observeEvent(input$swap, {
-    print(input$swap)
-  })
-
-  observeEvent(input$reorder, {
-    order <- sample(
-      c(
-        "s1",
-        "s2",
-        "s3"
-      )
+  output$settings_values <- renderPrint({
+    list(
+      dataset = input$dataset,
+      ngenes = input$ngenes,
+      normalize = input$normalize
     )
-
-    update_swappable("swap", order)
   })
 }
 
 shinyApp(ui, server, options = list(port = 8080))
+

@@ -1,6 +1,19 @@
 html {
   .navbar {
     border-bottom: 2px solid $brand-blue;
+    padding-top: .25rem;
+    padding-bottom: 0;
+  }
+
+  // the brand and the nav links set the height of the bar, trim their
+  // vertical padding so it hugs the logo
+  .navbar-brand {
+    padding-bottom: 0;
+  }
+
+  .navbar .nav-link {
+    padding-top: .25rem;
+    padding-bottom: .25rem;
   }
 
   .navbar > .dropdown-toggle::after {

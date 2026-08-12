@@ -6,7 +6,7 @@
 .bigdash-sidebar-shell {
   min-height: 92vh;
   width: 12rem;
-  padding: 0;
+  padding: 15px 0;
   border-right: 1px solid $light-grey;
   background-color: $pale-blue;
   position: relative;
@@ -23,6 +23,34 @@
 .sidebar-collapsed {
   width: 3rem;
   max-width: 3rem;
+
+  // stack the collapse icon on top of the (vertical) title, keeping the icon
+  // at the same height as when the sidebar is expanded
+  .sidebar-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: .5rem; // compensates the .p-2 dropped from .sidebar
+  }
+
+  .sidebar-icon {
+    order: -1;
+    float: none;
+    transform: rotate(180deg);
+  }
+
+  // vertical writing mode keeps a long title inside the page instead of
+  // overflowing sideways as a rotated horizontal box would
+  .sidebar-title {
+    margin-top: 1rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    max-height: calc(92vh - 8rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .active-sidebar {
@@ -30,7 +58,7 @@
 }
 
 .sidebar-menu{
-  padding: .7rem 0rem .7rem 1rem;
+  padding: .5rem 0rem .5rem 0.7rem;
   line-height: 1.4rem;
   display: block;
 }
@@ -42,6 +70,12 @@
 
 .tab-sidebar{
   border-left: .3rem solid transparent;
-  padding: .7rem .7rem;
+  padding: .4rem .7rem .5rem .4rem;
   display: block;
+}
+
+#sidebar-help-container{
+  position: absolute;
+  top: calc(100vh - 220px);
+  width: 100%;
 }

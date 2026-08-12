@@ -5,12 +5,15 @@
 \alias{sidebarTabHelp}
 \title{Sidebar Help}
 \usage{
-sidebarHelp(...)
+sidebarHelp(..., id = BIGDASH_DEFAULT_ID)
 
 sidebarTabHelp(target, title, text)
 }
 \arguments{
 \item{...}{Elements defined by \code{\link[=sidebarTabHelp]{sidebarTabHelp()}}.}
+
+\item{id}{Namespace id, must match the \code{id} passed to the enclosing
+\code{\link[=bigPage]{bigPage()}}. See \code{\link[=bigPage]{bigPage()}} for details on nesting.}
 
 \item{target}{Target tab when this should be displayed.}
 
