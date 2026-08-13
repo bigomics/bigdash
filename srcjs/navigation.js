@@ -1,5 +1,7 @@
 import 'jquery';
 import 'shiny';
+import { refreshHelp } from './sidebar';
+import { DEFAULT_ID } from './scope';
 
 // Programmatic counterpart to sidebar.js / settings.js: these drive the same
 // DOM those modules wire up, so the server can open, close and hide things.
@@ -23,18 +25,19 @@ const unloadSidebar = () => {
         $('#sidebar-help-container').hide();
 }
 
+// the label click runs through setSidebarState, which calls refreshHelp; the
+// help box is no longer shown or hidden from here, or it would override the
+// "sidebar open AND tab has help" rule sidebar.js applies
 const sidebarClose = () => {
     if($('#sidebar-container').hasClass('sidebar-expanded')) {
 	$('.sidebar-label').trigger('click');
     }
-    $('#sidebar-help-container').hide();
 }
 
 const sidebarOpen = () => {
     if($('#sidebar-container').hasClass('sidebar-collapsed')) {
 	$('.sidebar-label').trigger('click');
     }
-    $('#sidebar-help-container').show();
 }
 
 // The panel is click-toggled from its label (settings.js), so drive that,
@@ -78,7 +81,7 @@ export const handleNavigation = () => {
       }
 		});
 
-	$('#sidebar-help-container').show();
+	refreshHelp(DEFAULT_ID);
 	}, 1000);
   });
 

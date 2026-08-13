@@ -4,6 +4,8 @@ import { isMobile } from './utils';
 import { scopedId, rootIdFor, eachRootId } from './scope';
 
 let sidebarHelpByRoot = {};
+// whether the tab currently on screen has any help to show
+let hasActiveHelp = {};
 
 export const handleSidebar = () => {
   // Collapse click
@@ -42,7 +44,8 @@ const toggleFirstTab = (id, $root) => {
 
 const toggleTabs = (target, id) => {
   // reset be we set in case some help is missing
-  $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
+  hasActiveHelp[id] = false;
+  refreshHelp(id);
 
   $(`#${scopedId(id, 'big-tabs')}`)
     .find('.big-tab')
@@ -109,10 +112,9 @@ const toggleTab = (tab, target, id) => {
       );
     $(`#${scopedId(id, 'sidebar-help-content')}`)
       .html(help.text);
-    $(`#${scopedId(id, 'sidebar-help-container')}`).show();
-  } else {
-    $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
   }
+  hasActiveHelp[id] = !!help;
+  refreshHelp(id);
 
   if(isMobile())
     return;
@@ -158,20 +160,19 @@ const setSidebarState = (id, expand) => {
   $(`#${scopedId(id, 'sidebar-wrapper')}`).toggleClass('p-2');
   $(`#${scopedId(id, 'sidebar-top-expanded')}`).toggleClass('d-none');
   $(`#${scopedId(id, 'sidebar-top-collapsed')}`).toggleClass('d-none');
-  collapseHelp(id);
+  refreshHelp(id);
   toggleCollapseContent(id);
 }
 
 const sidebarToggle = (id) => setSidebarState(id, !isExpanded(id));
 
-const collapseHelp = (id) => {
-  let expanded = $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded')
-  if(expanded){
-    $(`#${scopedId(id, 'sidebar-help-container')}`).show();
-    return;
-  }
-
-  $(`#${scopedId(id, 'sidebar-help-container')}`).hide();
+// The help box belongs on screen only when the sidebar is open *and* the
+// active tab has help. Deciding those separately is what put it in the 3rem
+// rail as an unreadable ribbon, and what left an empty box on tabs with no
+// sidebarTabHelp(); both callers come through here so they cannot disagree.
+export const refreshHelp = (id) => {
+  $(`#${scopedId(id, 'sidebar-help-container')}`)
+    .toggle(isExpanded(id) && !!hasActiveHelp[id]);
 }
 
 const toggleCollapseContent = (id) => {
