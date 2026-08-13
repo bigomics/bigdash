@@ -80,10 +80,13 @@ sidebarItem <- function(
     stop("Missing `target`")
 
   tagList(
-    p(
-      title,
-      `data-target` = target,
-      class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-0 text-muted"
+    div(
+      class = "sidebar-item",
+      p(
+        title,
+        `data-target` = target,
+        class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-0 text-muted"
+      )
     ),
     hr_()
   )
