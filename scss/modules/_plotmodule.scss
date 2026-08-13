@@ -8,6 +8,17 @@ html {
 	border-bottom: 1px solid #ccc;
     }
 
+    // PlotModuleUI splices bslib's nav-pills bar into the header and strips its
+    // bslib classes with a literal gsub on "card-header bslib-navs-card-title".
+    // bslib now emits "card-header bslib-gap-spacing bslib-navs-card-title", so
+    // the gsub misses and card-header survives, nesting a full 33px card header
+    // inside the header. Neutralise it here: class-order independent, unlike the
+    // gsub.
+    .plotmodule-header .card-header {
+        height: auto;
+        padding: 0;
+    }
+
     .plotmodule-title {
 	font-size: 16px;
 	margin-top: -1px;
