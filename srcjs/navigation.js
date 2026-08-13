@@ -37,27 +37,19 @@ const sidebarOpen = () => {
     $('#sidebar-help-container').show();
 }
 
+// The panel is click-toggled from its label (settings.js), so drive that,
+// the same way sidebarOpen/sidebarClose drive '.sidebar-label'. Testing for
+// the absence of 'settings-collapsed' rather than the presence of
+// 'settings-expanded' matters: a freshly rendered panel is open but carries
+// neither class.
 const settingsClose = () => {
-	if($('#settings-container').hasClass('settings-expanded'))
-		$('#settings-container').trigger('mouseleave');
-
+	if(!$('#settings-container').hasClass('settings-collapsed'))
+		$('.settings-label').trigger('click');
 }
 
 const settingsOpen = () => {
 	if($('#settings-container').hasClass('settings-collapsed'))
-		$('#settings-container').trigger('mouseenter');
-}
-
-const settingsLock = () => {
-	if($('#settings-container').hasClass('settings-unlocked'))
-		$('.settings-lock').trigger('click');
-	if(!$('#settings-container').hasClass('settings-locked'))
-		$('.settings-lock').trigger('click');
-}
-
-const settingsUnlock = () => {
-	if($('#settings-container').hasClass('settings-locked'))
-		$('.settings-lock').trigger('click');
+		$('.settings-label').trigger('click');
 }
 
 export const handleNavigation = () => {
@@ -66,8 +58,6 @@ export const handleNavigation = () => {
   window.sidebarOpen = sidebarOpen;
   window.settingsClose = settingsClose;
   window.settingsOpen = settingsOpen;
-  window.settingsLock = settingsLock;
-  window.settingsUnlock = settingsUnlock;
 
   Shiny.addCustomMessageHandler('show-tabs', (msg) => {
 	setTimeout(() => {

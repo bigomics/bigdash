@@ -33,7 +33,7 @@ ui <- bigPage(
       "John Doe",
       navbarDropdownTab(
         "Profile",
-        "tab3"
+        "tab2"
       ),
       navbarDropdownItem(
         "Upgrade"

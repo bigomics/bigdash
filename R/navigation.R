@@ -65,21 +65,16 @@ bigdash.toggleSidebar <- function(state) {
 
 ## ------------------- settingsBar ---------------------------
 #' Open the settings drawer
-#' @param lock Keep the drawer open when the pointer leaves it.
+#' @param lock Ignored, kept so existing calls keep working. The drawer no
+#'   longer closes itself when the pointer leaves, so it is always "locked".
 #' @export
 bigdash.openSettings <- function(lock = TRUE) {
-  shinyjs::runjs("settingsUnlock()")
   shinyjs::runjs("settingsOpen()")
-  if (lock) {
-    Sys.sleep(0.1)
-    shinyjs::runjs("settingsLock()")
-  }
 }
 
 #' Close the settings drawer
 #' @export
 bigdash.closeSettings <- function() {
-  shinyjs::runjs("settingsUnlock()")
   shinyjs::runjs("settingsClose()")
 }
 
