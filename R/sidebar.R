@@ -27,12 +27,12 @@ sidebar <- function(
     `data-bigdash-id` = id,
     class = "bigdash-sidebar-shell sidebar-expanded flex-shrink-1 d-md-block",
     div(
-      class = "sidebar p-2",
+      class = "sidebar p-2 mt-2",
       id = scoped_id(id, "sidebar-wrapper"),
       top_expanded,
       top_collapsed,
       h4(
-        title,
+        span(title, class = "sidebar-title"),
         icon("angles-left", class = "sidebar-icon float-right"),
         class = "sidebar-label cursor-pointer mb-3"
       ),
@@ -43,16 +43,18 @@ sidebar <- function(
     ),
     div(
       id = scoped_id(id, "sidebar-help-container"),
-      class = "p-2",
+      class = "p-3",
       h4(
         id = scoped_id(id, "sidebar-help-title"),
+        class = "sidebar-help-title cursor-pointer",
         `data-bs-toggle` = "collapse",
         href = paste0("#", scoped_id(id, "sidebar-help-content"))
       ),
       hr_(),
       div(
         id = scoped_id(id, "sidebar-help-content"),
-        class = "collapse"
+        # `show` so the help starts open, the chevron follows suit
+        class = "collapse show sidebar-help-content"
       )
     )
   )

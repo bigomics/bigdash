@@ -4,10 +4,13 @@
 \alias{bigTabs}
 \title{Tabs}
 \usage{
-bigTabs(...)
+bigTabs(..., id = BIGDASH_DEFAULT_ID)
 }
 \arguments{
 \item{...}{Tabs, must be \code{\link[=bigTabItem]{bigTabItem()}}.}
+
+\item{id}{Namespace id, must match the \code{id} passed to the enclosing
+\code{\link[=bigPage]{bigPage()}}. See \code{\link[=bigPage]{bigPage()}} for details on nesting.}
 }
 \description{
 Create big tabs.

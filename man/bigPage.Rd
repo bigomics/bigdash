@@ -12,7 +12,8 @@ bigPage(
   title = "BigOmics",
   navbar = NULL,
   lang = NULL,
-  theme = big_theme()
+  theme = big_theme(),
+  id = BIGDASH_DEFAULT_ID
 )
 }
 \arguments{
@@ -35,6 +36,14 @@ bigPage(
 \code{bs_theme}. Can be changed but must be a n object
 of the same class as returned by \code{\link[bslib:bs_theme]{bslib::bs_theme()}}
 for \strong{Bootstrap 5.}}
+
+\item{id}{Namespace id for this page. Leave as the default \code{"app"}
+unless you are nesting a \code{\link[=bigPage]{bigPage()}} inside another one (e.g. embedding
+a bigdash dashboard as a tab/module of a larger bigdash app). When
+nesting, pass a distinct \code{id} here and the \emph{same} \code{id} to the
+\code{\link[=sidebar]{sidebar()}}, \code{\link[=bigTabs]{bigTabs()}}, \code{\link[=settings]{settings()}} and \code{\link[=sidebarHelp]{sidebarHelp()}} used to
+build this page, so their generated element ids don't collide with
+the outer page's.}
 }
 \description{
 Main application page.

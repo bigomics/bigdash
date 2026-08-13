@@ -21,12 +21,11 @@ settings <- function(
     `data-bigdash-id` = id,
     class = "bigdash-settings-shell position-relative d-none flex-shrink-1 d-md-block",
     div(
-      class = "settings p-2 mt-3",
+      class = "settings p-2 mt-2",
       h4(
-        title,
-        tags$i(class = "fa-solid fa-lock-open cursor-pointer settings-lock settings-unlocked"),
+        span(title, class = "settings-title"),
         icon("angles-right", class = "settings-icon"),
-        class = "settings-label mb-3"
+        class = "settings-label cursor-pointer mb-3"
       ),
       div(
         ...,

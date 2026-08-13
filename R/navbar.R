@@ -22,7 +22,7 @@ navbar <- function(
     div(
       class = "container-fluid",
       tags$span(
-        class = "navbar-brand mt-0 pt-0",
+        class = "navbar-brand mt-0 pt-0 mb-1",
         title
       ),
       tags$button(

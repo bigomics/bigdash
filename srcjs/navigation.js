@@ -1,5 +1,7 @@
 import 'jquery';
 import 'shiny';
+import { refreshHelp } from './sidebar';
+import { DEFAULT_ID } from './scope';
 
 // Programmatic counterpart to sidebar.js / settings.js: these drive the same
 // DOM those modules wire up, so the server can open, close and hide things.
@@ -23,41 +25,34 @@ const unloadSidebar = () => {
         $('#sidebar-help-container').hide();
 }
 
+// the label click runs through setSidebarState, which calls refreshHelp; the
+// help box is no longer shown or hidden from here, or it would override the
+// "sidebar open AND tab has help" rule sidebar.js applies
 const sidebarClose = () => {
     if($('#sidebar-container').hasClass('sidebar-expanded')) {
 	$('.sidebar-label').trigger('click');
     }
-    $('#sidebar-help-container').hide();
 }
 
 const sidebarOpen = () => {
     if($('#sidebar-container').hasClass('sidebar-collapsed')) {
 	$('.sidebar-label').trigger('click');
     }
-    $('#sidebar-help-container').show();
 }
 
+// The panel is click-toggled from its label (settings.js), so drive that,
+// the same way sidebarOpen/sidebarClose drive '.sidebar-label'. Testing for
+// the absence of 'settings-collapsed' rather than the presence of
+// 'settings-expanded' matters: a freshly rendered panel is open but carries
+// neither class.
 const settingsClose = () => {
-	if($('#settings-container').hasClass('settings-expanded'))
-		$('#settings-container').trigger('mouseleave');
-
+	if(!$('#settings-container').hasClass('settings-collapsed'))
+		$('.settings-label').trigger('click');
 }
 
 const settingsOpen = () => {
 	if($('#settings-container').hasClass('settings-collapsed'))
-		$('#settings-container').trigger('mouseenter');
-}
-
-const settingsLock = () => {
-	if($('#settings-container').hasClass('settings-unlocked'))
-		$('.settings-lock').trigger('click');
-	if(!$('#settings-container').hasClass('settings-locked'))
-		$('.settings-lock').trigger('click');
-}
-
-const settingsUnlock = () => {
-	if($('#settings-container').hasClass('settings-locked'))
-		$('.settings-lock').trigger('click');
+		$('.settings-label').trigger('click');
 }
 
 export const handleNavigation = () => {
@@ -66,8 +61,6 @@ export const handleNavigation = () => {
   window.sidebarOpen = sidebarOpen;
   window.settingsClose = settingsClose;
   window.settingsOpen = settingsOpen;
-  window.settingsLock = settingsLock;
-  window.settingsUnlock = settingsUnlock;
 
   Shiny.addCustomMessageHandler('show-tabs', (msg) => {
 	setTimeout(() => {
@@ -88,7 +81,7 @@ export const handleNavigation = () => {
       }
 		});
 
-	$('#sidebar-help-container').show();
+	refreshHelp(DEFAULT_ID);
 	}, 1000);
   });
 

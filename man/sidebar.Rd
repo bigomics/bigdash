@@ -4,7 +4,13 @@
 \alias{sidebar}
 \title{Sidebar}
 \usage{
-sidebar(title = "Menu", ..., top_expanded = NULL, top_collapsed = NULL)
+sidebar(
+  title = "Menu",
+  ...,
+  top_expanded = NULL,
+  top_collapsed = NULL,
+  id = BIGDASH_DEFAULT_ID
+)
 }
 \arguments{
 \item{title}{Title of the sidebar.}
@@ -12,6 +18,9 @@ sidebar(title = "Menu", ..., top_expanded = NULL, top_collapsed = NULL)
 \item{...}{Content of the sidebar.}
 
 \item{top_expanded, top_collapsed}{Top of page content, above title.}
+
+\item{id}{Namespace id, must match the \code{id} passed to the enclosing
+\code{\link[=bigPage]{bigPage()}}. See \code{\link[=bigPage]{bigPage()}} for details on nesting.}
 }
 \description{
 Sidebar content to pass to \code{\link[=bigPage]{bigPage()}}.

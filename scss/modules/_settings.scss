@@ -1,4 +1,4 @@
-#settings-container {
+.bigdash-settings-shell {
   min-height: 92vh;
   height: 100vh;
   width: 12rem;
@@ -14,24 +14,41 @@
   padding-left: 3px;
 }
 
+.settings-icon {
+  margin-top: 3px;
+}
+
 .settings-collapsed {
   width: 3rem;
   max-width: 3rem;
-}
 
-.settings-lock-collapsed{
-  display: inline-block;
-  width: 100%;
-  text-align: center;
-}
+  // stack the collapse icon on top of the (vertical) title, keeping the icon
+  // at the same height as when the settings panel is expanded
+  .settings-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+    padding-top: .5rem; // compensates the .p-2 dropped from .settings
+  }
 
-.settings-lock-expanded{
-  font-size: 0.9em;
-  margin-left: 7px;
-}
+  .settings-icon {
+    order: -1;
+    float: none;
+    transform: rotate(180deg);
+  }
 
-.settings-lock{
-  opacity: .7;
+  // vertical writing mode keeps a long title inside the page instead of
+  // overflowing sideways as a rotated horizontal box would
+  .settings-title {
+    margin-top: 1rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    max-height: calc(92vh - 8rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .settings-label{
