@@ -402,7 +402,7 @@ PlotModuleUI <- function(id,
         )
       )
     })
-    tabs_modal <- c(tabs_modal, id = "card_selector_modal", bg = "transparent", inverse = FALSE)
+    tabs_modal <- c(tabs_modal, id = ns("card_selector_modal"), bg = "transparent", inverse = FALSE)
     plot_cards_modal <- do.call(
       bslib::navset_bar,
       tabs_modal
