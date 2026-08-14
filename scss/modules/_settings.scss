@@ -14,7 +14,15 @@
   padding-left: 3px;
 }
 
-.settings-icon {
+.settings-label{
+  margin-top: 0px;
+  font-size: 22px;
+  font-weight: 700;    
+    
+}
+
+.settings-icon{
+  float: right;
   margin-top: 3px;
 }
 
@@ -51,10 +59,3 @@
   }
 }
 
-.settings-label{
-  margin-top: 0px;
-}
-
-.settings-icon{
-  float: right;
-}
