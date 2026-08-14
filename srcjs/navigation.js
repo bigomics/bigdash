@@ -1,7 +1,7 @@
 import 'jquery';
 import 'shiny';
-import { refreshHelp } from './sidebar';
-import { settingsExpand, settingsCollapse } from './settings';
+import { refreshHelp, initSidebarRoot } from './sidebar';
+import { settingsExpand, settingsCollapse, initSettingsRoot, moveSettingsForRoot } from './settings';
 import { DEFAULT_ID, scopedId } from './scope';
 
 // Programmatic counterpart to sidebar.js / settings.js: these drive the same
@@ -154,5 +154,23 @@ export const handleNavigation = () => {
   Shiny.addCustomMessageHandler('bigdash-show-menu-element', (msg) => {
       $(`span:contains(${msg.value})`).closest('p').show();
       $(`span:contains(${msg.value})`).closest('p').removeClass("nodisp");
+  });
+
+  // Finish wiring a bigPage() root that was inserted into the DOM after
+  // page load (e.g. via bslib::nav_insert()/shiny::insertUI(), to lazily
+  // load a module's UI on demand). Click handlers (.sidebar-label,
+  // .settings-label, .tab-trigger) don't need this -- they're bound
+  // delegated in sidebar.js/settings.js -- but moving each tab's settings
+  // pane into place and selecting the first tab are one-off DOM
+  // operations the page-ready setup only ever did for roots that existed
+  // at that moment, so they need to be repeated explicitly for this one.
+  Shiny.addCustomMessageHandler('bigdash-init-root', (msg) => {
+      const id = msg.value;
+      const $root = $(`.bigdash-app[data-bigdash-id="${id}"]`);
+      if ($root.length === 0) return;
+
+      moveSettingsForRoot(id, $root);
+      initSettingsRoot(id);
+      initSidebarRoot(id, $root);
   });
 }

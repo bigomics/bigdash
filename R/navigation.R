@@ -51,6 +51,31 @@ bigdash.selectTab <- function(session, selected) {
   send_nav(session, "bigdash-select-tab", selected)
 }
 
+#' Finish wiring a [bigPage()] root inserted into the DOM after page load
+#'
+#' bigdash's one-time page-ready setup (settings-panel relocation, first-tab
+#' selection) only ever sees the roots present in the DOM at that moment.
+#' Call this once, right after inserting a new [bigPage()] at runtime (e.g.
+#' via `bslib::nav_insert()` or `shiny::insertUI()` to lazily load a
+#' module's UI on demand), to run that same per-root setup for it. Click
+#' handlers (sidebar collapse, settings drawer, tab switching) do not need
+#' this -- they are bound delegated and already cover new roots.
+#'
+#' Deferred via `session$onFlush()` so it is sent after (not possibly
+#' before) the message that actually inserts the new root's markup, as long
+#' as this is called after the insertion call in the same reactive tick --
+#' `onFlush` callbacks run, and so their messages are sent to the client, in
+#' registration order.
+#'
+#' @param session Shiny session.
+#' @param id The `id` passed to the newly-inserted [bigPage()].
+#' @export
+bigdash.initRoot <- function(session, id) {
+  session$onFlush(function() {
+    send_nav(session, "bigdash-init-root", id)
+  }, once = TRUE)
+}
+
 #' Reveal the sidebar menu after the landing page
 #' @param session Shiny session.
 #' @export

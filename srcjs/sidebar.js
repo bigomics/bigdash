@@ -8,8 +8,10 @@ let sidebarHelpByRoot = {};
 let hasActiveHelp = {};
 
 export const handleSidebar = () => {
-  // Collapse click
-  $('.sidebar-label').on('click', (e) => {
+  // Collapse click -- delegated (rather than bound to whatever matches at
+  // this instant) so it also covers sidebars inserted later, e.g. via
+  // bslib::nav_insert()/insertUI() for a lazily-loaded module.
+  $(document).on('click', '.sidebar-label', (e) => {
     sidebarToggle(rootIdFor($(e.currentTarget)));
   });
 
@@ -198,19 +200,27 @@ export const isExpanded = (id) => {
   return $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded');
 }
 
+// Per-root setup: sidebar help content + auto-selecting the first tab.
+// Called for every root at boot (below) and again -- for just the one new
+// root -- by bigdash-init-root (navigation.js) when a bigPage() is
+// inserted into the DOM after page load (e.g. via
+// bslib::nav_insert()/insertUI() for a lazily-loaded module).
+export const initSidebarRoot = (id, $root) => {
+  // data to render in the sidebar help
+  let $help = $root.find(`#${scopedId(id, 'sidebar-help')}`);
+  if($help.length > 0)
+    sidebarHelpByRoot[id] = JSON.parse($help.text());
+
+  // on load toggle first tab
+  toggleFirstTab(id, $root);
+}
+
 /* $(function() { */
 $(document).on('shiny:connected', function() {
-  eachRootId((id, $root) => {
-    // data to render in the sidebar help
-    let $help = $root.find(`#${scopedId(id, 'sidebar-help')}`);
-    if($help.length > 0)
-      sidebarHelpByRoot[id] = JSON.parse($help.text());
+  eachRootId(initSidebarRoot);
 
-    // on load toggle first tab
-    toggleFirstTab(id, $root);
-  });
-
-  $('.tab-trigger').on('click', (e) => {
+  // Delegated so it also matches tab-triggers for roots inserted later.
+  $(document).on('click', '.tab-trigger', (e) => {
     let $trigger = $(e.currentTarget);
     let target = $trigger.data('target');
     toggleTabs(target, rootIdFor($trigger));
