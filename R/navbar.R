@@ -1,24 +1,30 @@
 #' Navbar
-#' 
+#'
 #' Main navbar to pass to [bigPage()] `navbar` argument.
-#' 
+#'
 #' @param title Brand of the navbar.
 #' @param ... Content of the navbar, generally `navbar*`
 #' functions.
-#' 
+#' @param id Namespace id, must match the `id` passed to the enclosing
+#' [bigPage()]. See [bigPage()] for details on nesting.
+#'
 #' @importFrom htmltools tags div
-#' 
-#' @export 
+#'
+#' @export
 navbar <- function(
   title,
   center = NULL, left = NULL,
-  ...
+  ...,
+  id = BIGDASH_DEFAULT_ID
 ) {
   if(missing(title))
     stop("Missing `title`")
- 
+
+  navbar_content <- scoped_id(id, "navbarContent")
+
   tags$nav(
     class = "navbar navbar-light bg-white mb-0 pb-0",
+    `data-bigdash-id` = id,
     div(
       class = "container-fluid",
       tags$span(
@@ -29,8 +35,8 @@ navbar <- function(
         class = "navbar-toggler",
         type = "button",
         `data-bs-toggle` = "collapse",
-        `data-bs-target` = "#navbarContent",
-        `aria-controls` = "navbarContent",
+        `data-bs-target` = paste0("#", navbar_content),
+        `aria-controls` = navbar_content,
         `aria-expanded` = "false",
         `aria-label` = "Toggle navigation",
         span(
@@ -39,7 +45,7 @@ navbar <- function(
       ),
       div(
         class = "collapse navbar-collapse flex-grow-0",
-        id = "navbarLeftContent",
+        id = scoped_id(id, "navbarLeftContent"),
         tags$ul(
           class = "navbar-nav ms-auto mb-2 mb-lg-0",
           left
@@ -47,7 +53,7 @@ navbar <- function(
       ),
       div(
         class = "collapse navbar-collapse justify-content-center",
-        id = "navbarCenterContent",
+        id = scoped_id(id, "navbarCenterContent"),
         tags$ul(
           class = "navbar-nav mb-2 mb-lg-0",
           center
@@ -55,7 +61,7 @@ navbar <- function(
       ),
       div(
         class = "collapse navbar-collapse flex-grow-0",
-        id = "navbarContent",
+        id = navbar_content,
         tags$ul(
           class = "navbar-nav ms-auto mb-2 mb-lg-0",
           ...

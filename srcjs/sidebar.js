@@ -120,8 +120,12 @@ const toggleTab = (tab, target, id) => {
     return;
 
   let found = false;
-  // we display the settings
-  $('.tab-settings')
+  // we display the settings. Scoped to this root's own settings-content:
+  // `moveSettings()` (settings.js) already relocates every `.tab-settings`
+  // block there, and two bigPage() instances (nested or parallel) can
+  // legitimately reuse the same tab `name`, so this must not touch another
+  // instance's settings panel.
+  $(`#${scopedId(id, 'settings-content')} .tab-settings`)
     .each((index, el) => {
       let tg = $(el).data('target');
 

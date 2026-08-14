@@ -66,8 +66,15 @@ const moveSettings = () => {
     .each((index, el) => {
       let $tab = $(el);
       let id = rootIdFor($tab);
+      // A bigTabItem() can wrap an entire nested bigPage() (a module
+      // embedded as a tab, e.g. Qsee), so `$tab.find('.tab-settings')` can
+      // reach straight through into that nested bigPage()'s own
+      // tabSettings() -- filtering to descendants that still resolve back
+      // to *this* tab's own root keeps a nested instance's settings panel
+      // from being stolen into the wrong (outer) settings-content.
       let settings = $tab
         .find('.tab-settings')
+        .filter((i, s) => rootIdFor($(s)) === id)
         .first();
 
       $(settings).data('target', $tab.data('name'));
