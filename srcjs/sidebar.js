@@ -151,7 +151,10 @@ const toggleTab = (tab, target, id) => {
     eval(hook());
 }
 
-const setSidebarState = (id, expand) => {
+// Exported so the server-side (R) `bigdash.open/closeSidebar()` can drive a
+// specific bigPage() instance instead of the JS-only, unscoped globals in
+// navigation.js.
+export const setSidebarState = (id, expand) => {
   // nothing to do, the sidebar already is in the requested state
   if(expand === isExpanded(id))
     return;
@@ -187,7 +190,7 @@ const toggleCollapseContent = (id) => {
   $container.hide();
 }
 
-const isExpanded = (id) => {
+export const isExpanded = (id) => {
   return $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded');
 }
 

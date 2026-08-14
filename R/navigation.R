@@ -21,6 +21,28 @@ send_nav <- function(session, type, value = NULL) {
   session$sendCustomMessage(type, if (is.null(value)) list() else list(value = value))
 }
 
+#' Resolve the [bigPage()] id `session` belongs to, for scoping nav messages.
+#'
+#' `session$ns(NULL)` is `""`/`character(0)` for the top-level session and
+#' the module id for a `moduleServer()` session_proxy -- which is exactly the
+#' `id` convention [bigPage()]/[sidebar()]/[settings()] already use (see
+#' [scoped_id()]). Returning `NULL` for the top-level case (rather than `""`)
+#' matters: `send_nav()` treats a `NULL` value as "no value field at all",
+#' which the JS side's `scopedId()` then reads as the unscoped default,
+#' matching pre-existing, page-wide behaviour exactly.
+#'
+#' @keywords internal
+nav_scope_id <- function(session) {
+  if (is.null(session)) {
+    return(NULL)
+  }
+  id <- session$ns(NULL)
+  if (length(id) == 0 || !nzchar(id)) {
+    return(NULL)
+  }
+  id
+}
+
 #' Select a tab
 #' @param session Shiny session.
 #' @param selected `data-target` of the tab to select.
@@ -33,49 +55,83 @@ bigdash.selectTab <- function(session, selected) {
 #' @param session Shiny session.
 #' @export
 bigdash.showTabs <- function(session) {
-  send_nav(session, "show-tabs")
+  send_nav(session, "show-tabs", nav_scope_id(session))
 }
 
 ## ------------------- sideBar ---------------------------
 #' Open the sidebar
+#'
+#' @param session Shiny session that identifies which [bigPage()] instance to
+#'   target. Defaults to the current reactive domain, so existing no-argument
+#'   calls keep working unchanged -- at the top level that resolves to the
+#'   default/unscoped `bigPage()`, and inside a `moduleServer()` it resolves
+#'   to that module's own scoped `bigPage()`. Pass it explicitly (or leave
+#'   the default) from inside a module to target that module's sidebar
+#'   rather than the page-wide default. `NULL` (no reactive domain found, or
+#'   passed explicitly) falls back to the pre-existing, unscoped behaviour.
 #' @export
-bigdash.openSidebar <- function() {
-  shinyjs::runjs("sidebarOpen()")
+bigdash.openSidebar <- function(session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    shinyjs::runjs("sidebarOpen()")
+    return(invisible(NULL))
+  }
+  send_nav(session, "bigdash-open-sidebar", nav_scope_id(session))
 }
 
 #' Close the sidebar
+#' @inheritParams bigdash.openSidebar
 #' @export
-bigdash.closeSidebar <- function() {
-  shinyjs::runjs("sidebarClose()")
+bigdash.closeSidebar <- function(session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    shinyjs::runjs("sidebarClose()")
+    return(invisible(NULL))
+  }
+  send_nav(session, "bigdash-close-sidebar", nav_scope_id(session))
 }
 
 #' Collapse the sidebar back to its initial state
+#' @inheritParams bigdash.openSidebar
 #' @export
-bigdash.unloadSidebar <- function() {
-  shinyjs::runjs("unloadSidebar()")
+bigdash.unloadSidebar <- function(session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    shinyjs::runjs("unloadSidebar()")
+    return(invisible(NULL))
+  }
+  send_nav(session, "bigdash-unload-sidebar", nav_scope_id(session))
 }
 
 #' Open or close the sidebar
 #' @param state `TRUE` to open, `FALSE` to close.
+#' @inheritParams bigdash.openSidebar
 #' @export
-bigdash.toggleSidebar <- function(state) {
-  if (state) bigdash.openSidebar()
-  if (!state) bigdash.closeSidebar()
+bigdash.toggleSidebar <- function(state, session = shiny::getDefaultReactiveDomain()) {
+  if (state) bigdash.openSidebar(session)
+  if (!state) bigdash.closeSidebar(session)
 }
 
 ## ------------------- settingsBar ---------------------------
 #' Open the settings drawer
 #' @param lock Ignored, kept so existing calls keep working. The drawer no
 #'   longer closes itself when the pointer leaves, so it is always "locked".
+#' @inheritParams bigdash.openSidebar
 #' @export
-bigdash.openSettings <- function(lock = TRUE) {
-  shinyjs::runjs("settingsOpen()")
+bigdash.openSettings <- function(lock = TRUE, session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    shinyjs::runjs("settingsOpen()")
+    return(invisible(NULL))
+  }
+  send_nav(session, "bigdash-open-settings", nav_scope_id(session))
 }
 
 #' Close the settings drawer
+#' @inheritParams bigdash.openSidebar
 #' @export
-bigdash.closeSettings <- function() {
-  shinyjs::runjs("settingsClose()")
+bigdash.closeSettings <- function(session = shiny::getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    shinyjs::runjs("settingsClose()")
+    return(invisible(NULL))
+  }
+  send_nav(session, "bigdash-close-settings", nav_scope_id(session))
 }
 
 ## --------------------menuItem --------------------------

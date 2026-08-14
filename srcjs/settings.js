@@ -26,7 +26,10 @@ export const handleSettings = () => {
   });
 }
 
-const settingsExpand = (id) => {
+// Exported so the server-side (R) `bigdash.open/closeSettings()` can drive a
+// specific bigPage() instance instead of the JS-only, unscoped globals in
+// navigation.js.
+export const settingsExpand = (id) => {
   let $settingsContainer = $(`#${scopedId(id, 'settings-container')}`);
   //change settings sidebar css upon expanding
   $settingsContainer.removeClass('settings-collapsed');
@@ -36,7 +39,7 @@ const settingsExpand = (id) => {
   $settingsContainer.find('.tab-settings').show();
 }
 
-const settingsCollapse = (id) => {
+export const settingsCollapse = (id) => {
   let $settingsContainer = $(`#${scopedId(id, 'settings-container')}`);
   $settingsContainer.removeClass('settings-expanded');
   $settingsContainer.addClass('settings-collapsed');
@@ -45,13 +48,17 @@ const settingsCollapse = (id) => {
   $settingsContainer.find('.tab-settings').hide();
 }
 
+// the panel renders expanded but carries neither class until it is toggled
+// once, so anything that is not collapsed counts as expanded
+export const isSettingsExpanded = (id) => (
+  !$(`#${scopedId(id, 'settings-container')}`).hasClass('settings-collapsed')
+);
+
 const settingsToggle = (id) => {
-  // the panel renders expanded but carries neither class until it is
-  // toggled once, so anything that is not collapsed counts as expanded
-  if($(`#${scopedId(id, 'settings-container')}`).hasClass('settings-collapsed'))
-    settingsExpand(id);
-  else
+  if(isSettingsExpanded(id))
     settingsCollapse(id);
+  else
+    settingsExpand(id);
 }
 
 const moveSettings = () => {
