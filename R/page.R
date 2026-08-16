@@ -56,7 +56,15 @@ bigPage <- function(
       sidebar,
       if(settings_position == "left") settings,
       div(
-        class = "flex-grow-1 p-0 w-100",
+        ## No w-100: on a flex row that means 100% of the *container*, i.e. the
+        ## full page width, while the sidebar and settings are siblings taking
+        ## their own space -- the row then overflows by their combined width.
+        ## flex-grow-1 alone already fills whatever is left over.
+        ## min-width:0 because flex items default to min-width:auto, which lets
+        ## wide content (tables, plots) push the column past its share instead
+        ## of shrinking.
+        class = "flex-grow-1 p-0",
+        style = "min-width: 0;",
         ...
       ),
       if(settings_position == "right") settings
