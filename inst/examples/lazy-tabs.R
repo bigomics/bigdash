@@ -12,7 +12,7 @@
 ##   - "alpha" loads at startup   -- it is the auto-selected first tab
 ##   - "gamma" loads only when you click it, and only the first time
 ##
-##   shiny::runApp("example/ex-lazy-tabs.R")
+##   shiny::runApp(system.file("examples/lazy-tabs.R", package = "bigdash"))
 ##
 
 library(shiny)
