@@ -1,0 +1,96 @@
+#' Load a tab's UI and server the first time it is opened
+#'
+#' A [bigTabItem()] normally carries its whole board: the markup is built and
+#' the module server started before the user has been anywhere near that tab.
+#' With many tabs that is the dominant cost of opening a dashboard, and most of
+#' it is for tabs nobody visits.
+#'
+#' `bigTabsLazy()` defers both halves. Give it, per tab, a function returning
+#' the UI and a function starting the server; on the first activation of that
+#' tab it inserts the UI, then calls the server, then never again.
+#'
+#' Leave the tab's heavy content out of [bigTabItem()] and keep only what must
+#' exist up front there -- typically the sidebar inputs and a placeholder.
+#'
+#' @section Ordering:
+#' The UI is inserted before the server function runs. Module servers routinely
+#' call `updateSelectInput()` and friends during initialisation, and those
+#' messages are dropped if the elements are not in the DOM yet.
+#'
+#' @section Scoping:
+#' Activation is read from the *scoped* nav input (`<id>-nav`, or `nav` for the
+#' default instance), so a nested [bigPage()] cannot trigger its parent's tabs
+#' through a tab-name clash. The UI is inserted with a selector rooted at this
+#' instance's `#<id>-big-tabs` for the same reason.
+#'
+#' @param tabs Named list, one entry per tab, named by the tab's `name` as
+#'   given to [bigTabItem()]. Each entry is a list with `ui` and/or `server`,
+#'   each a function of no arguments. Either may be omitted.
+#' @param id Namespace id, matching the enclosing [bigPage()].
+#' @param session Shiny session; defaults to the current one.
+#'
+#' @return Invisibly, a function returning the names of the tabs loaded so far.
+#'
+#' @examples
+#' \dontrun{
+#' ## ui
+#' bigTabs(
+#'   bigTabItem("plots-tab", plotsInputs("plots"))  # inputs only
+#' )
+#'
+#' ## server
+#' bigTabsLazy(list(
+#'   "plots-tab" = list(
+#'     ui     = function() plotsUI("plots"),
+#'     server = function() plotsServer("plots", data = data)
+#'   )
+#' ))
+#' }
+#'
+#' @export
+bigTabsLazy <- function(tabs,
+                        id = BIGDASH_DEFAULT_ID,
+                        session = shiny::getDefaultReactiveDomain()) {
+  if (!is.list(tabs) || is.null(names(tabs)) || any(!nzchar(names(tabs)))) {
+    stop("`tabs` must be a named list, one entry per tab name")
+  }
+  if (is.null(session)) {
+    stop("bigTabsLazy() must be called from a Shiny server function")
+  }
+
+  loaded <- new.env(parent = emptyenv())
+  nav_input <- scoped_id(id, "nav")
+  tabs_selector <- paste0("#", scoped_id(id, "big-tabs"))
+
+  load_tab <- function(name) {
+    spec <- tabs[[name]]
+    if (is.null(spec) || isTRUE(loaded[[name]])) {
+      return(invisible(FALSE))
+    }
+    ## Latch before running: if the UI or server errors we must not retry on
+    ## every subsequent click, which would insert the UI twice.
+    loaded[[name]] <- TRUE
+
+    if (is.function(spec$ui)) {
+      shiny::insertUI(
+        selector = sprintf("%s > div.big-tab[data-name='%s']", tabs_selector, name),
+        where = "beforeEnd",
+        ui = spec$ui(),
+        immediate = TRUE
+      )
+    }
+    if (is.function(spec$server)) {
+      spec$server()
+    }
+    invisible(TRUE)
+  }
+
+  shiny::observeEvent(session$input[[nav_input]],
+    {
+      load_tab(session$input[[nav_input]])
+    },
+    ignoreNULL = TRUE
+  )
+
+  invisible(function() ls(loaded))
+}

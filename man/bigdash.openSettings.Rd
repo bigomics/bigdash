@@ -7,7 +7,8 @@
 bigdash.openSettings(lock = TRUE)
 }
 \arguments{
-\item{lock}{Keep the drawer open when the pointer leaves it.}
+\item{lock}{Ignored, kept so existing calls keep working. The drawer no
+longer closes itself when the pointer leaves, so it is always "locked".}
 }
 \description{
 Open the settings drawer
