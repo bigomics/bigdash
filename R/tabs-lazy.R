@@ -25,7 +25,10 @@
 #'
 #' @param tabs Named list, one entry per tab, named by the tab's `name` as
 #'   given to [bigTabItem()]. Each entry is a list with `ui` and/or `server`,
-#'   each a function of no arguments. Either may be omitted.
+#'   each a function of no arguments; either may be omitted. Set
+#'   `preload = TRUE` on an entry to load it immediately instead of waiting
+#'   for its tab to be opened -- for a board whose server other boards depend
+#'   on, which therefore cannot wait for a click.
 #' @param id Namespace id, matching the enclosing [bigPage()].
 #' @param session Shiny session; defaults to the current one.
 #'
@@ -91,6 +94,15 @@ bigTabsLazy <- function(tabs,
     },
     ignoreNULL = TRUE
   )
+
+  ## Boards other boards depend on cannot wait to be clicked. Loaded through
+  ## the same path, so they are latched and will not load twice if their tab
+  ## is opened later.
+  for (name in names(tabs)) {
+    if (isTRUE(tabs[[name]]$preload)) {
+      load_tab(name)
+    }
+  }
 
   invisible(function() ls(loaded))
 }

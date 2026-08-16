@@ -1,12 +1,16 @@
 ##
 ## bigTabsLazy(): load a tab's UI and server the first time it is opened.
 ##
-## Each of the three tabs below pretends to be an expensive board: building its
-## UI sleeps, and starting its server sleeps again. Eagerly, opening the app
-## would pay for all three (~4.5s) before showing anything. Lazily you pay only
-## for the tab you click, and only once.
+## The board below pretends to be expensive: building its UI sleeps, and
+## starting its server sleeps again. Eagerly you would pay for all three
+## boards before seeing anything. Lazily you pay only for the one you open,
+## once.
 ##
-## Watch the console: "BUILD UI" / "START SERVER" appear on first visit only.
+## Watch the console:
+##   - "beta" loads at startup    -- marked preload = TRUE, standing in for a
+##                                   board that other boards depend on
+##   - "alpha" loads at startup   -- it is the auto-selected first tab
+##   - "gamma" loads only when you click it, and only the first time
 ##
 ##   shiny::runApp("example/ex-lazy-tabs.R")
 ##
@@ -14,14 +18,12 @@
 library(shiny)
 library(bigdash)
 
-BOARDS <- c(alpha = "Alpha", beta = "Beta", gamma = "Gamma")
-
-## --- a pretend board -------------------------------------------------------
+## --- one pretend board, instantiated three times ----------------------------
 
 boardInputs <- function(id) {
   ns <- NS(id)
   tabSettings(
-    sliderInput(ns("n"), "Points", min = 10, max = 500, value = 100)
+    sliderInput(ns("n"), "Points", min = 10, max = 500, value = 150)
   )
 }
 
@@ -31,7 +33,7 @@ boardUI <- function(id) {
   Sys.sleep(0.8) ## stand-in for a real board's tag building
   div(
     h3(paste("Board", id)),
-    p("This UI was built the first time you opened the tab."),
+    p("This UI was built when the tab was first opened."),
     plotOutput(ns("plot"), height = "320px"),
     verbatimTextOutput(ns("info"))
   )
@@ -43,9 +45,8 @@ boardServer <- function(id) {
   moduleServer(id, function(input, output, session) {
     output$plot <- renderPlot({
       set.seed(nchar(id))
-      plot(stats::rnorm(input$n), stats::rnorm(input$n),
-        pch = 19, col = "#3181de",
-        xlab = "", ylab = "", main = paste("board", id)
+      plot(rnorm(input$n), rnorm(input$n),
+        pch = 19, col = "#3181de", xlab = "", ylab = "", main = id
       )
     })
     output$info <- renderText({
@@ -54,41 +55,44 @@ boardServer <- function(id) {
   })
 }
 
-## --- app -------------------------------------------------------------------
+## --- app --------------------------------------------------------------------
 
 ui <- bigPage(
   navbar = navbar("bigTabsLazy() example"),
   sidebar = sidebar(
     "Boards",
-    !!!unname(Map(function(id, label) sidebarItem(label, paste0(id, "-tab")),
-      names(BOARDS), BOARDS
-    ))
+    sidebarItem("Alpha", "alpha-tab"),
+    sidebarItem("Beta", "beta-tab"),
+    sidebarItem("Gamma", "gamma-tab")
   ),
   settings = settings("Settings"),
   bigTabs(
-    ## Only the inputs are here. The board itself is registered below and
-    ## inserted on first visit.
-    !!!unname(lapply(names(BOARDS), function(id) {
-      bigTabItem(paste0(id, "-tab"), boardInputs(id))
-    }))
+    ## Only the sidebar inputs live here. The boards themselves are registered
+    ## below and inserted on first visit.
+    bigTabItem("alpha-tab", boardInputs("alpha")),
+    bigTabItem("beta-tab", boardInputs("beta")),
+    bigTabItem("gamma-tab", boardInputs("gamma"))
   )
 )
 
 server <- function(input, output, session) {
-  loaded <- bigTabsLazy(
-    stats::setNames(
-      lapply(names(BOARDS), function(id) {
-        list(
-          ui = function() boardUI(id),
-          server = function() boardServer(id)
-        )
-      }),
-      paste0(names(BOARDS), "-tab")
+  loaded <- bigTabsLazy(list(
+    "alpha-tab" = list(
+      ui     = function() boardUI("alpha"),
+      server = function() boardServer("alpha")
+    ),
+    "beta-tab" = list(
+      ui      = function() boardUI("beta"),
+      server  = function() boardServer("beta"),
+      preload = TRUE ## other boards depend on it; cannot wait for a click
+    ),
+    "gamma-tab" = list(
+      ui     = function() boardUI("gamma"),
+      server = function() boardServer("gamma")
     )
-  )
+  ))
 
-  ## Nothing is built until a tab is opened.
-  observe({
+  observeEvent(input$nav, {
     message("[loaded so far] ", paste(loaded(), collapse = ", "))
   })
 }
