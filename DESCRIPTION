@@ -39,8 +39,10 @@ Suggests:
     svglite,
     svgPanZoom,
     sysfonts,
+    testthat (>= 3.0.0),
     visNetwork,
     webshot2
 Remotes:
     bigomics/bigLoaders
 Config/roxygen2/version: 8.1.0
+Config/testthat/edition: 3
