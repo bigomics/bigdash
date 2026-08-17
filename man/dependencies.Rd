@@ -7,6 +7,10 @@
 dependencies()
 }
 \description{
-Dependencies
+bigdash's CSS/JS bundle, as an \code{\link[htmltools:htmlDependency]{htmltools::htmlDependency()}}. \code{\link[=bigPage]{bigPage()}}
+already includes this; call it directly when building a page that hosts
+one or more \code{\link[=bigPage]{bigPage()}}s as children/tabs without itself being a
+\code{\link[=bigPage]{bigPage()}} (e.g. a plain \code{\link[bslib:page_fillable]{bslib::page_fillable()}} shell), so bigdash's
+assets are guaranteed to load regardless of which child happens to be
+initially visible.
 }
-\keyword{internal}

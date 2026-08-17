@@ -4,13 +4,16 @@
 \alias{navbar}
 \title{Navbar}
 \usage{
-navbar(title, center = NULL, left = NULL, ...)
+navbar(title, center = NULL, left = NULL, ..., id = BIGDASH_DEFAULT_ID)
 }
 \arguments{
 \item{title}{Brand of the navbar.}
 
 \item{...}{Content of the navbar, generally \verb{navbar*}
 functions.}
+
+\item{id}{Namespace id, must match the \code{id} passed to the enclosing
+\code{\link[=bigPage]{bigPage()}}. See \code{\link[=bigPage]{bigPage()}} for details on nesting.}
 }
 \description{
 Main navbar to pass to \code{\link[=bigPage]{bigPage()}} \code{navbar} argument.

@@ -8,8 +8,10 @@ let sidebarHelpByRoot = {};
 let hasActiveHelp = {};
 
 export const handleSidebar = () => {
-  // Collapse click
-  $('.sidebar-label').on('click', (e) => {
+  // Collapse click -- delegated (rather than bound to whatever matches at
+  // this instant) so it also covers sidebars inserted later, e.g. via
+  // bslib::nav_insert()/insertUI() for a lazily-loaded module.
+  $(document).on('click', '.sidebar-label', (e) => {
     sidebarToggle(rootIdFor($(e.currentTarget)));
   });
 
@@ -120,8 +122,12 @@ const toggleTab = (tab, target, id) => {
     return;
 
   let found = false;
-  // we display the settings
-  $('.tab-settings')
+  // we display the settings. Scoped to this root's own settings-content:
+  // `moveSettings()` (settings.js) already relocates every `.tab-settings`
+  // block there, and two bigPage() instances (nested or parallel) can
+  // legitimately reuse the same tab `name`, so this must not touch another
+  // instance's settings panel.
+  $(`#${scopedId(id, 'settings-content')} .tab-settings`)
     .each((index, el) => {
       let tg = $(el).data('target');
 
@@ -151,7 +157,10 @@ const toggleTab = (tab, target, id) => {
     eval(hook());
 }
 
-const setSidebarState = (id, expand) => {
+// Exported so the server-side (R) `bigdash.open/closeSidebar()` can drive a
+// specific bigPage() instance instead of the JS-only, unscoped globals in
+// navigation.js.
+export const setSidebarState = (id, expand) => {
   // nothing to do, the sidebar already is in the requested state
   if(expand === isExpanded(id))
     return;
@@ -187,23 +196,31 @@ const toggleCollapseContent = (id) => {
   $container.hide();
 }
 
-const isExpanded = (id) => {
+export const isExpanded = (id) => {
   return $(`#${scopedId(id, 'sidebar-container')}`).hasClass('sidebar-expanded');
+}
+
+// Per-root setup: sidebar help content + auto-selecting the first tab.
+// Called for every root at boot (below) and again -- for just the one new
+// root -- by bigdash-init-root (navigation.js) when a bigPage() is
+// inserted into the DOM after page load (e.g. via
+// bslib::nav_insert()/insertUI() for a lazily-loaded module).
+export const initSidebarRoot = (id, $root) => {
+  // data to render in the sidebar help
+  let $help = $root.find(`#${scopedId(id, 'sidebar-help')}`);
+  if($help.length > 0)
+    sidebarHelpByRoot[id] = JSON.parse($help.text());
+
+  // on load toggle first tab
+  toggleFirstTab(id, $root);
 }
 
 /* $(function() { */
 $(document).on('shiny:connected', function() {
-  eachRootId((id, $root) => {
-    // data to render in the sidebar help
-    let $help = $root.find(`#${scopedId(id, 'sidebar-help')}`);
-    if($help.length > 0)
-      sidebarHelpByRoot[id] = JSON.parse($help.text());
+  eachRootId(initSidebarRoot);
 
-    // on load toggle first tab
-    toggleFirstTab(id, $root);
-  });
-
-  $('.tab-trigger').on('click', (e) => {
+  // Delegated so it also matches tab-triggers for roots inserted later.
+  $(document).on('click', '.tab-trigger', (e) => {
     let $trigger = $(e.currentTarget);
     let target = $trigger.data('target');
     toggleTabs(target, rootIdFor($trigger));

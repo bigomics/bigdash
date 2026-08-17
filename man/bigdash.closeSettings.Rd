@@ -4,7 +4,17 @@
 \alias{bigdash.closeSettings}
 \title{Close the settings drawer}
 \usage{
-bigdash.closeSettings()
+bigdash.closeSettings(session = shiny::getDefaultReactiveDomain())
+}
+\arguments{
+\item{session}{Shiny session that identifies which \code{\link[=bigPage]{bigPage()}} instance to
+target. Defaults to the current reactive domain, so existing no-argument
+calls keep working unchanged -- at the top level that resolves to the
+default/unscoped \code{bigPage()}, and inside a \code{moduleServer()} it resolves
+to that module's own scoped \code{bigPage()}. Pass it explicitly (or leave
+the default) from inside a module to target that module's sidebar
+rather than the page-wide default. \code{NULL} (no reactive domain found, or
+passed explicitly) falls back to the pre-existing, unscoped behaviour.}
 }
 \description{
 Close the settings drawer
