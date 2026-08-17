@@ -95,7 +95,14 @@ const toggleTab = (tab, target, id) => {
   $(tab).show();
   $(tab).trigger('shown');
   try {
+    // Unscoped, kept for backwards compatibility: existing apps observe
+    // input$nav. With more than one bigPage() on the page every instance
+    // writes this same input, so it cannot tell you *which* instance moved.
     Shiny.setInputValue('nav', name);
+    // Scoped counterpart. Same value, but one input per bigPage() instance,
+    // which is what lazy tab loading keys off -- a nested bigPage() must not
+    // be able to trigger its parent's tabs (or vice versa) via a name clash.
+    Shiny.setInputValue(scopedId(id, 'nav'), name);
   } catch(error) {
     console.error(error);
   }
