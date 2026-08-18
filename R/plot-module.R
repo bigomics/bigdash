@@ -510,7 +510,11 @@ PlotModuleUI <- function(id,
         )
       ),
       if (editor) {
-        editor_content
+        ## The editor modal is built by the host app's hook, but its id is
+        ## bigdash's (the trigger above targets it), so we can attach the same
+        ## open/close reporting modalUI(track_open = TRUE) does. The server
+        ## uses it to know when the editor's plot was dropped from the DOM.
+        shiny::tagList(editor_content, modal_track_script(ns("plotPopup2")))
       },
       shiny::tagList(
         shiny::tags$head(shiny::tags$style(modaldialog.style)),
@@ -560,6 +564,14 @@ PlotModuleUI <- function(id,
 #' @param remove_margins Strip plot margins before export.
 #' @param vis.delay Seconds to wait before screenshotting a visNetwork.
 #' @param card Index of this plot when the UI was built with `cards = TRUE`.
+#' @param purge Drop this plot's drawn DOM while it cannot be seen -- board
+#'   hidden, modal closed -- and redraw it on return. `NULL` (default) enables
+#'   it when the board has a [bd_visibility_probe()] and does nothing
+#'   otherwise; `TRUE`/`FALSE` force it. Only the client-side plotting
+#'   libraries are affected; `base`, `ggplot`, `grid` and `image` plots render
+#'   to a server-side image and are left alone.
+#'
+#' @seealso [bd_visibility_probe()], which is what makes `purge` possible.
 #'
 #' @export
 PlotModuleServer <- function(id,
@@ -588,7 +600,8 @@ PlotModuleServer <- function(id,
                              remove_margins = FALSE,
                              vis.delay = 3,
                              card = NULL,
-                             parent_session = NULL) {
+                             parent_session = NULL,
+                             purge = NULL) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -1258,6 +1271,63 @@ PlotModuleServer <- function(id,
 
       if (is.null(func2)) func2 <- func
       if (is.null(plotlib2)) plotlib2 <- plotlib
+
+      ## ---------------------- purge / redraw --------------------------------
+      ## The browser drops this plot's drawn tree while nobody can see it: the
+      ## board is off screen, or the modal holding it is closed (see
+      ## bd_visibility_probe()). Shiny does not resend a value for an output it
+      ## has not invalidated, so the plots would come back empty -- these ticks
+      ## are the dependency that brings them back.
+      board <- bd_visibility_lookup(session)
+      if (is.null(purge)) {
+        purge <- !is.null(board)
+      } else if (isTRUE(purge) && is.null(board)) {
+        warning(
+          "[PlotModuleServer] purge = TRUE for '", id,
+          "' but no bd_visibility_probe() in this board's UI"
+        )
+        purge <- FALSE
+      }
+
+      if (isTRUE(purge)) {
+        board_tick <- bd_redraw_tick(session = session)
+        modal_tick <- shiny::reactiveVal(0L)
+        modal_purged <- FALSE
+
+        ## Both modals share one tick: renderpopup and renderfigure_2 are the
+        ## same render2, so they cannot be invalidated apart. Closing one
+        ## therefore costs the other a redraw next time it is opened -- which
+        ## only shows up if the same plot is used maximised *and* in the editor.
+        track_modal <- function(open) {
+          if (!isTRUE(open)) {
+            if (isTRUE(bd_purge_enabled(board$purge))) modal_purged <<- TRUE
+          } else if (modal_purged) {
+            ## Bump on open, not on close: an output that Shiny still counts as
+            ## visible would re-render immediately, for a modal nobody is
+            ## looking at.
+            modal_purged <<- FALSE
+            modal_tick(shiny::isolate(modal_tick()) + 1L)
+          }
+        }
+        shiny::observeEvent(input$plotPopup_is_open, track_modal(input$plotPopup_is_open))
+        shiny::observeEvent(input$plotPopup2_is_open, track_modal(input$plotPopup2_is_open))
+
+        ## Server-rendered images are never purged, so making them depend on a
+        ## tick would only buy needless replotting.
+        if (!is.null(func) && bd_is_purgeable(plotlib)) {
+          func <- bd_with_redraw(board_tick, func)
+        }
+        if (!is.null(func2) && bd_is_purgeable(plotlib2)) {
+          func2 <- bd_with_redraw(
+            function() {
+              board_tick()
+              modal_tick()
+            },
+            func2
+          )
+        }
+      }
+
       if (length(height) == 1) height <- c(height, 700)
       if (length(width) == 1) width <- c(width, 1200)
       if (length(res) == 1) res <- c(res, 1.3 * res)

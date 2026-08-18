@@ -31,7 +31,8 @@ PlotModuleServer(
   remove_margins = FALSE,
   vis.delay = 3,
   card = NULL,
-  parent_session = NULL
+  parent_session = NULL,
+  purge = NULL
 )
 }
 \arguments{
@@ -68,7 +69,17 @@ download and click-to-label.}
 \item{card}{Index of this plot when the UI was built with \code{cards = TRUE}.}
 
 \item{parent_session}{Session of the calling module, needed by the editor.}
+
+\item{purge}{Drop this plot's drawn DOM while it cannot be seen -- board
+hidden, modal closed -- and redraw it on return. \code{NULL} (default) enables
+it when the board has a \code{\link[=bd_visibility_probe]{bd_visibility_probe()}} and does nothing
+otherwise; \code{TRUE}/\code{FALSE} force it. Only the client-side plotting
+libraries are affected; \code{base}, \code{ggplot}, \code{grid} and \code{image} plots render
+to a server-side image and are left alone.}
 }
 \description{
 Plot module server
+}
+\seealso{
+\code{\link[=bd_visibility_probe]{bd_visibility_probe()}}, which is what makes \code{purge} possible.
 }
