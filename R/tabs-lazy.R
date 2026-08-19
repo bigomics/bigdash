@@ -65,6 +65,16 @@ bigTabsLazy <- function(tabs,
   nav_input <- scoped_id(id, "nav")
   tabs_selector <- paste0("#", scoped_id(id, "big-tabs"))
 
+  ## session$input[[...]] auto-prefixes with the *caller's own* module
+  ## namespace when bigTabsLazy() is called from inside a moduleServer (the
+  ## usual shape for a nested bigTabs(id = id)) -- so a nav_input already
+  ## scoped by `id` would be looked up twice-prefixed and never match.
+  ## Strip the caller's own prefix first, exactly like bd_active_tab().
+  input_prefix <- session$ns("")
+  if (nzchar(input_prefix) && startsWith(nav_input, input_prefix)) {
+    nav_input <- substring(nav_input, nchar(input_prefix) + 1L)
+  }
+
   load_tab <- function(name) {
     spec <- tabs[[name]]
     if (is.null(spec) || isTRUE(loaded[[name]])) {
