@@ -181,11 +181,29 @@ TableModuleUI <- function(id,
   return(e)
 }
 
+#' Coerce to a [DT::datatable()] widget if it isn't already one
+#'
+#' [TableModuleServer()] reaches into `$x$options`/`$x$data`/`$x$selection`
+#' etc, which only exist on the widget object [DT::datatable()] returns. A
+#' bare data.frame passed through unchanged would silently corrupt itself --
+#' each `dt$x$foo <- ...` builds a stray `x` list-column via `` `$<-` `` on a
+#' data.frame that has no such column, which trips an opaque "replacement
+#' has N rows, data has M" error instead of a clear one.
+#'
+#' @keywords internal
+as_dt_widget <- function(x) {
+  if (is.null(x) || inherits(x, "datatables")) {
+    return(x)
+  }
+  DT::datatable(x)
+}
+
 #' Table module server
 #'
 #' @param id Module id, matching [TableModuleUI()].
-#' @param func,func2 Functions returning the [DT::datatable()] for the card and
-#'   the modal.
+#' @param func,func2 Functions returning the table for the card and the
+#'   modal: either a [DT::datatable()], or a plain data.frame/matrix, which
+#'   is wrapped in [DT::datatable()] automatically.
 #' @param csvFunc Function returning the data to download; defaults to the
 #'   table's own data.
 #' @param height,width Length-2 vectors: card size, then modal size.
@@ -213,6 +231,13 @@ TableModuleServer <- function(id,
       filename <- ns(filename)
 
       if (is.null(func2)) func2 <- func
+
+      # Normalize once so every access below (`$x$options`, `$x$data`, ...)
+      # can assume a DT::datatable() widget, whatever func()/func2() return.
+      raw_func <- func
+      raw_func2 <- func2
+      func <- function() as_dt_widget(raw_func())
+      func2 <- function() as_dt_widget(raw_func2())
 
       # Downloader
       output$download <- shiny::downloadHandler(
