@@ -223,18 +223,78 @@ bigdash.removeTab <- function(session, tab) {
   send_nav(session, "bigdash-remove-tab", tab)
 }
 
-#' Hide a sidebar menu section by its label
+#' Hide a sidebar menu group by its id
+#'
+#' Hides the group's header/chevron/divider and closes its collapse body.
+#' The body reappears closed (not force-expanded) the next time
+#' [bigdash.showMenuElement()] reveals the group -- same as a freshly
+#' rendered [sidebarMenu()], the user re-expands it by clicking.
+#'
 #' @param session Shiny session.
-#' @param name Visible label of the section.
+#' @param id The target [sidebarMenu()]'s own `id`. [sidebarMenu()]
+#'   auto-generates one if you don't pass `id` yourself, so targeting a
+#'   specific group from the server requires giving it an explicit,
+#'   stable `id` in the UI first: `sidebarMenu(..., id = "reports-menu")`.
+#'
+#'   If nothing matches `id`, this falls back to matching the group's
+#'   visible label instead (the pre-`id` behaviour) -- purely so callers
+#'   written before [sidebarMenu()] took an `id` keep working unchanged.
+#'   New code should always give its [sidebarMenu()] an explicit `id` and
+#'   target that; matching by label breaks the moment two groups share a
+#'   label or one gets renamed/translated.
+#'
 #' @export
-bigdash.hideMenuElement <- function(session, name) {
-  send_nav(session, "bigdash-hide-menu-element", name)
+bigdash.hideMenuElement <- function(session, id) {
+  send_nav(session, "bigdash-hide-menu-element", id)
 }
 
-#' Show a sidebar menu section by its label
-#' @param session Shiny session.
-#' @param name Visible label of the section.
+#' Show a sidebar menu group by its id
+#' @inheritParams bigdash.hideMenuElement
 #' @export
-bigdash.showMenuElement <- function(session, name) {
-  send_nav(session, "bigdash-show-menu-element", name)
+bigdash.showMenuElement <- function(session, id) {
+  send_nav(session, "bigdash-show-menu-element", id)
+}
+
+#' Filter visible tabs and menu items
+#'
+#' Shows only the specified tabs (and their corresponding sidebar menu items).
+#' Hides all other menu items and their associated tab canvases (`big-tab`
+#' elements). Useful for dynamic filtering of available boards/views.
+#'
+#' The currently active tab stays selected if it is still among `tabs`;
+#' otherwise the first tab in `tabs` is selected. This avoids bouncing the
+#' user back to `tabs[[1]]` on every call when their current tab was never
+#' actually filtered out.
+#'
+#' @param session Shiny session.
+#' @param tabs Character vector of tab names (`data-name` / `target` values
+#'   from [bigTabItem()], [sidebarItem()], etc.).
+#' @param id Namespace id of the [bigPage()] instance to filter, as given to
+#'   [bigPage()]/[bigTabs()]/[sidebar()] in the UI. Only needed when several
+#'   `bigPage()`s render in parallel from the same server, each with its own
+#'   `id` (not nested) -- omit it for the default, single-`bigPage()` case.
+#' @export
+bigdash.filterTabs <- function(session, tabs, id = BIGDASH_DEFAULT_ID) {
+  if (!length(tabs)) {
+    return(invisible(NULL))
+  }
+  if (!inherits(tabs, "character")) {
+    tabs <- as.character(tabs)
+  }
+  tabs <- unique(tabs)
+
+  ## The nav input is set at the root, under the bigTabs id ("qsee-nav").
+  ## Read from inside module "qsee" that is input$nav; read from the app
+  ## server it is input[["qsee-nav"]]. Strip the caller's own prefix when
+  ## it is there. (Same lookup as bd_active_tab(), kept private here so
+  ## this doesn't reach across into an unrelated module.)
+  nav <- scoped_id(id, "nav")
+  prefix <- session$ns("")
+  if (nzchar(prefix) && startsWith(nav, prefix)) {
+    nav <- substring(nav, nchar(prefix) + 1L)
+  }
+  current <- shiny::isolate(session$input[[nav]])
+  select <- if (!is.null(current) && current %in% tabs) current else tabs[[1]]
+
+  send_nav(session, "bigdash-filter-tabs", list(id = id, keep = tabs, select = select))
 }

@@ -2,15 +2,28 @@
 % Please edit documentation in R/navigation.R
 \name{bigdash.hideMenuElement}
 \alias{bigdash.hideMenuElement}
-\title{Hide a sidebar menu section by its label}
+\title{Hide a sidebar menu group by its id}
 \usage{
-bigdash.hideMenuElement(session, name)
+bigdash.hideMenuElement(session, id)
 }
 \arguments{
 \item{session}{Shiny session.}
 
-\item{name}{Visible label of the section.}
+\item{id}{The target \code{\link[=sidebarMenu]{sidebarMenu()}}'s own \code{id}. \code{\link[=sidebarMenu]{sidebarMenu()}}
+auto-generates one if you don't pass \code{id} yourself, so targeting a
+specific group from the server requires giving it an explicit,
+stable \code{id} in the UI first: \code{sidebarMenu(..., id = "reports-menu")}.
+
+If nothing matches \code{id}, this falls back to matching the group's
+visible label instead (the pre-\code{id} behaviour) -- purely so callers
+written before \code{\link[=sidebarMenu]{sidebarMenu()}} took an \code{id} keep working unchanged.
+New code should always give its \code{\link[=sidebarMenu]{sidebarMenu()}} an explicit \code{id} and
+target that; matching by label breaks the moment two groups share a
+label or one gets renamed/translated.}
 }
 \description{
-Hide a sidebar menu section by its label
+Hides the group's header/chevron/divider and closes its collapse body.
+The body reappears closed (not force-expanded) the next time
+\code{\link[=bigdash.showMenuElement]{bigdash.showMenuElement()}} reveals the group -- same as a freshly
+rendered \code{\link[=sidebarMenu]{sidebarMenu()}}, the user re-expands it by clicking.
 }
