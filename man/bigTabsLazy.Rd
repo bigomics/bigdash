@@ -12,8 +12,14 @@ bigTabsLazy(
 }
 \arguments{
 \item{tabs}{Named list, one entry per tab, named by the tab's \code{name} as
-given to \code{\link[=bigTabItem]{bigTabItem()}}. Each entry is a list with \code{ui} and/or \code{server},
-each a function of no arguments. Either may be omitted.}
+given to \code{\link[=bigTabItem]{bigTabItem()}} -- the fully-namespaced name (e.g.
+\code{session$ns("plots-tab")}), not the bare one, unless \code{id} is the default
+\code{"app"}. A name that doesn't start with that namespace is rejected up
+front, since otherwise nothing loads and nothing errors. Each entry is a
+list with \code{ui} and/or \code{server}, each a function of no arguments; either
+may be omitted. Set \code{preload = TRUE} on an entry to load it immediately
+instead of waiting for its tab to be opened -- for a board whose server
+other boards depend on, which therefore cannot wait for a click.}
 
 \item{id}{Namespace id, matching the enclosing \code{\link[=bigPage]{bigPage()}}.}
 
