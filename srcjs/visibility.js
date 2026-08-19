@@ -134,6 +134,24 @@ const watch = (spec) => {
 
   check();
   document.addEventListener('shiny:connected', check);
+
+  // Chrome only delivers IntersectionObserver entries -- and, in practice,
+  // only finishes settling layout -- as part of an actual render/paint
+  // pass. A page that goes idle right after load, with nothing else
+  // scheduling a frame, can leave that pass (and so the observer callback)
+  // pending indefinitely: the probe then never reports `true` until some
+  // real user input (e.g. a scroll) forces a new compositor frame and
+  // unsticks it. Force a short burst of our own frames instead of waiting
+  // on that: requestAnimationFrame always fires on a foreground tab
+  // regardless of what else is scheduled, and re-running check() on each
+  // one is what actually lets a late `true` through without needing the
+  // user to touch anything.
+  let settleFrames = 10;
+  const settle = () => {
+    check();
+    if (--settleFrames > 0) window.requestAnimationFrame(settle);
+  }
+  window.requestAnimationFrame(settle);
 }
 
 // --- modals: a closed modal is hidden, whatever the board is doing ----------
