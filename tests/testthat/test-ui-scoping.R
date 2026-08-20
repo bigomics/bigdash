@@ -53,3 +53,15 @@ test_that("sidebar()/settings()/bigTabs() stay scoped consistently with navbar()
   expect_true(grepl('id="mymod-settings-container"', settings_html, fixed = TRUE))
   expect_true(grepl('id="mymod-big-tabs"', tabs_html, fixed = TRUE))
 })
+
+test_that("sidebar help keeps its layout class when the page id is scoped", {
+  # Bottom-alignment CSS keys off .sidebar-help-container, not the
+  # (now namespaced) id, so both default and scoped pages stay pinned.
+  default_html <- as.character(sidebar("Menu", sidebarItem("Tab", "t1")))
+  scoped_html <- as.character(sidebar("Menu", id = "mymod", sidebarItem("Tab", "t1")))
+
+  expect_true(grepl('class="p-3 sidebar-help-container"', default_html, fixed = TRUE))
+  expect_true(grepl('class="p-3 sidebar-help-container"', scoped_html, fixed = TRUE))
+  expect_true(grepl('id="sidebar-help-container"', default_html, fixed = TRUE))
+  expect_true(grepl('id="mymod-sidebar-help-container"', scoped_html, fixed = TRUE))
+})

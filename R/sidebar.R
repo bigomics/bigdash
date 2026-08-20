@@ -43,7 +43,7 @@ sidebar <- function(
     ),
     div(
       id = scoped_id(id, "sidebar-help-container"),
-      class = "p-3",
+      class = "p-3 sidebar-help-container",
       h4(
         id = scoped_id(id, "sidebar-help-title"),
         class = "sidebar-help-title cursor-pointer",
