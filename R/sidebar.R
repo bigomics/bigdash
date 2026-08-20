@@ -88,7 +88,7 @@ sidebarItem <- function(
         class = "tab-trigger tab-sidebar cursor-pointer w-100 mb-0 text-muted"
       )
     ),
-    hr_()
+    hr_(`data-target` = target)
   )
 }
 
