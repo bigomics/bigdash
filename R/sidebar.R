@@ -107,6 +107,10 @@ sidebarItem <- function(
 #'   rendered markup and then re-evaluated in the browser every time item
 #'   visibility changes, so it does not need the sidebar itself to be
 #'   reactive.
+#' @param open Start the menu expanded (`TRUE`) instead of collapsed. Sets the
+#'   Bootstrap `.show` class on the `.collapse` body and points the chevron
+#'   down, so the menu is already open at page load -- the toggle keeps
+#'   working as usual afterwards.
 #' @param id This group's own id, used as the `.collapse` body's DOM id and
 #'   as the target [bigdash.hideMenuElement()]/[bigdash.showMenuElement()]
 #'   match against. Defaults to an opaque, auto-generated one -- pass your
@@ -118,6 +122,7 @@ sidebarMenu <- function(
   text,
   ...,
   promote_single = FALSE,
+  open = FALSE,
   id = NULL
 ) {
   if(missing(text))
@@ -136,14 +141,14 @@ sidebarMenu <- function(
           text
         ),
         icon(
-          "angle-right",
+          if (isTRUE(open)) "angle-down" else "angle-right",
           class = "sidebar-menu-icon float-right mt-1 text-mid-grey"
         )
       )
     ),
     hr_(),
     div(
-      class = "collapse",
+      class = if (isTRUE(open)) "collapse show" else "collapse",
       id = id,
       ...
     )

@@ -4,7 +4,7 @@
 \alias{sidebarMenu}
 \title{Sidebar Menu}
 \usage{
-sidebarMenu(text, ..., promote_single = FALSE, id = NULL)
+sidebarMenu(text, ..., promote_single = FALSE, open = FALSE, id = NULL)
 }
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
@@ -20,6 +20,11 @@ Purely a client-side, per-menu display rule: it's read once from the
 rendered markup and then re-evaluated in the browser every time item
 visibility changes, so it does not need the sidebar itself to be
 reactive.}
+
+\item{open}{Start the menu expanded (\code{TRUE}) instead of collapsed. Sets the
+Bootstrap \code{.show} class on the \code{.collapse} body and points the chevron
+down, so the menu is already open at page load -- the toggle keeps
+working as usual afterwards.}
 
 \item{id}{This group's own id, used as the \code{.collapse} body's DOM id and
 as the target \code{\link[=bigdash.hideMenuElement]{bigdash.hideMenuElement()}}/\code{\link[=bigdash.showMenuElement]{bigdash.showMenuElement()}}
