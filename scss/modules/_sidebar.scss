@@ -4,8 +4,9 @@
 }
 
 .bigdash-sidebar-shell {
-  min-height: 92vh;
-  height: 100vh;
+  align-self: stretch;
+  min-height: 100%;
+  height: auto;
   width: 12rem;
   padding: 0;
   padding-top: 10px;
@@ -21,7 +22,7 @@
 .sidebar-expanded > .sidebar{
   width: 12rem;
   min-width: 12rem;
-  max-height: calc(100vh - 300px);
+  max-height: calc(100% - 300px);
   overflow-y: auto;
 }
 
@@ -35,11 +36,20 @@
   color: #333 !important;
 }
 
-#sidebar-help-title {
-  padding-top: 10rem;
+.sidebar-help-title,
+[id$="sidebar-help-title"] {
+    padding-top: 10rem;
+    margin-bottom: 5px;
 }
 
-#sidebar-help-container {
+.sidebar-help-content {
+    padding: 7px 0px;
+}
+
+// Match both the default id and a scoped "<id>-sidebar-help-container".
+// The old #sidebar-help-container selector missed every non-default page.
+.sidebar-help-container,
+[id$="sidebar-help-container"] {
   width: 11.5rem;
   font-size: 12px;
   line-height: 1.2em;
@@ -47,7 +57,7 @@
   background-size: 5rem 5rem;
   background-position: 3.5rem 5rem;
   position: absolute;
-  bottom: 40px;
+  bottom: 5px;
 }
 
 .sidebar-icon {

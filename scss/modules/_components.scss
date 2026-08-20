@@ -1,8 +1,17 @@
 // bigPage owns <body>, so the base type scale belongs here. Bootstrap's 16px
 // default renders the whole dashboard ~14% larger than Omics Playground, which
 // sets the same 14px in its own sheet.
+html, body {
+  height: 100%;
+}
+
 html body {
   font-size: 14px;
+}
+
+.bigdash-page {
+  min-height: 100%;
+  height: 100%;
 }
 
 .big-full-page {
