@@ -4,8 +4,9 @@
 }
 
 .bigdash-sidebar-shell {
-  min-height: 92vh;
-  height: 100vh;
+  align-self: stretch;
+  min-height: 100%;
+  height: auto;
   width: 12rem;
   padding: 0;
   padding-top: 10px;
@@ -21,7 +22,7 @@
 .sidebar-expanded > .sidebar{
   width: 12rem;
   min-width: 12rem;
-  max-height: calc(100vh - 300px);
+  max-height: calc(100% - 300px);
   overflow-y: auto;
 }
 
@@ -35,11 +36,20 @@
   color: #333 !important;
 }
 
-#sidebar-help-title {
-  padding-top: 10rem;
+.sidebar-help-title,
+[id$="sidebar-help-title"] {
+    padding-top: 10rem;
+    margin-bottom: 5px;
 }
 
-#sidebar-help-container {
+.sidebar-help-content {
+    padding: 7px 0px;
+}
+
+// Match both the default id and a scoped "<id>-sidebar-help-container".
+// The old #sidebar-help-container selector missed every non-default page.
+.sidebar-help-container,
+[id$="sidebar-help-container"] {
   width: 11.5rem;
   font-size: 12px;
   line-height: 1.2em;
@@ -47,7 +57,7 @@
   background-size: 5rem 5rem;
   background-position: 3.5rem 5rem;
   position: absolute;
-  bottom: 40px;
+  bottom: 5px;
 }
 
 .sidebar-icon {
@@ -120,5 +130,38 @@
   border-left: .3rem solid transparent;
   padding: .4rem .7rem .5rem .4rem;
   display: block;
+}
+
+// sidebarMenu(promote_single = TRUE): when filtering leaves exactly one
+// sidebarMenuItem() visible, navigation.js's refreshMenuPromotion() adds
+// .menu-promoted to the group's header <p>, its divider <hr>, and its
+// .collapse body -- hide the header/chevron/divider, force the body open
+// (bootstrap's own .collapse:not(.show) rule would otherwise hide it, since
+// the toggle that opens it is now itself hidden), and restyle the one
+// remaining .sidebar-menu-item to read as a flat, top-level .sidebar-item.
+.sidebar-menu-header.menu-promoted,
+hr.menu-promoted {
+  display: none;
+}
+
+.collapse.menu-promoted {
+  display: block !important;
+}
+
+.collapse.menu-promoted .sidebar-menu-item {
+  padding: 0;
+  border-left: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+// Every sidebarMenu(): when filtering leaves zero sidebarMenuItem()s
+// visible, refreshMenuPromotion() adds .menu-empty to the same three
+// elements -- a header that expands to an empty box is never useful, so
+// this applies to every group, not just promote_single = TRUE ones.
+.sidebar-menu-header.menu-empty,
+hr.menu-empty,
+.collapse.menu-empty {
+  display: none !important;
 }
 

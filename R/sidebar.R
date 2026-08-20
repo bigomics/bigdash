@@ -43,7 +43,7 @@ sidebar <- function(
     ),
     div(
       id = scoped_id(id, "sidebar-help-container"),
-      class = "p-3",
+      class = "p-3 sidebar-help-container",
       h4(
         id = scoped_id(id, "sidebar-help-title"),
         class = "sidebar-help-title cursor-pointer",
@@ -98,23 +98,40 @@ sidebarItem <- function(
 #'
 #' @param text Text to display when the sidebar is expanded.
 #' @param ... Children, [sidebarMenuItem()].
+#' @param promote_single When filtering (e.g. [bigdash.filterTabs()]) leaves
+#'   exactly one [sidebarMenuItem()] visible in this menu, show that one item
+#'   as if it were a flat, top-level [sidebarItem()] instead of a lone
+#'   collapsed subitem -- no group header/chevron, no indent. Reverts back to
+#'   the normal grouped display the moment 0 or 2+ items are visible again.
+#'   Purely a client-side, per-menu display rule: it's read once from the
+#'   rendered markup and then re-evaluated in the browser every time item
+#'   visibility changes, so it does not need the sidebar itself to be
+#'   reactive.
+#' @param id This group's own id, used as the `.collapse` body's DOM id and
+#'   as the target [bigdash.hideMenuElement()]/[bigdash.showMenuElement()]
+#'   match against. Defaults to an opaque, auto-generated one -- pass your
+#'   own stable id if you need to hide/show this specific group from the
+#'   server.
 #'
 #' @export
 sidebarMenu <- function(
   text,
-  ...
+  ...,
+  promote_single = FALSE,
+  id = NULL
 ) {
   if(missing(text))
     stop("Missing `text`")
 
-  id <- make_id()
+  if (is.null(id)) id <- make_id()
 
   tagList(
     p(
-      class = "w-100 mb-0",
+      class = "w-100 mb-0 sidebar-menu-header",
       tags$a(
         class = "sidebar-menu text-decoration-none text-muted cursor-pointer",
         `data-target` = id,
+        `data-promote-single` = tolower(as.character(isTRUE(promote_single))),
         span(
           text
         ),
