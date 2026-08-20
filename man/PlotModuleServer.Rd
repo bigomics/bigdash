@@ -32,7 +32,8 @@ PlotModuleServer(
   vis.delay = 3,
   card = NULL,
   parent_session = NULL,
-  purge = NULL
+  purge = NULL,
+  purge.debug = FALSE
 )
 }
 \arguments{
@@ -76,6 +77,10 @@ it when the board has a \code{\link[=bd_visibility_probe]{bd_visibility_probe()}
 otherwise; \code{TRUE}/\code{FALSE} force it. Only the client-side plotting
 libraries are affected; \code{base}, \code{ggplot}, \code{grid} and \code{image} plots render
 to a server-side image and are left alone.}
+
+\item{purge.debug}{\code{message()} whether purging is on or off for this plot,
+and every purge/redraw as it happens -- for the card, the maximise
+modal, and the editor modal separately. \code{FALSE} by default.}
 }
 \description{
 Plot module server

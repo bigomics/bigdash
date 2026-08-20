@@ -570,6 +570,9 @@ PlotModuleUI <- function(id,
 #'   otherwise; `TRUE`/`FALSE` force it. Only the client-side plotting
 #'   libraries are affected; `base`, `ggplot`, `grid` and `image` plots render
 #'   to a server-side image and are left alone.
+#' @param purge.debug `message()` whether purging is on or off for this plot,
+#'   and every purge/redraw as it happens -- for the card, the maximise
+#'   modal, and the editor modal separately. `FALSE` by default.
 #'
 #' @seealso [bd_visibility_probe()], which is what makes `purge` possible.
 #'
@@ -601,7 +604,8 @@ PlotModuleServer <- function(id,
                              vis.delay = 3,
                              card = NULL,
                              parent_session = NULL,
-                             purge = NULL) {
+                             purge = NULL,
+                             purge.debug = TRUE) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -1288,9 +1292,30 @@ PlotModuleServer <- function(id,
         )
         purge <- FALSE
       }
+      if (isTRUE(purge.debug)) {
+        ## `purge` above is only the wiring: whether this plot holds a redraw
+        ## tick at all. Whether anything is actually dropped is the board's
+        ## switch, read here without calling it -- a reactive one cannot be
+        ## evaluated outside a reactive context.
+        state <- if (!isTRUE(purge)) {
+          "OFF"
+        } else if (is.null(board)) {
+          "ON"
+        } else if (is.function(board$purge)) {
+          "ON (runtime switch)"
+        } else if (isTRUE(board$purge)) {
+          "ON"
+        } else {
+          "OFF (disabled by board)"
+        }
+        message("[PlotModule ", filename, "] purging: ", state)
+      }
 
       if (isTRUE(purge)) {
-        board_tick <- bd_redraw_tick(session = session)
+        board_tick <- bd_redraw_tick(
+          session = session,
+          label = if (isTRUE(purge.debug)) paste0(filename, " normal")
+        )
         modal_tick <- shiny::reactiveVal(0L)
         modal_purged <- FALSE
 
@@ -1298,19 +1323,30 @@ PlotModuleServer <- function(id,
         ## same render2, so they cannot be invalidated apart. Closing one
         ## therefore costs the other a redraw next time it is opened -- which
         ## only shows up if the same plot is used maximised *and* in the editor.
-        track_modal <- function(open) {
+        ## `kind` ("modal" for the maximise popup, "editor" for the editor
+        ## popup) only labels which close/open triggered this call -- the
+        ## purge/redraw state itself stays shared, as above.
+        track_modal <- function(open, kind) {
           if (!isTRUE(open)) {
-            if (isTRUE(bd_purge_enabled(board$purge))) modal_purged <<- TRUE
+            if (isTRUE(bd_purge_enabled(board$purge))) {
+              modal_purged <<- TRUE
+              if (isTRUE(purge.debug)) {
+                message("[PlotModule ", filename, " ", kind, "] purged (closed)")
+              }
+            }
           } else if (modal_purged) {
             ## Bump on open, not on close: an output that Shiny still counts as
             ## visible would re-render immediately, for a modal nobody is
             ## looking at.
             modal_purged <<- FALSE
             modal_tick(shiny::isolate(modal_tick()) + 1L)
+            if (isTRUE(purge.debug)) {
+              message("[PlotModule ", filename, " ", kind, "] redrawn (reopened)")
+            }
           }
         }
-        shiny::observeEvent(input$plotPopup_is_open, track_modal(input$plotPopup_is_open))
-        shiny::observeEvent(input$plotPopup2_is_open, track_modal(input$plotPopup2_is_open))
+        shiny::observeEvent(input$plotPopup_is_open, track_modal(input$plotPopup_is_open, "modal"))
+        shiny::observeEvent(input$plotPopup2_is_open, track_modal(input$plotPopup2_is_open, "editor"))
 
         ## Server-rendered images are never purged, so making them depend on a
         ## tick would only buy needless replotting.
