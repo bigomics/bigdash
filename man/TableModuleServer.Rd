@@ -19,8 +19,9 @@ TableModuleServer(
 \arguments{
 \item{id}{Module id, matching \code{\link[=TableModuleUI]{TableModuleUI()}}.}
 
-\item{func, func2}{Functions returning the \code{\link[DT:datatable]{DT::datatable()}} for the card and
-the modal.}
+\item{func, func2}{Functions returning the table for the card and the
+modal: either a \code{\link[DT:datatable]{DT::datatable()}}, or a plain data.frame/matrix, which
+is wrapped in \code{\link[DT:datatable]{DT::datatable()}} automatically.}
 
 \item{csvFunc}{Function returning the data to download; defaults to the
 table's own data.}
