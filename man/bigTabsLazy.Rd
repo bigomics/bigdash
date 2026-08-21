@@ -42,6 +42,15 @@ tab it inserts the UI, then calls the server, then never again.
 Leave the tab's heavy content out of \code{\link[=bigTabItem]{bigTabItem()}} and keep only what must
 exist up front there -- typically the sidebar inputs and a placeholder.
 }
+\section{Placeholder cleanup}{
+
+Give the placeholder the class \code{"bigtabslazy-placeholder"} (e.g. a loading
+spinner) and it is removed automatically, as a direct child of the tab,
+once the real UI for that tab is inserted. Without this class the
+placeholder is left in the DOM forever, stacked underneath the real
+content.
+}
+
 \section{Ordering}{
 
 The UI is inserted before the server function runs. Module servers routinely

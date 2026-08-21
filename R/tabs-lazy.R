@@ -12,6 +12,13 @@
 #' Leave the tab's heavy content out of [bigTabItem()] and keep only what must
 #' exist up front there -- typically the sidebar inputs and a placeholder.
 #'
+#' @section Placeholder cleanup:
+#' Give the placeholder the class `"bigtabslazy-placeholder"` (e.g. a loading
+#' spinner) and it is removed automatically, as a direct child of the tab,
+#' once the real UI for that tab is inserted. Without this class the
+#' placeholder is left in the DOM forever, stacked underneath the real
+#' content.
+#'
 #' @section Ordering:
 #' The UI is inserted before the server function runs. Module servers routinely
 #' call `updateSelectInput()` and friends during initialisation, and those
@@ -109,10 +116,18 @@ bigTabsLazy <- function(tabs,
     loaded[[name]] <- TRUE
 
     if (is.function(spec$ui)) {
+      tab_selector <- sprintf("%s > div.big-tab[data-name='%s']", tabs_selector, name)
       shiny::insertUI(
-        selector = sprintf("%s > div.big-tab[data-name='%s']", tabs_selector, name),
+        selector = tab_selector,
         where = "beforeEnd",
         ui = spec$ui(),
+        immediate = TRUE
+      )
+      ## Drop the placeholder now that the real content has replaced it --
+      ## otherwise it sits underneath forever, nothing else ever removes it.
+      shiny::removeUI(
+        selector = paste0(tab_selector, " > .bigtabslazy-placeholder"),
+        multiple = TRUE,
         immediate = TRUE
       )
     }
