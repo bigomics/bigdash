@@ -605,7 +605,7 @@ PlotModuleServer <- function(id,
                              card = NULL,
                              parent_session = NULL,
                              purge = NULL,
-                             purge.debug = TRUE) {
+                             purge.debug = FALSE) {
   moduleServer(
     id,
     function(input, output, session) {
