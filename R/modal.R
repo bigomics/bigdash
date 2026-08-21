@@ -103,17 +103,27 @@ modalUI <- function(
   )
 
   if (track_open) {
-    shiny::tagList(
-      modal,
-      shiny::tags$script(sprintf(
-        "$('#%s').on('shown.bs.modal hidden.bs.modal', function(e) {
-          Shiny.setInputValue('%s_is_open', e.type === 'shown');
-        });",
-        id,
-        id
-      ))
-    )
+    shiny::tagList(modal, modal_track_script(id))
   } else {
     modal
   }
+}
+
+#' Report a modal's open state to the server
+#'
+#' The script behind `modalUI(track_open = TRUE)`, so it can also be attached to
+#' a modal built elsewhere -- the plot editor's, which [PlotModuleUI()] triggers
+#' but does not build.
+#'
+#' @param id DOM id of the modal. Reported as `<id>_is_open`.
+#'
+#' @keywords internal
+modal_track_script <- function(id) {
+  shiny::tags$script(shiny::HTML(sprintf(
+    "$('#%s').on('shown.bs.modal hidden.bs.modal', function(e) {
+      Shiny.setInputValue('%s_is_open', e.type === 'shown');
+    });",
+    id,
+    id
+  )))
 }

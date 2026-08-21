@@ -43,6 +43,24 @@ Tabs are not standard Shiny `tabPanel`s. The system works as follows:
 - Active tab name is pushed to Shiny as `input$nav` via `Shiny.setInputValue('nav', name)`
 - `navbarTab` and `navbarDropdownTab` also use `class="tab-trigger"` so clicking them switches tabs the same way
 
+### Visibility and purging
+
+`R/visibility.R` + `srcjs/visibility.js` are the toolbox for not paying for a
+board nobody is looking at. `bd_visibility_probe(ns)` drops an invisible 1px
+element in a board's UI; the JS watches it with an `IntersectionObserver` plus
+an `offsetParent` check (and a `MutationObserver` on each *ancestor*, not on
+`documentElement`, so a board's probe does not wake on every DOM change in the
+app) and reports on/off screen as `input$is_visible`, read with
+`bd_is_visible()`.
+
+The same registration lets the browser drop the drawn Plotly/iheatmapr trees of
+a hidden board, and of a closed modal. Purging is off until the server enables
+it per board (`bigdash-visibility-enable` custom message), because a purged plot
+only comes back if something server-side holds a redraw tick for it:
+`PlotModuleServer(purge=)` holds one for the card, the maximise modal and the
+editor modal; `bd_redraw_tick()` is the same thing for plots rendered outside a
+plot module. Ticks move on the way *in*, never on the way out.
+
 ### Settings panel
 
 `settings(...)` creates a right (or left) sidebar that is hidden by default. `tabSettings(...)` inside a `bigTabItem` contains per-tab settings content. When a tab is activated, `sidebar.js` finds the matching `.tab-settings` div and moves its content into `#settings-content`.

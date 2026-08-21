@@ -24,11 +24,14 @@
 #' instance's `#<id>-big-tabs` for the same reason.
 #'
 #' @param tabs Named list, one entry per tab, named by the tab's `name` as
-#'   given to [bigTabItem()]. Each entry is a list with `ui` and/or `server`,
-#'   each a function of no arguments; either may be omitted. Set
-#'   `preload = TRUE` on an entry to load it immediately instead of waiting
-#'   for its tab to be opened -- for a board whose server other boards depend
-#'   on, which therefore cannot wait for a click.
+#'   given to [bigTabItem()] -- the fully-namespaced name (e.g.
+#'   `session$ns("plots-tab")`), not the bare one, unless `id` is the default
+#'   `"app"`. A name that doesn't start with that namespace is rejected up
+#'   front, since otherwise nothing loads and nothing errors. Each entry is a
+#'   list with `ui` and/or `server`, each a function of no arguments; either
+#'   may be omitted. Set `preload = TRUE` on an entry to load it immediately
+#'   instead of waiting for its tab to be opened -- for a board whose server
+#'   other boards depend on, which therefore cannot wait for a click.
 #' @param id Namespace id, matching the enclosing [bigPage()].
 #' @param session Shiny session; defaults to the current one.
 #'
@@ -61,9 +64,40 @@ bigTabsLazy <- function(tabs,
     stop("bigTabsLazy() must be called from a Shiny server function")
   }
 
+  ## The one failure mode this can't otherwise surface: a `tabs` name that
+  ## doesn't match any bigTabItem(), silently. load_tab() below is only ever
+  ## invoked with whatever the client reports for the nav input -- the same
+  ## fully-namespaced name bigTabItem() was given in the UI (id = "app" is
+  ## the one case with no namespace at all) -- so a mismatch here means the
+  ## observeEvent() driving it just never fires; nothing loads and nothing
+  ## errors. Catch it up front instead.
+  id_prefix <- if (is.null(id) || identical(id, BIGDASH_DEFAULT_ID)) "" else paste0(id, "-")
+  if (nzchar(id_prefix)) {
+    bad <- names(tabs)[!startsWith(names(tabs), id_prefix)]
+    if (length(bad)) {
+      stop(
+        "bigTabsLazy(): every name in `tabs` must be the fully-namespaced tab ",
+        "name bigTabItem() was given in the UI -- i.e. start with '", id_prefix,
+        "' (id = '", id, "'). Name the entry e.g. session$ns('", bad[1], "') ",
+        "rather than '", bad[1], "'. Offending name(s): ",
+        paste(sprintf("'%s'", bad), collapse = ", ")
+      )
+    }
+  }
+
   loaded <- new.env(parent = emptyenv())
   nav_input <- scoped_id(id, "nav")
   tabs_selector <- paste0("#", scoped_id(id, "big-tabs"))
+
+  ## session$input[[...]] auto-prefixes with the *caller's own* module
+  ## namespace when bigTabsLazy() is called from inside a moduleServer (the
+  ## usual shape for a nested bigTabs(id = id)) -- so a nav_input already
+  ## scoped by `id` would be looked up twice-prefixed and never match.
+  ## Strip the caller's own prefix first, exactly like bd_active_tab().
+  input_prefix <- session$ns("")
+  if (nzchar(input_prefix) && startsWith(nav_input, input_prefix)) {
+    nav_input <- substring(nav_input, nchar(input_prefix) + 1L)
+  }
 
   load_tab <- function(name) {
     spec <- tabs[[name]]

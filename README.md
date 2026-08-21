@@ -18,5 +18,5 @@ remotes::install_github("bigomics/bigdash")
 
 For code examples, see folder [inst/examples](inst/examples)
 
-<img src="inst/examples/standalone.png" width="800">
+<img src="inst/examples/dashboard.png" width="800">
 

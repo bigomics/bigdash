@@ -21,15 +21,6 @@ ui <- bigPage(
       )
     ),
     navbarDropdown(
-      "Tutorials",
-      navbarDropdownItem(
-        "Get started"
-      ),
-      navbarDropdownItem(
-        "Advanced"
-      )
-    ),
-    navbarDropdown(
       "John Doe",
       navbarDropdownTab(
         "Profile",
@@ -112,30 +103,30 @@ ui <- bigPage(
       ),
       div(
         class = "p-4",
-        h2("World"),
+        h2("Data Board"),
         tabsetPanel(
           tabPanel(
-            "First tab",
+            "First",
             verbatimTextOutput("settings_values"),
           ),
-          tabPanel(
-            "Second tab",
-            h1("Second tab")
-          )
+          tabPanel("Second", div(class="p-3", "Second tab contents")),
+          tabPanel("Third", div(class="p-3", "Third tab contents"))         
         )
       )
     ),
     bigTabItem(
       "tab2",
       div(
-        class = "p-4",
-        h2("profile")
+        class="p-4",
+        h2("Document Board"),
+        p("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
       )
     )
   )
 )
 
 server <- function(input, output) {
+
   output$settings_values <- renderPrint({
     list(
       dataset = input$dataset,
