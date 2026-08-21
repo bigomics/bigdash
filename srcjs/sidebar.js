@@ -1,7 +1,7 @@
 import 'jquery';
 import 'shiny';
 import { isMobile } from './utils';
-import { scopedId, rootIdFor, $scopeFor, eachRootId } from './scope';
+import { scopedId, rootIdFor, $navScopeFor, eachRootId } from './scope';
 
 let sidebarHelpByRoot = {};
 // whether the tab currently on screen has any help to show
@@ -58,7 +58,7 @@ const toggleTabs = (target, id) => {
   // Only this bigPage()'s triggers. A page-wide `$('.tab-trigger')` /
   // `[data-target=...]` walk would clear the orange bar on every other
   // instance the moment one of them changed tab.
-  $scopeFor(id)
+  $navScopeFor(id)
     .find('.tab-trigger')
     .each((index, el) => {
       const $el = $(el);
@@ -244,7 +244,7 @@ $(document).on('shiny:connected', function() {
 
   $(document).on('click', '.sidebar-menu', function(e){
     const $menu = $(this);
-    const $menus = $scopeFor(rootIdFor($menu)).find('.sidebar-menu');
+    const $menus = $navScopeFor(rootIdFor($menu)).find('.sidebar-menu');
     $menus.not(this)
       .find('.sidebar-menu-icon')
       .removeClass('fa-angle-right')
