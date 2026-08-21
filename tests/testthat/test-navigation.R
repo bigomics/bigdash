@@ -13,6 +13,7 @@ fake_session <- function(ns_prefix = NULL) {
       ns = shiny::NS(ns_prefix),
       sendCustomMessage = function(type, message) {
         env$sent <- list(type = type, message = message)
+        env$all <- c(env$all, list(list(type = type, message = message)))
       }
     ),
     class = "MockShinySession"
@@ -136,4 +137,64 @@ test_that("no-argument calls stay backward compatible inside a moduleServer", {
     expect_identical(env$sent$type, "bigdash-open-settings")
     expect_identical(env$sent$message$value, "qsee")
   })
+})
+
+test_that("bigdash.hideMenuElement/showMenuElement target a sidebarMenu() by its id", {
+  fs <- fake_session()
+
+  bigdash.hideMenuElement(fs$session, "reports-menu")
+  expect_identical(fs$env$sent$type, "bigdash-hide-menu-element")
+  expect_identical(fs$env$sent$message$value, "reports-menu")
+
+  bigdash.showMenuElement(fs$session, "reports-menu")
+  expect_identical(fs$env$sent$type, "bigdash-show-menu-element")
+  expect_identical(fs$env$sent$message$value, "reports-menu")
+})
+
+test_that("bigdash.filterTabs sends the kept tabs and selects the first one when nothing was active", {
+  fs <- fake_session()
+
+  bigdash.filterTabs(fs$session, c("plots", "tables", "plots"))
+
+  expect_identical(fs$env$sent$type, "bigdash-filter-tabs")
+  expect_identical(fs$env$sent$message$value$id, "app")
+  expect_identical(fs$env$sent$message$value$keep, c("plots", "tables"))
+  expect_identical(fs$env$sent$message$value$select, "plots")
+})
+
+test_that("bigdash.filterTabs keeps the current tab selected when it is still in the kept set", {
+  fs <- fake_session()
+  fs$session$input <- list(nav = "tables")
+
+  bigdash.filterTabs(fs$session, c("plots", "tables"))
+
+  expect_identical(fs$env$sent$message$value$select, "tables")
+})
+
+test_that("bigdash.filterTabs falls back to the first tab when the current one was filtered out", {
+  fs <- fake_session()
+  fs$session$input <- list(nav = "reports")
+
+  bigdash.filterTabs(fs$session, c("plots", "tables"))
+
+  expect_identical(fs$env$sent$message$value$select, "plots")
+})
+
+test_that("bigdash.filterTabs scopes to the given bigPage() id", {
+  fs <- fake_session()
+
+  bigdash.filterTabs(fs$session, c("plots", "tables"), id = "reportsApp")
+
+  expect_identical(fs$env$sent$message$value$id, "reportsApp")
+})
+
+test_that("bigdash.filterTabs coerces non-character input and no-ops on empty input", {
+  fs <- fake_session()
+
+  bigdash.filterTabs(fs$session, factor(c("a", "b")))
+  expect_identical(fs$env$all[[1]]$message$value$keep, c("a", "b"))
+
+  fs2 <- fake_session()
+  bigdash.filterTabs(fs2$session, character(0))
+  expect_null(fs2$env$sent)
 })

@@ -1,7 +1,7 @@
 import 'jquery';
 import 'shiny';
 import { isMobile } from './utils';
-import { scopedId, rootIdFor, eachRootId } from './scope';
+import { scopedId, rootIdFor, $scopeFor, eachRootId } from './scope';
 
 let sidebarHelpByRoot = {};
 // whether the tab currently on screen has any help to show
@@ -55,26 +55,25 @@ const toggleTabs = (target, id) => {
       toggleTab(tab, target, id);
     });
 
-  $('.tab-trigger')
+  // Only this bigPage()'s triggers. A page-wide `$('.tab-trigger')` /
+  // `[data-target=...]` walk would clear the orange bar on every other
+  // instance the moment one of them changed tab.
+  $scopeFor(id)
+    .find('.tab-trigger')
     .each((index, el) => {
-      let name = $(el).data('target');
-      if(target == name){
-        $(`[data-target='${name}']`).removeClass('text-muted');
-        $(`[data-target='${name}']`).addClass('text-dark fw-bold');
+      const $el = $(el);
+      const active = $el.data('target') == target;
 
-        if($(`[data-target='${name}']`).not('hr').is('p'))
-          $(`[data-target='${name}']`).not('hr').addClass('active-sidebar active-sidebar-space');
+      $el.toggleClass('text-muted', !active);
+      $el.toggleClass('text-dark fw-bold', active);
 
-        if(!$(`[data-target='${name}']`).not('hr').is('p'))
-          $(`[data-target='${name}']`).not('hr').parent().addClass('active-sidebar');
-        return;
+      if ($el.is('hr')) return;
+
+      if ($el.is('p')) {
+        $el.toggleClass('active-sidebar active-sidebar-space', active);
+      } else {
+        $el.parent().toggleClass('active-sidebar', active);
       }
-
-      $(`[data-target='${name}']`).removeClass('active-sidebar active-sidebar-space');
-      $(`[data-target='${name}']`).parent().removeClass('active-sidebar');
-
-      $(`[data-target='${name}']`).addClass('text-muted');
-      $(`[data-target='${name}']`).removeClass('text-dark fw-bold');
     });
 }
 
@@ -243,23 +242,23 @@ $(document).on('shiny:connected', function() {
       });
     });
 
-  $('.sidebar-menu').click(function(){
-    $('.sidebar-menu').not(this)
+  $(document).on('click', '.sidebar-menu', function(e){
+    const $menu = $(this);
+    const $menus = $scopeFor(rootIdFor($menu)).find('.sidebar-menu');
+    $menus.not(this)
       .find('.sidebar-menu-icon')
       .removeClass('fa-angle-right')
       .removeClass('fa-angle-down')
       .addClass('fa-angle-right');
-    $(this)
+    $menu
       .find('.sidebar-menu-icon')
       .toggleClass('fa-angle-down fa-angle-right');
-  })
 
-  $('.sidebar-menu').on('click', (e) => {
-
-    let target = $(e.currentTarget).data('target');
-
-    collapse.map((el) => {
-      if(el.id == target)
+    const target = $menu.data('target');
+    const ids = new Set($menus.map((_, el) => $(el).data('target')).get());
+    collapse.forEach((el) => {
+      if (!ids.has(el.id)) return;
+      if (el.id == target)
         el.obj.toggle();
       else
         el.obj.hide();

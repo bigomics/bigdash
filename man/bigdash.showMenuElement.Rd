@@ -2,15 +2,25 @@
 % Please edit documentation in R/navigation.R
 \name{bigdash.showMenuElement}
 \alias{bigdash.showMenuElement}
-\title{Show a sidebar menu section by its label}
+\title{Show a sidebar menu group by its id}
 \usage{
-bigdash.showMenuElement(session, name)
+bigdash.showMenuElement(session, id)
 }
 \arguments{
 \item{session}{Shiny session.}
 
-\item{name}{Visible label of the section.}
+\item{id}{The target \code{\link[=sidebarMenu]{sidebarMenu()}}'s own \code{id}. \code{\link[=sidebarMenu]{sidebarMenu()}}
+auto-generates one if you don't pass \code{id} yourself, so targeting a
+specific group from the server requires giving it an explicit,
+stable \code{id} in the UI first: \code{sidebarMenu(..., id = "reports-menu")}.
+
+If nothing matches \code{id}, this falls back to matching the group's
+visible label instead (the pre-\code{id} behaviour) -- purely so callers
+written before \code{\link[=sidebarMenu]{sidebarMenu()}} took an \code{id} keep working unchanged.
+New code should always give its \code{\link[=sidebarMenu]{sidebarMenu()}} an explicit \code{id} and
+target that; matching by label breaks the moment two groups share a
+label or one gets renamed/translated.}
 }
 \description{
-Show a sidebar menu section by its label
+Show a sidebar menu group by its id
 }
