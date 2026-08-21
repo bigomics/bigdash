@@ -13,7 +13,12 @@ import 'jquery';
  * something server-side holds a redraw tick for it. No tick, no purge.
  */
 
-const WIDGETS = '.js-plotly-plot, .plotly.html-widget, .iheatmapr';
+// Matched with getElementsByClassName rather than one querySelectorAll
+// selector list: a selector list gets no fast path, so it walks every element
+// under the root -- and the roots here are whole boards full of drawn SVG,
+// which is exactly what makes the walk expensive. A space-separated class
+// string means "has all of these", so '.plotly.html-widget' still needs both.
+const WIDGET_CLASSES = ['js-plotly-plot', 'plotly html-widget', 'iheatmapr'];
 const VISIBILITY_ATTRS = ['class', 'style', 'hidden', 'aria-hidden'];
 const MAX_PAINT_FRAMES = 600; // ~10s at 60fps
 
@@ -22,7 +27,7 @@ const boards = {};
 
 const board = (prefix) => {
   if (!boards[prefix]) {
-    boards[prefix] = { prefix: prefix, enabled: false, spinner: false };
+    boards[prefix] = { prefix: prefix, enabled: false, spinner: false, visible: null };
   }
   return boards[prefix];
 }
@@ -67,13 +72,23 @@ const purgeNode = (node) => {
   delete node.htmlwidget_data_init_result;
 }
 
+// Collected into a Set first: the class lookups return *live* collections, and
+// an element carrying two of these classes would otherwise be visited twice.
+const widgetsWithin = (root) => {
+  const found = new Set();
+  for (let c = 0; c < WIDGET_CLASSES.length; c++) {
+    const hits = root.getElementsByClassName(WIDGET_CLASSES[c]);
+    for (let i = 0; i < hits.length; i++) found.add(hits[i]);
+  }
+  return found;
+}
+
 // Purge drawn widgets inside `root`; with `prefix`, only those it owns. The
 // output element itself stays -- Shiny renders back into it.
 const purgeWithin = (root, prefix) => {
-  const nodes = root.querySelectorAll(WIDGETS);
+  const nodes = widgetsWithin(root);
   let n = 0;
-  for (let i = 0; i < nodes.length; i++) {
-    const el = nodes[i];
+  for (const el of nodes) {
     if (prefix && el.id && el.id.indexOf(prefix) !== 0) continue;
     if (!painted(el)) continue; // nothing drawn -- nothing to drop
     purgeNode(el);
@@ -109,10 +124,20 @@ const watch = (spec) => {
     window.Shiny.setInputValue(spec.input, state, { priority: 'event' });
   }
 
+  // Tracked separately from `lastState`, which report() leaves untouched while
+  // Shiny is still starting up.
+  let wasVisible = null;
   const check = () => {
     // offsetParent is null while any ancestor is display:none.
     const visible = el.offsetParent !== null && el.getClientRects().length > 0;
-    if (!visible) purgeBoard(b);
+    // On the hidden *transition* only. check() also runs ten times from the
+    // settle loop below and again on every ancestor attribute flip, and
+    // purgeBoard() has to look for widgets each time it is called -- while the
+    // board stays hidden there is nothing left to find, since anything drawn
+    // was dropped on the way out.
+    if (!visible && wasVisible !== false) purgeBoard(b);
+    wasVisible = visible;
+    b.visible = visible; // for the enable handler's catch-up, below
     report(visible);
   }
 
@@ -125,7 +150,17 @@ const watch = (spec) => {
   // style flips too -- on each *ancestor* that can carry them, rather than on
   // documentElement with subtree:true, which would call back on every DOM
   // change anywhere in the app, for every board.
-  const mo = new MutationObserver(() => window.requestAnimationFrame(check));
+  // One check per frame however many mutation batches land in it.
+  let checkPending = false;
+  const scheduleCheck = () => {
+    if (checkPending) return;
+    checkPending = true;
+    window.requestAnimationFrame(() => {
+      checkPending = false;
+      check();
+    });
+  }
+  const mo = new MutationObserver(scheduleCheck);
   let node = el.parentElement;
   while (node && node !== document.body) {
     mo.observe(node, { attributes: true, attributeFilter: VISIBILITY_ATTRS });
@@ -217,7 +252,13 @@ export const handleVisibility = () => {
 
   whenShiny(() => {
     window.Shiny.addCustomMessageHandler('bigdash-visibility-enable', (msg) => {
-      board(msg.prefix).enabled = !!msg.enabled;
+      const b = board(msg.prefix);
+      const wasEnabled = b.enabled;
+      b.enabled = !!msg.enabled;
+      // Switched on while the board is already off screen: purge now. check()
+      // only purges on the hidden transition, which for this board is in the
+      // past -- it happened while purging was still off.
+      if (b.enabled && !wasEnabled && b.visible === false) purgeBoard(b);
     });
     window.Shiny.addCustomMessageHandler('bigdash-visibility-purge', (msg) => {
       purgeBoard(board(msg.prefix));

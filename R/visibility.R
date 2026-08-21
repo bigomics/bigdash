@@ -193,6 +193,8 @@ bd_active_tab <- function(id = BIGDASH_DEFAULT_ID,
 #' @param is_visible Reactive logical, defaulting to the one [bd_is_visible()]
 #'   registered for the enclosing board.
 #' @param session Module session.
+#' @param label Optional label; when given, purge and redraw events are
+#'   `message()`d -- handy for confirming purging is actually happening.
 #'
 #' @return A `reactive` returning an integer.
 #'
@@ -207,7 +209,8 @@ bd_active_tab <- function(id = BIGDASH_DEFAULT_ID,
 #'
 #' @export
 bd_redraw_tick <- function(is_visible = NULL,
-                           session = shiny::getDefaultReactiveDomain()) {
+                           session = shiny::getDefaultReactiveDomain(),
+                           label = NULL) {
   purge <- TRUE
   if (is.null(is_visible)) {
     registered <- bd_visibility_lookup(session)
@@ -227,13 +230,19 @@ bd_redraw_tick <- function(is_visible = NULL,
       if (!isTRUE(is_visible())) {
         ## Purging is client-side, on the same visibility change; all we do
         ## here is remember that the plots are now empty.
-        if (isTRUE(bd_purge_enabled(purge))) purged <<- TRUE
+        if (isTRUE(bd_purge_enabled(purge))) {
+          purged <<- TRUE
+          if (!is.null(label)) message("[", label, "] purged (off screen)")
+        } else if (!is.null(label)) {
+          message("[", label, "] off screen, purging OFF -- kept")
+        }
       } else if (purged) {
         ## Bump on show, never on hide: the browser reports visibility
         ## asynchronously, so a tick moved at hide-time can land while the
         ## outputs still count as visible and force a pointless re-render.
         purged <<- FALSE
         tick(shiny::isolate(tick()) + 1L)
+        if (!is.null(label)) message("[", label, "] redrawn (back on screen)")
       }
     },
     ignoreInit = TRUE

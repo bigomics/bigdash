@@ -4,13 +4,20 @@
 \alias{bd_redraw_tick}
 \title{Redraw tick for plots purged while hidden}
 \usage{
-bd_redraw_tick(is_visible = NULL, session = shiny::getDefaultReactiveDomain())
+bd_redraw_tick(
+  is_visible = NULL,
+  session = shiny::getDefaultReactiveDomain(),
+  label = NULL
+)
 }
 \arguments{
 \item{is_visible}{Reactive logical, defaulting to the one \code{\link[=bd_is_visible]{bd_is_visible()}}
 registered for the enclosing board.}
 
 \item{session}{Module session.}
+
+\item{label}{Optional label; when given, purge and redraw events are
+\code{message()}d -- handy for confirming purging is actually happening.}
 }
 \value{
 A \code{reactive} returning an integer.

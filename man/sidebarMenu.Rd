@@ -4,12 +4,28 @@
 \alias{sidebarMenu}
 \title{Sidebar Menu}
 \usage{
-sidebarMenu(text, ...)
+sidebarMenu(text, ..., promote_single = FALSE, id = NULL)
 }
 \arguments{
 \item{text}{Text to display when the sidebar is expanded.}
 
 \item{...}{Children, \code{\link[=sidebarMenuItem]{sidebarMenuItem()}}.}
+
+\item{promote_single}{When filtering (e.g. \code{\link[=bigdash.filterTabs]{bigdash.filterTabs()}}) leaves
+exactly one \code{\link[=sidebarMenuItem]{sidebarMenuItem()}} visible in this menu, show that one item
+as if it were a flat, top-level \code{\link[=sidebarItem]{sidebarItem()}} instead of a lone
+collapsed subitem -- no group header/chevron, no indent. Reverts back to
+the normal grouped display the moment 0 or 2+ items are visible again.
+Purely a client-side, per-menu display rule: it's read once from the
+rendered markup and then re-evaluated in the browser every time item
+visibility changes, so it does not need the sidebar itself to be
+reactive.}
+
+\item{id}{This group's own id, used as the \code{.collapse} body's DOM id and
+as the target \code{\link[=bigdash.hideMenuElement]{bigdash.hideMenuElement()}}/\code{\link[=bigdash.showMenuElement]{bigdash.showMenuElement()}}
+match against. Defaults to an opaque, auto-generated one -- pass your
+own stable id if you need to hide/show this specific group from the
+server.}
 }
 \description{
 Menu for the side bar to pass to \code{\link[=sidebar]{sidebar()}}.
