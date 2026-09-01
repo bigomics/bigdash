@@ -138,9 +138,15 @@
 // (bootstrap's own .collapse:not(.show) rule would otherwise hide it, since
 // the toggle that opens it is now itself hidden), and restyle the one
 // remaining .sidebar-menu-item to read as a flat, top-level .sidebar-item.
+// !important, same as the .menu-empty rule below: bigdash's own 'show-tabs'
+// handler walks every .sidebar-content child and jQuery-.show()s it, which
+// pins an inline display:block on whatever CSS had hidden -- i.e. exactly
+// this header and its hr. Without !important the group header (and its
+// chevron) reappears above the promoted item and never goes away again,
+// since refreshMenuPromotion() only toggles classes.
 .sidebar-menu-header.menu-promoted,
 hr.menu-promoted {
-  display: none;
+  display: none !important;
 }
 
 .collapse.menu-promoted {
@@ -152,6 +158,10 @@ hr.menu-promoted {
   border-left: none;
   font-size: 18px;
   font-weight: 600;
+  // .sidebar-menu-item's tight 1.1rem would leave the promoted row ~9px
+  // shorter than a real .sidebar-item; 1.5 is bootstrap's body line-height,
+  // which is what a flat item inherits.
+  line-height: 1.5;
 }
 
 // Every sidebarMenu(): when filtering leaves zero sidebarMenuItem()s
