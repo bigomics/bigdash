@@ -14,8 +14,15 @@ html {
     // the gsub misses and card-header survives, nesting a full 33px card header
     // inside the header. Neutralise it here: class-order independent, unlike the
     // gsub.
+    //
+    // min-height matters as much as height: bslib's own
+    // `.bslib-card .card-header` sets min-height: 2.5rem, which height:auto does
+    // not defeat. Left in, it floors the spliced nav at 40px around a 24px pill
+    // bar, so any plot module built with cards = TRUE (the dynamic/static
+    // toggles) renders a ~51px header where a plain one is ~32px.
     .plotmodule-header .card-header {
         height: auto;
+        min-height: 0;
         padding: 0;
     }
 
