@@ -552,6 +552,9 @@ PlotModuleUI <- function(id,
 #' @param plotlib,plotlib2 Plotting library, see [PlotModuleUI()].
 #' @param renderFunc,renderFunc2 Override the render function inferred from `plotlib`.
 #' @param download.fmt Formats offered in the download menu.
+#' @param download.handlers Named list of custom-format handlers, each
+#'   `list(ext = <file extension>, content = function(file))`. The names become
+#'   entries in `download.fmt` (e.g. `list(cx2 = list(ext = "cx2", content = f))`).
 #' @param download.pdf,download.png,download.html,download.csv,download.excel,download.obj
 #'   Override the generated [shiny::downloadHandler()].
 #' @param add.watermark `FALSE`, or a position passed to the `bigdash.watermark_png`
@@ -595,6 +598,7 @@ PlotModuleServer <- function(id,
                              download.csv = NULL,
                              download.excel = NULL,
                              download.obj = NULL,
+                             download.handlers = NULL,
                              download.contrast.name = NULL,
                              pdf.width = 8,
                              pdf.height = 6,
@@ -1195,6 +1199,29 @@ PlotModuleServer <- function(id,
         )
       }
 
+      ## generic custom-format handlers (e.g. CX2 for Cytoscape)
+      custom.handlers <- list()
+      if (!is.null(download.handlers)) {
+        custom.handlers <- lapply(names(download.handlers), function(fmt) {
+          spec <- download.handlers[[fmt]]
+          ext <- if (!is.null(spec$ext)) spec$ext else fmt
+          shiny::downloadHandler(
+            filename = function() paste0(filename, ".", ext),
+            content = function(file) {
+              shiny::withProgress(
+                {
+                  spec$content(file)
+                  bd_record_download(ns)
+                },
+                message = paste("Exporting to", toupper(fmt)),
+                value = 0.8
+              )
+            }
+          )
+        })
+        names(custom.handlers) <- names(download.handlers)
+      }
+
       ## --------------------------------------------------------------------------------
       ## ------------------------ OUTPUT ------------------------------------------------
       ## --------------------------------------------------------------------------------
@@ -1220,6 +1247,9 @@ PlotModuleServer <- function(id,
           }
           if (input$downloadOption == "obj") {
             output$download <- download.obj
+          }
+          if (input$downloadOption %in% names(custom.handlers)) {
+            output$download <- custom.handlers[[input$downloadOption]]
           }
         })
       } else {
@@ -1265,6 +1295,12 @@ PlotModuleServer <- function(id,
               "download",
               card
             )]] <- download.obj
+          }
+          if (input$downloadOption %in% names(custom.handlers)) {
+            output[[paste0(
+              "download",
+              card
+            )]] <- custom.handlers[[input$downloadOption]]
           }
         })
       }
