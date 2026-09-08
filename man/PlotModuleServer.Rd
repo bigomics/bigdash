@@ -23,6 +23,7 @@ PlotModuleServer(
   download.csv = NULL,
   download.excel = NULL,
   download.obj = NULL,
+  download.handlers = NULL,
   download.contrast.name = NULL,
   pdf.width = 8,
   pdf.height = 6,
@@ -55,6 +56,10 @@ download and click-to-label.}
 \item{res}{Length-2 vector: card resolution, then modal resolution.}
 
 \item{download.pdf, download.png, download.html, download.csv, download.excel, download.obj}{Override the generated \code{\link[shiny:downloadHandler]{shiny::downloadHandler()}}.}
+
+\item{download.handlers}{Named list of custom-format handlers, each
+\verb{list(ext = <file extension>, content = function(file))}. The names become
+entries in \code{download.fmt} (e.g. \code{list(cx2 = list(ext = "cx2", content = f))}).}
 
 \item{download.contrast.name}{Reactive appended to the download filename.}
 
